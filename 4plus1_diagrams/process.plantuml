@@ -1,0 +1,58 @@
+@startuml process_view
+title "Process Diagram for Chip's Core Escape"
+start
+:Player starts game;
+:Game engine begins;
+fork
+    :Initialize player details;
+fork again
+    :Initializes maze;
+fork again
+    :Initializes puzzles;
+end fork
+
+repeat
+    :Player is inside the maze;
+    
+    if (Is the player at the end of the maze?) then (Yes)
+        :Player escapes maze;
+        :Game set to complete;
+        stop
+    else (No)
+    endif
+    
+    if (Did the player trigger a puzzle?) then (Yes)
+        :Game engine presents puzzle;
+        repeat
+            :Player submits solution;
+            
+            if (Was player solution accepted by game engine?) then (Yes)
+                break
+            else (No)
+            endif
+        repeat while (Player retries puzzle)
+        :Game engine enables player to move forward;
+    else (No)
+        :Player is able to move forward;
+    endif
+    
+    :Maze and player state updated by game engine as player moves forward;
+
+repeat while ()
+
+
+@enduml
+
+
+
+
+
+
+
+
+
+
+
+
+
+
