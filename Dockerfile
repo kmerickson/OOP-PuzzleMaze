@@ -4,7 +4,7 @@ RUN apt update \
   && apt install -y \
   g++ gcc make sqlite3 time curl git nano dos2unix \
   net-tools iputils-ping iproute2 sudo gdb less \
-  sudo apt-get install python3-pip python3-pygame
+  #sudo apt-get install python3-pip python3-pygame
   && apt clean;
 
 # Install Java and Graphviz for plantuml
