@@ -1,10 +1,11 @@
+import os
+os.environ['SDL_AUDIODRIVER'] = 'dummy'
 import pygame, sys
 from button import Button
 import game
-
-pygame.init()
-pygame.mixer.init()
-
+from text import Text
+#pygame.init()
+#pygame.mixer.init()
 class MenuScreens:
     """
     """
@@ -16,7 +17,7 @@ class MenuScreens:
 
     def __init__(self):
         picture = pygame.transform.scale(self.background_picture, (1280, 720))
-        pygame.mixer.music.load("assets/space-horror-music.mp3")
+        #pygame.mixer.music.load("assets/space-horror-music.mp3")
     def get_font(self, size):
         return pygame.font.Font("assets/Cyberpunks.ttf", size)
 
@@ -27,10 +28,7 @@ class MenuScreens:
 
 
     def play_screen(self):
-        pygame.mixer.quit()
-        pygame.mixer.init()
-        pygame.mixer.music.load("assets/button-sound-effect.mp3")
-        pygame.mixer.music.play()
+        #pygame.mixer.quit()
         while True:
 
             game.game_loop()
@@ -45,9 +43,9 @@ class MenuScreens:
 
     def create_button(self, current_width, current_height):
         MENU_MOUSE_POS = pygame.mouse.get_pos()
-        play_button = Button("assets/Play Rect.png", 0.5, "Play",
+        play_button = Button("assets/button.png", 0.5, "Play",
                              "assets/Cyberpunks.ttf", "White", self.SCREEN, current_width, current_height)
-        quit_button = Button("assets/Play Rect.png", 0.75 , "Quit",
+        quit_button = Button("assets/button.png", 0.75 , "Quit",
                              "assets/Cyberpunks.ttf", "White", self.SCREEN, current_width, current_height)
         #PLAY_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(current_width // 2, current_height // 2), 
                             #text_input="PLAY", font=self.get_font(75), base_color="#d7fcd4", hovering_color="White")
@@ -65,9 +63,8 @@ class MenuScreens:
         self.draw_background(current_width, current_height)
         self.draw_menu_text("Chip's Core Escape", current_width, current_height, "White")
         #self.create_button(current_width, current_height)
-
+    
     def hover_over_menu_text(self, menu_pos, width, height):
-        print("Here")
         font_and_size_obj = pygame.font.Font(
             "assets/Cyberpunks.ttf",
             (width // 10) + 7
@@ -81,23 +78,23 @@ class MenuScreens:
                         )
                 )
         self.SCREEN.blit(text, text_rect)
-        self.draw_menu_text("Chip's Core Escape", width, height, "Light Green")
+        self.draw_menu_text("Chip's Core Escape", width, height, "White")
 
     def main_menu(self):
-        pygame.mixer.music.play(loops=-1, start=0.0)
+        #pygame.mixer.music.play(loops=-1, start=0.0)
         current_width, current_height = self.SCREEN.get_size()
         self.draw_main_menu_screen(current_width, current_height)
-        play_button = Button("assets/Play Rect.png", 0.45, "Play",
+        play_button = Button("assets/button.png", 0.45, "Play",
                              "assets/Cyberpunks.ttf", "White", self.SCREEN, current_width, current_height)
-        options_button = Button("assets/Play Rect.png", 0.65, "Options",
+        options_button = Button("assets/button.png", 0.65, "Options",
                              "assets/Cyberpunks.ttf", "White", self.SCREEN, current_width, current_height)
-        quit_button = Button("assets/Play Rect.png", 0.85, "Quit",
+        quit_button = Button("assets/button.png", 0.85, "Quit",
                              "assets/Cyberpunks.ttf", "White", self.SCREEN, current_width, current_height)
         while True:
             current_width, current_height = self.SCREEN.get_size()
-            self.draw_main_menu_screen(current_width, current_height)
             MENU_MOUSE_POS = pygame.mouse.get_pos()
             self.hover_over_menu_text(MENU_MOUSE_POS, current_width, current_height)
+            self.draw_main_menu_screen(current_width, current_height)
             play_button.react_to_user_position(MENU_MOUSE_POS)
             quit_button.react_to_user_position(MENU_MOUSE_POS)
             options_button.react_to_user_position(MENU_MOUSE_POS)
@@ -115,7 +112,7 @@ class MenuScreens:
                     if play_button.user_clicked_button(MENU_MOUSE_POS):
                         self.play_screen()
                     if options_button.user_clicked_button(MENU_MOUSE_POS):
-                        print("Here")
+                        pass
                     if quit_button.user_clicked_button(MENU_MOUSE_POS):
                         pygame.quit()
                         sys.exit()

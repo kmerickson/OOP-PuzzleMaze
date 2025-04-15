@@ -12,24 +12,7 @@ class Button():
     
     def draw_button(self):
         self._screen.blit(self._button, self._button_rect)
-        self._screen.blit(self._text, self._text_rect)
-    
-    def _set_up_text_on_button(self):
 
-        self._font_and_size_obj: pygame.font.Font = pygame.font.Font(
-            self._font_dir,
-            int(self._button_height)
-            )
-        
-        self._text: pygame.Surface = self._font_and_size_obj.render(
-            self._text_to_place, True, self._color_without_hover)
-        
-        self._text_rect: pygame.Rect = self._text.get_rect(
-            center=(
-                    self._screen_width * self.FACTOR_OF_X_POS,
-                    self._screen_height * self._factor_of_y_pos
-                    )
-            )
         
     def _set_up_button_shape_change(self):
         self._button = pygame.transform.scale(
@@ -86,9 +69,12 @@ class Button():
         self._text_to_place: str = text_to_place
         self._font_dir = font_dir
         self._text = Text("assets/Cyberpunks.ttf", self._screen, self._screen_width, self._screen_height, self.FACTOR_OF_X_POS,
-                          self._factor_of_y_pos, color, self._button_height, self._text_to_place)
+                          self._factor_of_y_pos, color, self._button_height, self._text_to_place, False, 15, "Light Green", True)
         self._text_hover = Text("assets/Cyberpunks.ttf", self._screen, self._screen_width, self._screen_height, self.FACTOR_OF_X_POS,
-                          self._factor_of_y_pos, "Light Green", self._button_height, self._text_to_place, True, 15)
+                          self._factor_of_y_pos, "Light Green", self._button_height, self._text_to_place, True, 15, "Light Green", True)
+        self._text.draw_button()
+
+        self._screen.blit(self._button, self._button_rect)
         self._text.draw_button()
 
     def update(self, screen_width, screen_height):
@@ -102,8 +88,8 @@ class Button():
         self._screen_height = screen_height
 
         self._set_up_button_shape_change()
-        self._set_up_text_on_button()
-        self.draw_button()
+        self._text.update_on_screen_resize(self._button_height, self._screen_width, self._screen_height)
+
 
     def user_clicked_button(self, mouse_position):
         if self._button_rect.collidepoint(mouse_position):
@@ -111,10 +97,10 @@ class Button():
         return False
     
     def react_to_user_position(self, mouse_position):
-        self._screen.blit(self._button, self._button_rect)
-        if (self._button_rect.collidepoint(mouse_position)):
-            self._text_hover.draw_button()
-        else:
+        self.draw_button()
+        if self._button_rect.collidepoint(mouse_position):
+            self._text.draw_hover_state()
+        if not self._button_rect.collidepoint(mouse_position):
             self._text.draw_button()
             
         
