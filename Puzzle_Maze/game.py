@@ -32,7 +32,7 @@ class TileSet:
             if os.path.exists(path):
                 img = pygame.image.load(path).convert_alpha()
                 img = pygame.transform.scale(img, (TILE_SIZE, TILE_SIZE))
-                if name in {"key", "goal", "door"}:
+                if name in {"key", "goal", "door", "door_unlocked"}:
                     base = images["empty"].copy()
                     base.blit(img, (0, 0))
                     return base
