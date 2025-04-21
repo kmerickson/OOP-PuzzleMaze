@@ -17,7 +17,7 @@ class MenuScreens:
 
     def __init__(self):
         picture = pygame.transform.scale(self.background_picture, (1280, 720))
-        #pygame.mixer.music.load("assets/space-horror-music.mp3")
+        # pygame.mixer.music.load("assets/space-horror-music.mp3")
     def get_font(self, size):
         return pygame.font.Font("assets/Cyberpunks.ttf", size)
 

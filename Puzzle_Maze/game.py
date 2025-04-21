@@ -3,6 +3,8 @@ import pygame
 import sys
 import os
 from pygame.locals import *
+from GameObjects import Player, Enemy
+
 
 # Initialize pygame
 pygame.init()
@@ -115,12 +117,13 @@ class Game:
 
     def load_level(self, index):
         self.maze = self.levels[index]
-        self.player = Actor('player', (1 * TILE_SIZE, 1 * TILE_SIZE), self.tileset.images['player'])
-        self.enemy = Actor('enemy', (6 * TILE_SIZE, 3 * TILE_SIZE), self.tileset.images['enemy'])
-        self.enemy.y_velocity = -1
-        self.unlock_count = 0
-        self.last_player_move = 0
-        self.last_enemy_move = 0
+        # New player and enemy class only requires the starting position
+        # to be added as an arguemnt. A second argument can be added to
+        # change the image. Enemy class requires velocity as well.
+        #############################################################
+        self.player = Player((1 * TILE_SIZE, 1 * TILE_SIZE))
+        self.enemy = Enemy((6 * TILE_SIZE, 3 * TILE_SIZE), velocity = -1) 
+        ############################################################
         self.door_unlock_time = None
 
     def draw(self):
@@ -137,70 +140,71 @@ class Game:
         self.enemy.draw(self.screen)
         pygame.display.flip()
 
-    def handle_player_input(self):
-        current_time = pygame.time.get_ticks()
-        if current_time - self.last_player_move < PLAYER_MOVE_DELAY:
-            return
+        # No longer needed 
+        # def handle_player_input(self):
+        # current_time = pygame.time.get_ticks()
+        # if current_time - self.last_player_move < PLAYER_MOVE_DELAY:
+        #     return
 
-        keys = pygame.key.get_pressed()
-        dx = dy = 0
-        if keys[K_UP]: dy = -1
-        elif keys[K_DOWN]: dy = 1
-        elif keys[K_LEFT]: dx = -1
-        elif keys[K_RIGHT]: dx = 1
-        else: return
+        # keys = pygame.key.get_pressed()
+        # dx = dy = 0
+        # if keys[K_UP]: dy = -1
+        # elif keys[K_DOWN]: dy = 1
+        # elif keys[K_LEFT]: dx = -1
+        # elif keys[K_RIGHT]: dx = 1
+        # else: return
 
-        new_row = self.player.rect.top // TILE_SIZE + dy
-        new_col = self.player.rect.left // TILE_SIZE + dx
-        if not (0 <= new_row < GRID_HEIGHT and 0 <= new_col < GRID_WIDTH): return
+        # new_row = self.player.rect.top // TILE_SIZE + dy
+        # new_col = self.player.rect.left // TILE_SIZE + dx
+        # if not (0 <= new_row < GRID_HEIGHT and 0 <= new_col < GRID_WIDTH): return
 
-        tile_name = self.tileset.get_tile_name(self.maze[new_row][new_col])
-        if tile_name == 'goal':
-            print("Level complete!")
-            self.level_index += 1
-            if self.level_index < len(self.levels):
-                self.load_level(self.level_index)
-            else:
-                print("You won all levels!")
-                pygame.quit()
-                sys.exit()
-            return
-        elif tile_name == 'key':
-            self.unlock_count += 1
-            self.maze[new_row][new_col] = 0
-        elif tile_name == 'door':
-            if self.unlock_count > 0:
-                self.unlock_count -= 1
-                self.maze[new_row][new_col] = 5  # 5 is temporary unlocked state
-                self.door_unlock_time = pygame.time.get_ticks()
-            else:
-                return
-        elif tile_name != 'empty':
-            return
+        # tile_name = self.tileset.get_tile_name(self.maze[new_row][new_col])
+        # if tile_name == 'goal':
+        #     print("Level complete!")
+        #     self.level_index += 1
+        #     if self.level_index < len(self.levels):
+        #         self.load_level(self.level_index)
+        #     else:
+        #         print("You won all levels!")
+        #         pygame.quit()
+        #         sys.exit()
+        #     return
+        # elif tile_name == 'key':
+        #     self.unlock_count += 1
+        #     self.maze[new_row][new_col] = 0
+        # elif tile_name == 'door':
+        #     if self.unlock_count > 0:
+        #         self.unlock_count -= 1
+        #         self.maze[new_row][new_col] = 5  # 5 is temporary unlocked state
+        #         self.door_unlock_time = pygame.time.get_ticks()
+        #     else:
+        #         return
+        # elif tile_name != 'empty':
+        #     return
 
-        self.player.move_to((new_col * TILE_SIZE, new_row * TILE_SIZE))
-        self.last_player_move = current_time
+        # self.player.move_to((new_col * TILE_SIZE, new_row * TILE_SIZE))
+        # self.last_player_move = current_time
 
-    def update_enemy(self):
-        current_time = pygame.time.get_ticks()
-        if current_time - self.last_enemy_move < ENEMY_MOVE_DELAY:
-            return
+        #  def update_enemy(self):
+        # current_time = pygame.time.get_ticks()
+        # if current_time - self.last_enemy_move < ENEMY_MOVE_DELAY:
+        #     return
 
-        row = self.enemy.rect.top // TILE_SIZE + self.enemy.y_velocity
-        col = self.enemy.rect.left // TILE_SIZE
-        if 0 <= row < GRID_HEIGHT:
-            tile_name = self.tileset.get_tile_name(self.maze[row][col])
-            if tile_name != 'wall':
-                self.enemy.move_to((col * TILE_SIZE, row * TILE_SIZE))
-            else:
-                self.enemy.y_velocity *= -1
+        # row = self.enemy.rect.top // TILE_SIZE + self.enemy.y_velocity
+        # col = self.enemy.rect.left // TILE_SIZE
+        # if 0 <= row < GRID_HEIGHT:
+        #     tile_name = self.tileset.get_tile_name(self.maze[row][col])
+        #     if tile_name != 'wall':
+        #         self.enemy.move_to((col * TILE_SIZE, row * TILE_SIZE))
+        #     else:
+        #         self.enemy.y_velocity *= -1
 
-        self.last_enemy_move = current_time
+        # self.last_enemy_move = current_time
 
-        if self.enemy.collides_with(self.player):
-            print("You died")
-            pygame.quit()
-            sys.exit()
+        # if self.enemy.collides_with(self.player):
+        #     print("You died")
+        #     pygame.quit()
+        #     sys.exit()
 
     def update(self):
         if self.door_unlock_time:
@@ -211,15 +215,38 @@ class Game:
                             self.maze[r][c] = 0
                 self.door_unlock_time = None
 
+        ###############################################
+        # Added to check if player is on goal tile
+        row = self.player.rect.top // TILE_SIZE
+        col = self.player.rect.left // TILE_SIZE
+        tile_name = self.tileset.get_tile_name(self.maze[row][col])
+
+        if tile_name == 'goal':
+            print("Level complete!")
+            self.level_index += 1
+            if self.level_index < len(self.levels):
+                # makes sure haven't completed all levels
+                self.load_levels(self.level_index) # load next level
+            else:
+                print(" You won all levels!")
+                # put in logic to display message until a key is pressed
+                # ! want to replace this to go back to menu
+                pygame.quit()
+                sys.exit()
+        #############################################
+
     def run(self):
         while True:
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
-
-            self.handle_player_input()
-            self.update_enemy()
+            ##########################################################
+            # new player and enemy classes require the maze as an input    
+            self.player.update(self.maze)
+            # the enemy class also requires player information as an input
+            self.enemy.update(self.maze, self.player)
+            ##########################################################
             self.update()
             self.draw()
             self.clock.tick(FPS)
