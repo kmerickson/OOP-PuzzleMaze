@@ -15,7 +15,7 @@ class Drawable(ABC):
 
     def __init__(self, screen: pygame.Surface, factor_of_x_pos: float,
                  factor_of_y_pos: float, image_dir: str,
-                 size: float, data: Any) -> None:
+                 size: float, data: str) -> None:
         """Constructor for Drawable class
 
         Args:
@@ -24,6 +24,7 @@ class Drawable(ABC):
             factor_of_y_pos (float): Position to place object on y-axis
             image_dir (str): Directory to find image that be drawn on screen
             size (float): Size of object
+            data (str): data for given object
         """
         self._screen: pygame.Surface = screen
         self._screen_width: float = self._screen.get_size()[0]
@@ -34,7 +35,7 @@ class Drawable(ABC):
         self._surface: pygame.Surface | None = None
         self._image_dir: str = image_dir
         self._size: float = size
-        self._data: Any = data
+        self._data: str = data
 
     @abstractmethod
     def draw(self) -> None:
@@ -257,21 +258,21 @@ class Drawable(ABC):
         self._size = size
 
     @property
-    def data(self) -> Any:
+    def data(self) -> str:
         """Getter for the data variable
 
         Returns:
-            self._data (Any)
+            self._data (str)
             data needed for the specific object
         """
         return self._data
 
     @data.setter
-    def data(self, data: Any) -> None:
+    def data(self, data: str) -> None:
         """Setter for the data variable
 
         Args:
-            data (Any)
+            data (str)
             the new size to be used while drawing
             object
         """
