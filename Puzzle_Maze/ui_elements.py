@@ -3,9 +3,9 @@
    design pattern
 """
 from abc import ABC, abstractmethod
+from typing import Any
 from typing_extensions import override
 import pygame
-from typing import Any
 
 
 class Drawable(ABC):
@@ -112,7 +112,51 @@ class Drawable(ABC):
             screen width by idealized position on screen
         """
         return self._screen_width * self._factor_of_x_pos
+    
+    @property
+    def factor_of_x_pos(self) -> float:
+        """Getter for the factor of x pos variable
 
+        Returns:
+            self._factor_of_x_pos (float):
+            determines where the object
+            will be on the screen horizontally
+        """
+        return self._factor_of_x_pos
+    
+    @factor_of_x_pos.setter
+    def factor_of_x_pos(self, factor_of_x_pos: float) -> float:
+        """Setter for the factor of x pos variable
+
+        Args:
+            factor_of_x_pos (float):
+            determines where the object
+            will be on the screen horizontally
+        """
+        self._factor_of_x_pos = factor_of_x_pos
+
+    @property
+    def factor_of_y_pos(self) -> float:
+        """Getter for the factor of y pos variable
+
+        Returns:
+            self._factor_of_y_pos (float):
+            determines where the object
+            will be on the screen vertically
+        """
+        return self._factor_of_y_pos
+    
+    @factor_of_y_pos.setter
+    def factor_of_y_pos(self, factor_of_y_pos: float) -> float:
+        """Setter for the factor of y pos variable
+
+        Args:
+            factor_of_y_pos (float):
+            determines where the object
+            will be on the screen vertically
+        """
+        self._factor_of_y_pos = factor_of_y_pos
+    
     @property
     def y_pos(self) -> float:
         """Getter for the y (vertical) coordinate
@@ -288,34 +332,12 @@ class Text(Drawable):
         self._font = pygame.font.Font(
             self.image_dir, int(self._size)
         )
-        self.surface = self._font.render(self._text, True, self._color)
+        self.surface = self._font.render(self.data, True, self._color)
         self.rect = self.surface.get_rect(
             center=(
                 self.x_pos, self.y_pos
             )
         )
-
-    @property
-    def text(self) -> str:
-        """Getter for the text variable
-
-        Returns:
-            self._text (str)
-            the actual text that will be
-            drawn
-        """
-        return self._text
-
-    @text.setter
-    def text(self, text: str) -> None:
-        """Setter for the text variable
-
-        Args:
-            text (str):
-            the new text that be will be
-            drawn
-        """
-        self._text = text
 
     @property
     def color(self) -> str:
