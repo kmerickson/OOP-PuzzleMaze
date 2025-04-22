@@ -4,7 +4,7 @@ import pygame, sys
 from button import Button
 import game
 from text import Text
-#pygame.init()
+pygame.init()
 #pygame.mixer.init()
 class MenuScreens:
     """
@@ -29,11 +29,11 @@ class MenuScreens:
 
     def play_screen(self):
         #pygame.mixer.quit()
-        while True:
+        #while True:
 
-            game.game_loop()
+        game.game_loop() # changed, was in while loop
 
-            pygame.display.update()
+            #pygame.display.update()
 
 
     def draw_menu_text(self, text: str, width: int, height: int, color: str):

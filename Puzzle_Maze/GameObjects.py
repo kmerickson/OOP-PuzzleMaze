@@ -1,18 +1,24 @@
 """ Game objects classes such as player, enemies,
 and other"""
 
-import pygame
 import sys
-import os
-from pygame.locals import *
+# import os
 from typing import Type, Tuple
+import pygame
+from pygame.locals import *
 
 TILE_SIZE = 64
 PLAYER_MOVE_DELAY = 200
 ENEMY_MOVE_DELAY = 500
-
+TILE_EMPTY = 0
+TILE_WALL = 1
+TILE_GOAL = 2
+TILE_DOOR = 3
+TILE_KEY = 4
+TILE_UNLOCKED = 5
 
 class GameObject:
+	"""Game object class from which objects such as player and enemy are derived"""
 	def __init__(self, name: str, pos: tuple[int, int], image: pygame.Surface) -> None:
 		""" Initialization Function, replaced the Actor clas in game.py"""
 		self.name = name
@@ -30,9 +36,12 @@ class GameObject:
 
 	def move_to(self, x: int, y: int) -> None:
 		"""used to move game objects, upon update, moves object to new coords"""
+		print(f"[DEBUG] Setting self.rect.topleft = ({x}, {y})")
 		self.rect.topleft = (x,y)
 
-	def collides_with(self, other):
+	def collides_with(self, other: 'GameObject') -> bool:
+		"""Checks for collision between this object and input object.
+		Incorporates the colliderect() function."""
 		return self.rect.colliderect(other.rect)
 
 class Player(GameObject):
@@ -59,6 +68,10 @@ class Player(GameObject):
 		self.unlock_count = 0
 		self.last_move_time = 0
 		# self.level_index = 0  # no longer neeeded
+	
+	def draw(self, screen):
+		print(f"[DEBUG] Drawing player at {self.rect.topleft}")
+		super().draw(screen)
 
 	# handle movement
 	def update(self, maze: list[list[int]]) -> None:
@@ -67,7 +80,11 @@ class Player(GameObject):
 		This version requires passing in the 'maze' which are the matrices
 		created in the load_levels() function."""
 
-		print("plater is updating")
+		print("[DEBUG] Player.update() CALLED")
+		keys = pygame.key.get_pressed()
+		print("Keys pressed:", [i for i, key in enumerate(keys) if key])
+
+
 		current_time = pygame.time.get_ticks()
 		if current_time - self.last_move_time < PLAYER_MOVE_DELAY:
 			return
@@ -76,23 +93,30 @@ class Player(GameObject):
 		dx = dy = 0
 		if keys[K_UP]:
 			dy = -1
+			print("Up pressed")
 		elif keys[K_DOWN]:
 			dy = 1
+			print("Down pressed")
 		elif keys[K_LEFT]:
 			dx = -1
+			print("Left pressed")
 		elif keys[K_RIGHT]:
 			dx = 1
+			print("Right pressed")
 		else:
 			return
 
 		new_row = self.rect.top // TILE_SIZE + dy
 		new_col = self.rect.left // TILE_SIZE + dx
+		print("Trying to  move to:", new_row, new_col)
 		if not (0 <= new_row < len(maze) and 0 <= new_col < len(maze[0])):
 			return
            	
 		# utilize the maze matrix used to draw the level to
 		# decide what the player can do: 
-		tile_name = maze[new_row][new_col]
+		tile_index = maze[new_row][new_col]
+		print("Tile at target:", tile_index)
+
 		# if tile_name == 'goal':
 		# 	print("Level Complete") # I don't think this actually shows up
 		# 	self.level_index += 1 """
@@ -106,18 +130,19 @@ class Player(GameObject):
 		# 		pygame.quit()
 		# 		sys.exit()
 		# 	return
-		if tile_name == 'key':
+		if tile_index == TILE_KEY:
 			self.unlock_count += 1
 			maze[new_row][new_col] = 0
-		elif tile_name == 'door':
+		elif tile_index == TILE_DOOR:
 			if self.unlock_count > 0:
 				self.unlock_count -= 1
 				maze[new_row][new_col] = 5 # 5 is temporarily unlocked
 			else:
 				return
-		elif tile_name != 'empty':
-			return # do nothing if wall
+		elif tile_index not in (TILE_EMPTY, TILE_GOAL):
+			return  # do nothing if wall
 				
+		print(f"Moving player to: ({new_col * TILE_SIZE}, {new_row * TILE_SIZE})")
 		self.move_to(new_col * TILE_SIZE, new_row * TILE_SIZE)
 		self.last_move_time = current_time
 
@@ -148,8 +173,8 @@ class Enemy(GameObject):
 		col = self.rect.left // TILE_SIZE # doesn't actually move from column
 
 		if 0 <= new_row < len(maze):
-			tile_name = maze[new_row][col]
-			if tile_name != 'wall':
+			tile_index = maze[new_row][col]
+			if tile_index != TILE_WALL:
 				self.move_to(col * TILE_SIZE, new_row * TILE_SIZE)
 			else:
 				self.velocity *= -1

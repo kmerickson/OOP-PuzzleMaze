@@ -7,10 +7,11 @@ from GameObjects import Player, Enemy
 
 
 # Initialize pygame
-pygame.init()
+# pygame.init()  # not needed if done in main.py
 
 # Constants
-TILE_SIZE = 64
+TILE_SIZE = 64  # also defined again in GameObjects.py,
+                # Maybe move to a constants.py file
 GRID_WIDTH = 8
 GRID_HEIGHT = 8
 WIDTH = TILE_SIZE * GRID_WIDTH
@@ -23,7 +24,10 @@ ASSET_DIR = "assets"
 # Tile management
 class TileSet:
     def __init__(self):
-        self.tiles = ['empty', 'wall', 'goal', 'door', 'key']
+        ###################
+        # added door_unlocked to array"
+        self.tiles = ['empty', 'wall', 'goal', 'door', 'key', 'door_unlocked']
+        ##################
         self.images = self._load_images()
 
     def _load_images(self):
@@ -226,7 +230,7 @@ class Game:
             self.level_index += 1
             if self.level_index < len(self.levels):
                 # makes sure haven't completed all levels
-                self.load_levels(self.level_index) # load next level
+                self.load_level(self.level_index) # load next level
             else:
                 print(" You won all levels!")
                 # put in logic to display message until a key is pressed
