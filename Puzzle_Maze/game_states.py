@@ -79,3 +79,8 @@ class ChipsCoreEscape:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     self.handle_user(GameEvents.ESCAPE)
             pygame.display.update()
+
+
+if __name__ == "__main__":
+    game = ChipsCoreEscape()
+    game.game()
