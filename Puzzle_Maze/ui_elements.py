@@ -112,7 +112,7 @@ class Drawable(ABC):
             screen width by idealized position on screen
         """
         return self._screen_width * self._factor_of_x_pos
-
+    
     @property
     def factor_of_x_pos(self) -> float:
         """Getter for the factor of x pos variable
@@ -123,9 +123,9 @@ class Drawable(ABC):
             will be on the screen horizontally
         """
         return self._factor_of_x_pos
-
+    
     @factor_of_x_pos.setter
-    def factor_of_x_pos(self, factor_of_x_pos: float) -> None:
+    def factor_of_x_pos(self, factor_of_x_pos: float) -> float:
         """Setter for the factor of x pos variable
 
         Args:
@@ -145,9 +145,9 @@ class Drawable(ABC):
             will be on the screen vertically
         """
         return self._factor_of_y_pos
-
+    
     @factor_of_y_pos.setter
-    def factor_of_y_pos(self, factor_of_y_pos: float) -> None:
+    def factor_of_y_pos(self, factor_of_y_pos: float) -> float:
         """Setter for the factor of y pos variable
 
         Args:
@@ -156,7 +156,7 @@ class Drawable(ABC):
             will be on the screen vertically
         """
         self._factor_of_y_pos = factor_of_y_pos
-
+    
     @property
     def y_pos(self) -> float:
         """Getter for the y (vertical) coordinate
@@ -300,7 +300,7 @@ class Text(Drawable):
                          image_dir, size, text)
         self._color: str = color
         self._font: pygame.font.Font = pygame.font.Font(
-            self.image_dir, int(self._size)
+            self.image_dir, int(self.size)
         )
 
         self.surface = self._font.render(self.data, True, self._color)
@@ -330,7 +330,7 @@ class Text(Drawable):
         """
         self.resize_screen()
         self._font = pygame.font.Font(
-            self.image_dir, int(self._size)
+            self.image_dir, int(self.size)
         )
         self.surface = self._font.render(self.data, True, self._color)
         self.rect = self.surface.get_rect(
@@ -436,6 +436,7 @@ class DrawableDecorator(Drawable):
             decorator
         """
         self._drawable = drawble
+        self._drawable.resize_screen()
 
     @property
     def original_size(self) -> float:
@@ -584,6 +585,7 @@ class Button(DrawableDecorator):
         )
         self._button_width = change_in_screen_width * self._button_width
         self._button_height = change_in_screen_height * self._button_height
+
         self.drawable.resize_screen()
 
         self._surface = pygame.transform.scale(
@@ -594,3 +596,4 @@ class Button(DrawableDecorator):
                 self.drawable.x_pos, self.drawable.y_pos
             )
         )
+        
