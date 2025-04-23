@@ -3,7 +3,6 @@
    design pattern
 """
 from abc import ABC, abstractmethod
-from typing import Any
 from typing_extensions import override
 import pygame
 
@@ -68,7 +67,7 @@ class Drawable(ABC):
         """Getter for the screen variable
 
         Returns:
-            self._screen (pygame.Surface)
+            _screen (pygame.Surface)
             the surface the game is being drawn on
         """
         return self._screen
@@ -78,7 +77,7 @@ class Drawable(ABC):
         """Setter for the screen variable
 
         Args:
-            self._screen (pygame.Surface)
+            screen (pygame.Surface)
             the surface the game will be drawn on
         """
         self._screen = screen
@@ -88,7 +87,7 @@ class Drawable(ABC):
         """Getter for the screen width variable
 
         Returns:
-            self._width (float):
+            _width (float):
             the width of the surface the game is being drawn on
         """
         return self._screen_width
@@ -98,7 +97,7 @@ class Drawable(ABC):
         """Getter for the screen height variable
 
         Returns:
-            self._height (float):
+            _height (float):
             the width of the surface the game is being drawn on
         """
         return self._screen_height
@@ -113,20 +112,20 @@ class Drawable(ABC):
             screen width by idealized position on screen
         """
         return self._screen_width * self._factor_of_x_pos
-    
+
     @property
     def factor_of_x_pos(self) -> float:
         """Getter for the factor of x pos variable
 
         Returns:
-            self._factor_of_x_pos (float):
+            _factor_of_x_pos (float):
             determines where the object
             will be on the screen horizontally
         """
         return self._factor_of_x_pos
-    
+
     @factor_of_x_pos.setter
-    def factor_of_x_pos(self, factor_of_x_pos: float) -> float:
+    def factor_of_x_pos(self, factor_of_x_pos: float) -> None:
         """Setter for the factor of x pos variable
 
         Args:
@@ -141,14 +140,14 @@ class Drawable(ABC):
         """Getter for the factor of y pos variable
 
         Returns:
-            self._factor_of_y_pos (float):
+            _factor_of_y_pos (float):
             determines where the object
             will be on the screen vertically
         """
         return self._factor_of_y_pos
-    
+
     @factor_of_y_pos.setter
-    def factor_of_y_pos(self, factor_of_y_pos: float) -> float:
+    def factor_of_y_pos(self, factor_of_y_pos: float) -> None:
         """Setter for the factor of y pos variable
 
         Args:
@@ -157,7 +156,7 @@ class Drawable(ABC):
             will be on the screen vertically
         """
         self._factor_of_y_pos = factor_of_y_pos
-    
+
     @property
     def y_pos(self) -> float:
         """Getter for the y (vertical) coordinate
@@ -175,7 +174,7 @@ class Drawable(ABC):
             for drawing an object
 
         Returns:
-            self._rect (pygame.Rect): The rect
+            _rect (pygame.Rect): The rect
             to be used to draw the object
         """
         return self._rect
@@ -195,7 +194,7 @@ class Drawable(ABC):
         """Getter for the surface variable
 
         Returns:
-            self._surface (pygame.Surface)
+            _surface (pygame.Surface)
             the surface that the
             image from the image_dir directory
             will be drawn on
@@ -219,7 +218,7 @@ class Drawable(ABC):
         """Getter for the image_dir variable
 
         Returns:
-            self._image_dir (str): The string of the
+            _image_dir (str): The string of the
             directory of the image to be used while
             drawing object
         """
@@ -240,7 +239,7 @@ class Drawable(ABC):
         """Getter for the size variable
 
         Returns:
-            self._size (float)
+            _size (float)
             size to be used while drawing
             object
         """
@@ -262,7 +261,7 @@ class Drawable(ABC):
         """Getter for the data variable
 
         Returns:
-            self._data (str)
+            _data (str)
             data needed for the specific object
         """
         return self._data
@@ -345,7 +344,7 @@ class Text(Drawable):
         """Getter for the color variable
 
         Returns:
-            self._color (str)
+            _color (str)
             color of the text that will be drawn
         """
         return self._color
@@ -365,7 +364,7 @@ class Text(Drawable):
         """Getter for the font variable
 
         Returns:
-            self._font (pygame.font)
+            _font (pygame.font)
             pygame font object
         """
         return self._font
@@ -421,7 +420,7 @@ class DrawableDecorator(Drawable):
         """Getter for drawable variable
 
         Returns:
-            self._drawable (Drawable):
+            _drawable (Drawable):
             Either concrete component or another
             decorator
         """
