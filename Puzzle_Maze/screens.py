@@ -81,7 +81,7 @@ class MainMenu(Screen):
     """Class that will create the main menu screen
     """
     X_FACTOR: float = 0.5
-    FACTOR_FOR_MAIN_TEXT_SIZE: float = 0.3
+    FACTOR_FOR_MAIN_TEXT_SIZE: float = 0.1
     Y_FACTOR_MENU_TEXT: float = 0.1
 
     Y_FACTOR_PLAY_BUTTON: float = 0.35
@@ -239,7 +239,7 @@ class InfoScreen(Screen):
             self.X_FACTOR, self.Y_FACTOR_LINE_3, self.SIZE_FOR_LINES)
         
         self._body_text_line4: GameText = GameText(
-            self._screen, "to advance. \nIt was developed as our final project.",
+            self._screen, "to advance. It was developed as our final project.",
             self.X_FACTOR, self.Y_FACTOR_LINE_4, self.SIZE_FOR_LINES)
         
         self._back_button: GameButton = GameButton(

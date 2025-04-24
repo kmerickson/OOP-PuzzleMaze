@@ -16,8 +16,8 @@ class Events(Enum):
         all the states UI
         elements can be in
     """
-    IDLE = 0
-    HOVER = 1
+    IDLE: int = 0
+    HOVER: int = 1
 
 
 class State(ABC):
@@ -395,7 +395,7 @@ class GameButton(InteractiveButton):
             size (float): Size of font
         """
         super().__init__(screen, factor_of_x_pos, factor_of_y_pos,
-                         self.FONT_DIRECTORY, size, text_to_place,
+                         self.FONT_DIRECTORY, 0, text_to_place,
                          self.IDLE_COLOR, self.HOVER_COLOR,
                          self.OUTLINE_COLOR, 10, self.BUTTON_IMAGE_DIR)
         
