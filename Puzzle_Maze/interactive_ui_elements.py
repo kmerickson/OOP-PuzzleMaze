@@ -354,7 +354,7 @@ class GameText(InteractiveText):
     IDLE_COLOR: str = "White"
     HOVER_COLOR: str = "Light Green"
     OUTLINE_COLOR: str = "Black"
-    OUTLINE_SIZE: int = 10
+    OUTLINE_SIZE: int = 1
     def __init__(self, screen: pygame.Surface, text_to_place: str,
                  factor_of_x_pos: float, factor_of_y_pos, size: float):
         """Constructor for GameText class
@@ -369,7 +369,7 @@ class GameText(InteractiveText):
         super().__init__(screen, factor_of_x_pos, factor_of_y_pos,
                          self.FONT_DIRECTORY, size, text_to_place,
                          self.IDLE_COLOR, self.HOVER_COLOR,
-                         self.OUTLINE_COLOR, 10)
+                         self.OUTLINE_COLOR, 1)
         
 
 class GameButton(InteractiveButton):

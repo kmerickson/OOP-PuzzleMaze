@@ -184,6 +184,8 @@ class Enemy(GameObject):
 
         if self.collides_with(player):
             print("You Died!")
+            #Added to make return to main menu with player death
+            #Will return if player presses escape or dies, as an escape key click is mocked
             mock_event = pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE)
             pygame.event.post(mock_event)
 

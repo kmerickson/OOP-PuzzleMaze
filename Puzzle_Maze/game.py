@@ -256,7 +256,6 @@ class Game:
 
     #added
     def single_iteration(self):
-        print("In function")
         self.player.update(self.maze)
             # the enemy class also requires player information as an input
         self.enemy.update(self.maze, self.player)

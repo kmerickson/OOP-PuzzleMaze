@@ -585,7 +585,6 @@ class Button(DrawableDecorator):
         )
         self._button_width = change_in_screen_width * self._button_width
         self._button_height = change_in_screen_height * self._button_height
-
         self.drawable.resize_screen()
 
         self._surface = pygame.transform.scale(
@@ -596,4 +595,3 @@ class Button(DrawableDecorator):
                 self.drawable.x_pos, self.drawable.y_pos
             )
         )
-        

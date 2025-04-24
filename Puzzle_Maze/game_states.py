@@ -1,4 +1,4 @@
-from entry_point import MainMenu, OptionsScreen
+from screens import MainMenu, OptionsScreen
 from abc import ABC, abstractmethod
 from enum import Enum
 import pygame
@@ -38,16 +38,7 @@ class OptionsState(GameState):
             outer_class._state = MainMenuState()
         if event == GameEvents.USER_CLICK:
             mouse_position = pygame.mouse.get_pos()
-            if (outer_class._options.small_button.button.rect.collidepoint(mouse_position)):
-                outer_class.screen = pygame.display.set_mode((outer_class._options.SMALL_SCREEN), pygame.RESIZABLE)
-                outer_class._state = MainMenuState()
-                outer_class.display_screen()
-            elif(outer_class._options.large_button.button.rect.collidepoint(mouse_position)):
-                outer_class.screen = pygame.display.set_mode((outer_class._options.LARGE_SCREEN), pygame.RESIZABLE)
-                outer_class._state = MainMenuState()
-                outer_class.display_screen()
-            elif(outer_class._options.full_button.button.rect.collidepoint(mouse_position)):
-                #outer_class.screen = pygame.display.set_mode((1920, 1080), pygame.FULLSCREEN)
+            if (outer_class._options.back_button.button.rect.collidepoint(mouse_position)):
                 outer_class._state = MainMenuState()
 
 class MainMenuState(GameState):
@@ -68,6 +59,7 @@ class MainMenuState(GameState):
             pygame.quit()
 
 class ChipsCoreEscape:
+    #will become singleton
     def __init__(self):
         pygame.init()
         self._screen = pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
