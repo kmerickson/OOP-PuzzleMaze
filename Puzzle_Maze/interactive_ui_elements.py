@@ -384,7 +384,7 @@ class GameButton(InteractiveButton):
     BUTTON_IMAGE_DIR: str = "assets/button.png"
 
     def __init__(self, screen: pygame.Surface, text_to_place: str,
-                 factor_of_x_pos: float, factor_of_y_pos, size):
+                 factor_of_x_pos: float, factor_of_y_pos):
         """Constructor for GameButton class
 
         Args:

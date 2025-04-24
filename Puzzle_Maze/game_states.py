@@ -1,4 +1,4 @@
-from screens import MainMenu, OptionsScreen
+from screens import MainMenu, InfoScreen
 from abc import ABC, abstractmethod
 from enum import Enum
 import pygame
@@ -31,7 +31,7 @@ class PlayState(GameState):
             outer_class._state = MainMenuState()
 
 
-class OptionsState(GameState):
+class InfoState(GameState):
     def display_screen(self, outer_class):
         outer_class._options.draw_screen()
     def handle_event(self, outer_class, event):
@@ -52,7 +52,7 @@ class MainMenuState(GameState):
             if (outer_class._menu.play_button.button.rect.collidepoint(mouse_position)):
                 outer_class._game = Game()
                 outer_class._state = PlayState() 
-            elif(outer_class._menu.options_button.button.rect.collidepoint(mouse_position)):
+            elif(outer_class._menu.info_button.button.rect.collidepoint(mouse_position)):
                 outer_class._state = OptionsState()
             elif(outer_class._menu.quit_button.button.rect.collidepoint(mouse_position)):
                 pygame.quit()
@@ -74,7 +74,7 @@ class ChipsCoreEscape:
         self._screen = pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
         self._game = Game()
         self._menu = MainMenu(self._screen)
-        self._options = OptionsScreen(self._screen)
+        self._Info = InfoScreen(self._screen)
         self._state: GameState = MainMenuState()
         
 
