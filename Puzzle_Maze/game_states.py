@@ -1,4 +1,4 @@
-from entry_point import MainMenu
+from entry_point import MainMenu, OptionsScreen
 from abc import ABC, abstractmethod
 from enum import Enum
 import pygame
@@ -32,9 +32,23 @@ class PlayState(GameState):
 
 class OptionsState(GameState):
     def display_screen(self, outer_class):
-        pass
+        outer_class._options.draw_screen()
     def handle_event(self, outer_class, event):
-        pass
+        if event == GameEvents.ESCAPE:
+            outer_class._state = MainMenuState()
+        if event == GameEvents.USER_CLICK:
+            mouse_position = pygame.mouse.get_pos()
+            if (outer_class._options.small_button.button.rect.collidepoint(mouse_position)):
+                outer_class.screen = pygame.display.set_mode((outer_class._options.SMALL_SCREEN), pygame.RESIZABLE)
+                outer_class._state = MainMenuState()
+                outer_class.display_screen()
+            elif(outer_class._options.large_button.button.rect.collidepoint(mouse_position)):
+                outer_class.screen = pygame.display.set_mode((outer_class._options.LARGE_SCREEN), pygame.RESIZABLE)
+                outer_class._state = MainMenuState()
+                outer_class.display_screen()
+            elif(outer_class._options.full_button.button.rect.collidepoint(mouse_position)):
+                #outer_class.screen = pygame.display.set_mode((1920, 1080), pygame.FULLSCREEN)
+                outer_class._state = MainMenuState()
 
 class MainMenuState(GameState):
     def display_screen(self, outer_class: "ChipsCoreEscape"):
@@ -44,13 +58,14 @@ class MainMenuState(GameState):
         if event == GameEvents.USER_CLICK:
             mouse_position = pygame.mouse.get_pos()
             if (outer_class._menu.play_button.button.rect.collidepoint(mouse_position)):
-                self._game = Game()
+                outer_class._game = Game()
                 outer_class._state = PlayState() 
             elif(outer_class._menu.options_button.button.rect.collidepoint(mouse_position)):
-                outer_class.state = OptionsState()
-                outer_class._menu._break = True
+                outer_class._state = OptionsState()
             elif(outer_class._menu.quit_button.button.rect.collidepoint(mouse_position)):
                 pygame.quit()
+        if event == GameEvents.ESCAPE:
+            pygame.quit()
 
 class ChipsCoreEscape:
     def __init__(self):
@@ -58,6 +73,7 @@ class ChipsCoreEscape:
         self._screen = pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
         self._game = Game()
         self._menu = MainMenu(self._screen)
+        self._options = OptionsScreen(self._screen)
         self._state: GameState = MainMenuState()
         
 
@@ -79,8 +95,3 @@ class ChipsCoreEscape:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     self.handle_user(GameEvents.ESCAPE)
             pygame.display.update()
-
-
-if __name__ == "__main__":
-    game = ChipsCoreEscape()
-    game.game()
