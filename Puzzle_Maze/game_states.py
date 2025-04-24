@@ -1,8 +1,9 @@
-from screens import MainMenu, OptionsScreen
+from entry_point import MainMenu, OptionsScreen
 from abc import ABC, abstractmethod
 from enum import Enum
 import pygame
 from game import Game
+from typing import Optional
 
 class GameEvents(Enum):
     """Enum containing 
@@ -59,8 +60,16 @@ class MainMenuState(GameState):
             pygame.quit()
 
 class ChipsCoreEscape:
-    #will become singleton
+    _instance: Optional['ChipsCoreEscape'] = None
+
     def __init__(self):
+        if ChipsCoreEscape._instance:
+            raise NameError(
+                "Cannot create multiple instances of \
+                a singleton class Solution")
+        super().__init__()
+        ChipsCoreEscape._instance = self
+
         pygame.init()
         self._screen = pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
         self._game = Game()
@@ -87,3 +96,31 @@ class ChipsCoreEscape:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     self.handle_user(GameEvents.ESCAPE)
             pygame.display.update()
+
+    
+    @classmethod
+    def get_instance(cls) -> Optional['ChipsCoreEscape']:
+        """Returns the instance of the class
+
+        Returns:
+            WeatherApp: class instance
+        """
+
+        return cls._instance
+
+    @classmethod
+    def reset_instance(cls) -> None:
+        """Resets the instance
+        """
+        cls._instance = None
+
+    @staticmethod
+    def main() -> None:
+        """main static method
+        """
+        game = ChipsCoreEscape()
+        game.game()
+
+        
+if __name__ == "__main__":
+    ChipsCoreEscape.main()  # pragma: no cover
