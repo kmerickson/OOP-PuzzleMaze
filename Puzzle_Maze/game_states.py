@@ -1,4 +1,4 @@
-from entry_point import MainMenu, OptionsScreen
+from screens import MainMenu, OptionsScreen
 from abc import ABC, abstractmethod
 from enum import Enum
 import pygame
@@ -6,7 +6,7 @@ from game import Game
 from typing import Optional
 
 class GameEvents(Enum):
-    """Enum containing 
+    """Enum containing
         all the states UI
         elements can be in
     """
