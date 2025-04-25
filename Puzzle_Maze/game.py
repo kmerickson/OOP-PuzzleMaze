@@ -17,7 +17,7 @@ GRID_HEIGHT = 8
 WIDTH = TILE_SIZE * GRID_WIDTH
 HEIGHT = TILE_SIZE * GRID_HEIGHT
 FPS = 60
-PLAYER_MOVE_DELAY = 200
+PLAYER_MOVE_DELAY = 200 # not needed?
 ENEMY_MOVE_DELAY = 500
 ASSET_DIR = "assets"
 
@@ -64,22 +64,22 @@ class TileSet:
     def get_tile_name(self, tile_index):
         return self.tiles[tile_index]
 
-# Actor base
-class Actor:
-    def __init__(self, name, position, image):
-        self.name = name
-        self.image = image
-        self.rect = image.get_rect(topleft=position)
-        self.y_velocity = 0
+# Actor base, pretty sure not useful anymore
+# class Actor:
+#     def __init__(self, name, position, image):
+#         self.name = name
+#         self.image = image
+#         self.rect = image.get_rect(topleft=position)
+#         self.y_velocity = 0
 
-    def draw(self, screen):
-        screen.blit(self.image, self.rect.topleft)
+#     def draw(self, screen):
+#         screen.blit(self.image, self.rect.topleft)
 
-    def move_to(self, position):
-        self.rect.topleft = position
+#     def move_to(self, position):
+#         self.rect.topleft = position
 
-    def collides_with(self, other):
-        return self.rect.colliderect(other.rect)
+#     def collides_with(self, other):
+#         return self.rect.colliderect(other.rect)
 
 # Game logic
 class Game:
@@ -93,6 +93,7 @@ class Game:
         self.level_index = 0
 
         self.door_unlock_time = None
+
         self.load_level(self.level_index)
 
     def load_levels(self):
@@ -128,6 +129,7 @@ class Game:
         self.player = Player((1 * TILE_SIZE, 1 * TILE_SIZE))
         self.enemy = Enemy((6 * TILE_SIZE, 3 * TILE_SIZE), velocity = -1) 
         ############################################################
+
         self.door_unlock_time = None
 
     def draw(self):
@@ -140,6 +142,7 @@ class Game:
                 else:
                     tile_img = self.tileset.get_image(tile_value)
                 self.screen.blit(tile_img, (col * TILE_SIZE, row * TILE_SIZE))
+
         self.player.draw(self.screen)
         self.enemy.draw(self.screen)
         pygame.display.flip()
