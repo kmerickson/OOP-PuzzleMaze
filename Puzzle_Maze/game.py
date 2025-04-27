@@ -3,7 +3,7 @@ import pygame
 import sys
 import os
 from pygame.locals import *
-from GameObjects import Player, Enemy
+from GameObjects import *
 
 # Constants
 TILE_SIZE = 64
@@ -56,22 +56,6 @@ class TileSet:
     def get_tile_name(self, tile_index):
         return self.tiles[tile_index]
 
-# Actor base
-class Actor:
-    def __init__(self, name, position, image):
-        self.name = name
-        self.image = image
-        self.rect = image.get_rect(topleft=position)
-        self.y_velocity = 0
-
-    def draw(self, screen):
-        screen.blit(self.image, self.rect.topleft)
-
-    def move_to(self, position):
-        self.rect.topleft = position
-
-    def collides_with(self, other):
-        return self.rect.colliderect(other.rect)
 
 # Game logic
 class Game:
@@ -84,6 +68,10 @@ class Game:
         self.levels = self.load_levels()
         self.level_index = 0
 
+        ###############################
+        # added to hold a list of doors
+        self.doors = []
+        ###############################
         self.door_unlock_time = None
         self.load_level(self.level_index)
 
@@ -138,6 +126,8 @@ class Game:
 
     def load_level(self, index):
         self.maze = self.levels[index]
+        ###############################
+        self.doors = []  # reset list of doors for the level
         self.player = Player((1 * TILE_SIZE, 1 * TILE_SIZE))
 
         if index == 2:
@@ -151,6 +141,15 @@ class Game:
                 Enemy((1 * TILE_SIZE, 6 * TILE_SIZE), velocity=1)
             ]
 
+        ###############################
+        # initialize the position of all the doors on the level:
+        for row in range(len(self.maze)):
+            for col in range(len(self.maze[0])):
+                if self.maze[row][col] == 3:
+                    door_pos = (col * TILE_SIZE, row * TILE_SIZE)
+                    door = Door(door_pos, LockedDoorState())
+                    self.doors.append(door)
+
         self.door_unlock_time = None
 
     def draw(self):
@@ -158,8 +157,24 @@ class Game:
         for row in range(len(self.maze)):
             for col in range(len(self.maze[row])):
                 tile_value = self.maze[row][col]
-                tile_img = self.tileset.images['door_unlocked'] if tile_value == 5 else self.tileset.get_image(tile_value)
+                ###################################
+                # need to add in the empty tile image behind doors:
+                if tile_value in {TILE_WALL, TILE_GOAL, TILE_KEY}:
+                    tile_img = self.tileset.get_image(tile_value)
+                else:
+                    # filles in the empty and tilespots behind doors:
+                    tile_img = self.tileset.get_image(TILE_EMPTY)
+                # tile_img = self.tileset.images['door_unlocked'] if tile_value == 5 else self.tileset.get_image(tile_value)
                 self.screen.blit(tile_img, (col * TILE_SIZE, row * TILE_SIZE))
+
+        #####################################
+        # draw all the doors after tiles and walls drawn
+        for door in self.doors:
+            door.draw(self.screen)
+        ####################################
+
+        # maybe in future add an array of all objects to be drawn on top of empty tiles
+
         self.player.draw(self.screen)
         for enemy in self.enemies:
             enemy.draw(self.screen)
@@ -176,6 +191,11 @@ class Game:
         row = self.player.rect.top // TILE_SIZE
         col = self.player.rect.left // TILE_SIZE
         tile_name = self.tileset.get_tile_name(self.maze[row][col])
+
+        ######################################3
+        for door in self.doors:
+            if self.player.collides_with(door):
+                door.interact(self.player, self.maze)
 
         if tile_name == 'goal':
             print("Level complete!")
