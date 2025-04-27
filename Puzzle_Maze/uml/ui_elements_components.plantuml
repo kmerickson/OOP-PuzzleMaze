@@ -1,0 +1,52 @@
+@startuml
+scale 2
+title "UI Elements Diagram"
+class Drawable <<abstract>>{
+    .. Instance Variables ..
+    - _screen: pygame.Surface
+    + screen: pygame.Surface
+    - _screen_width: float
+    + _screen_width: float
+    - _screen_height: float
+    + screen_height: float
+    - _factor_of_x_pos: float
+    + factor_of_x_pos: float
+    - _factor_of_y_pos: float
+    + factor_of_y_pos: float
+    + x_pos: float
+    + y_pos: float
+    - _rect: pygame.Rect | None
+    + rect: pygame.Rect | None
+    - _surface: pygame.Surface | None
+    + surface: pygame.Surface | None
+    - _image_dir: str
+    + image_dir: str
+    - _size: float 
+    + size: float
+    - _data: str
+    + _data: str
+    .. Instance Methods ..
+    + __init__( screen: pygame.Surface, factor_of_x_pos: float,
+                 factor_of_y_pos: float, image_dir: str,
+                 size: float, data: Any): None
+    + _draw_(): void
+    + _dynamically_draw_(): None
+    - __adjust_to_changes_(): None
+}
+
+class Text implements Drawable{
+    .. Instance Variables ..
+    - _color: str
+    + color: str
+    - _font: pygame.font.Font
+    + font: pygame.font.Font
+    .. Instance Methods ..
+    + __init__(self, screen: pygame.Surface, factor_of_x_pos: float,
+                 factor_of_y_pos: float, image_dir: str, size: float,
+                 text: str, color: str): None
+    + draw(): void
+    + dynamically_draw(): None
+    - adjust_to_changes(): None
+}
+
+@enduml

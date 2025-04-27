@@ -200,6 +200,15 @@ class Game:
             self.draw()
             self.clock.tick(FPS)
 
+    #ADDED
+    def single_iteration(self):
+        self.player.update(self.maze)
+        for enemy in self.enemies:
+            enemy.update(self.maze, self.player)
+        self.update()
+        self.draw()
+        self.clock.tick(FPS)
+
 def game_loop():
     Game().run()
 

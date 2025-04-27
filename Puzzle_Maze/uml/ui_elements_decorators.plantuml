@@ -1,0 +1,49 @@
+@startuml
+scale 2
+title "UI Element Decorators Diagram"
+
+
+class DrawableDecorator implements Drawable{
+    .. Instance Variables ..
+    - _drawable: Drawable
+    + drawable: Drawable
+    + original_size: float
+    .. Instance Methods ..
+    + __init__(drawable: Drawable): None
+    + draw(): void
+    + dynamically_draw(): None
+    - adjust_to_changes(): None
+}
+
+class Outline extends DrawableDecorator{
+    .. Instance Variables ..
+    - _outline_color: str
+    - _outline_size: float
+    - _font: pygame.font.Font
+    - _surface: pygame.Surface
+    - _rect: pygame.Rect
+    .. Instance Methods ..
+    +__init__(self, drawable: Text, outline_color: str,
+                 outline_size: float)
+    + draw(): void
+    + dynamically_draw(): None
+    - adjust_to_changes(): None
+
+}
+
+class Button extends DrawableDecorator{
+    .. Instance Variables ..
+    - _button_image_dir: str
+    - _button_width: float
+    - _button_height: float
+    - _surface: pygame.Surface
+    - _rect: pygame.Rect
+    .. Instance Methods ..
+    + __init__(self, drawable: Drawable, image_dir: str)
+    + draw(): void
+    + dynamically_draw(): None
+    - adjust_to_changes(): None
+
+}
+
+@enduml

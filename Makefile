@@ -2,7 +2,7 @@ TEST = pytest
 TEST_ARGS = -s --verbose --color=yes
 TYPE_CHECK = mypy --strict --allow-untyped-decorators --ignore-missing-imports
 STYLE_CHECK = flake8
-COVERAGE = python -m pytest
+COVERAGE = python3 -m pytest
 DEMO-ASSIGNMENT = ./demo-assignments
 
 .PHONY: all
