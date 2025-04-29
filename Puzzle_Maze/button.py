@@ -1,7 +1,9 @@
 """Module containing the button class
 """
-import pygame, sys
+import pygame
+import sys
 from text import Text
+
 
 class Button():
     """Class representing a button within the context of
@@ -9,20 +11,19 @@ class Button():
     """
     NON_HOVER_TRANSPARENCY_VALUE: int = 128
     FACTOR_OF_X_POS: float = 0.5
-    
+
     def draw_button(self):
         self._screen.blit(self._button, self._button_rect)
 
-        
     def _set_up_button_shape_change(self):
         self._button = pygame.transform.scale(
-                self._button,
-                (self._button_width, self._button_height))
+            self._button,
+            (self._button_width, self._button_height))
         self._button_rect = self._button.get_rect(
             center=(
-                    self._screen_width * self.FACTOR_OF_X_POS,
-                    self._screen_height * self._factor_of_y_pos
-                    )
+                self._screen_width * self.FACTOR_OF_X_POS,
+                self._screen_height * self._factor_of_y_pos
+            )
         )
 
     def __init__(self, image_dir: str, factor_of_y_pos: float,
@@ -61,17 +62,41 @@ class Button():
         self._y_pos: int = self._factor_of_y_pos * self._screen_height
         self._button_rect: pygame.Rect = self._button.get_rect(
             center=(
-                    self._x_pos, self._y_pos))
-    
+                self._x_pos, self._y_pos))
+
         self._button_width: float = self._button.get_size()[0]
         self._button_height: float = self._button.get_size()[1]
 
         self._text_to_place: str = text_to_place
         self._font_dir = font_dir
-        self._text = Text("assets/Cyberpunks.ttf", self._screen, self._screen_width, self._screen_height, self.FACTOR_OF_X_POS,
-                          self._factor_of_y_pos, color, self._button_height, self._text_to_place, False, 15, "Light Green", True)
-        self._text_hover = Text("assets/Cyberpunks.ttf", self._screen, self._screen_width, self._screen_height, self.FACTOR_OF_X_POS,
-                          self._factor_of_y_pos, "Light Green", self._button_height, self._text_to_place, True, 15, "Light Green", True)
+        self._text = Text(
+            "assets/Cyberpunks.ttf",
+            self._screen,
+            self._screen_width,
+            self._screen_height,
+            self.FACTOR_OF_X_POS,
+            self._factor_of_y_pos,
+            color,
+            self._button_height,
+            self._text_to_place,
+            False,
+            15,
+            "Light Green",
+            True)
+        self._text_hover = Text(
+            "assets/Cyberpunks.ttf",
+            self._screen,
+            self._screen_width,
+            self._screen_height,
+            self.FACTOR_OF_X_POS,
+            self._factor_of_y_pos,
+            "Light Green",
+            self._button_height,
+            self._text_to_place,
+            True,
+            15,
+            "Light Green",
+            True)
         self._text.draw_button()
 
         self._screen.blit(self._button, self._button_rect)
@@ -88,19 +113,19 @@ class Button():
         self._screen_height = screen_height
 
         self._set_up_button_shape_change()
-        self._text.update_on_screen_resize(self._button_height, self._screen_width, self._screen_height)
-
+        self._text.update_on_screen_resize(
+            self._button_height,
+            self._screen_width,
+            self._screen_height)
 
     def user_clicked_button(self, mouse_position):
         if self._button_rect.collidepoint(mouse_position):
             return True
         return False
-    
+
     def react_to_user_position(self, mouse_position):
         self.draw_button()
         if self._button_rect.collidepoint(mouse_position):
             self._text.draw_hover_state()
         if not self._button_rect.collidepoint(mouse_position):
             self._text.draw_button()
-            
-        

@@ -1,7 +1,7 @@
 import pygame
 
 
-class Text():  
+class Text():
     def __init__(self, font_dir: str, screen: pygame.Surface, screen_width: float,
                  screen_height: float, factor_of_x_pos: float, factor_of_y_pos: float,
                  color: str, size: float, text: str, outline: bool = False,
@@ -20,7 +20,7 @@ class Text():
             self._hover_color = None
         self._hover_outline: bool = hover_outline
         self._text = text
-        
+
         self._factor_of_x_pos: float = factor_of_x_pos
         self._x_pos: float = self._factor_of_x_pos * self._screen_width
         self._factor_of_y_pos: float = factor_of_y_pos
@@ -29,7 +29,7 @@ class Text():
         self._font_obj: pygame.font.Font | None = None
         self._text_obj: pygame.Surface | None = None
         self._text_rect: pygame.Rect | None = None
-        
+
         self._outline: bool = outline
         self._outline_size: float = outline_size
 
@@ -50,7 +50,7 @@ class Text():
             float: _description_
         """
         return self._size
-    
+
     @size.setter
     def size(self, size: float) -> None:
         """_summary_
@@ -59,6 +59,7 @@ class Text():
             size (float): _description_
         """
         self._size = size
+
     def update_on_screen_resize(self, new_size: float, new_screen_width: float, new_screen_height):
         self._size = new_size
         self._screen_width = new_screen_width
@@ -70,7 +71,7 @@ class Text():
             self._font_obj_outline = pygame.font.Font(
                 self._font_dir,
                 int(self._size + self._outline_size)
-            ) 
+            )
 
             self._text_obj_outline = self._font_obj_outline.render(
                 self._text, True, "Black"
@@ -83,7 +84,7 @@ class Text():
                 )
             )
             self._screen.blit(self._text_obj_outline, self._text_rect_outline)
-        
+
         color_to_use: str
         if hover:
             color_to_use = self._hover_color
@@ -96,12 +97,12 @@ class Text():
 
         self._text_obj = self._font_obj.render(
             self._text, True, color_to_use
-           )
+        )
 
         self._text_rect = self._text_obj.get_rect(
             center=(
-                    self._screen_width * self._factor_of_x_pos,
-                    self._screen_height * self._factor_of_y_pos
+                self._screen_width * self._factor_of_x_pos,
+                self._screen_height * self._factor_of_y_pos
             )
-           )
+        )
         self._screen.blit(self._text_obj, self._text_rect)
