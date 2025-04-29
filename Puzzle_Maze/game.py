@@ -71,6 +71,8 @@ class Game:
         ###############################
         # added to hold a list of doors
         self.doors = []
+        # if an object class is created for keys and goals as well, could
+        # create an object array in the same way and simplify updates
         ###############################
         self.door_unlock_time = None
         self.load_level(self.level_index)
@@ -192,7 +194,7 @@ class Game:
         col = self.player.rect.left // TILE_SIZE
         tile_name = self.tileset.get_tile_name(self.maze[row][col])
 
-        ######################################3
+        ######################################
         for door in self.doors:
             if self.player.collides_with(door):
                 door.interact(self.player, self.maze)
@@ -220,8 +222,10 @@ class Game:
             self.draw()
             self.clock.tick(FPS)
 
+
 def game_loop():
     Game().run()
+
 
 if __name__ == "__main__":
     game_loop()

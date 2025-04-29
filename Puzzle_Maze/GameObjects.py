@@ -21,10 +21,11 @@ TILE_DOOR = 3
 TILE_KEY = 4
 TILE_UNLOCKED = 5
 
+
 class GameObject:
 	"""Game object class from which objects such as player and enemy are derived"""
 	def __init__(self, name: str, pos: tuple[int, int], image: pygame.Surface) -> None:
-		""" Initialization Function, replaced the Actor clas in game.py"""
+		""" Initialization Function"""
 		self.name = name
 		self.image = image
 		# set the top left corner as the point of reference:
@@ -167,7 +168,7 @@ class Enemy(GameObject):
 			return
 		
 		new_row = self.rect.top // TILE_SIZE + self.velocity
-		col = self.rect.left // TILE_SIZE # doesn't actually move from column
+		col = self.rect.left // TILE_SIZE  # doesn't actually move from column
 
 		if 0 <= new_row < len(maze):
 			tile_index = maze[new_row][col]
@@ -187,7 +188,9 @@ class Enemy(GameObject):
 			sys.exit()
 			######################
 
-T = TypeVar('T', bound = GameObject)
+
+T = TypeVar('T', bound=GameObject)
+
 
 class ObjectState(ABC, Generic[T]):
 	"""Base abstract state class. Declares methods that all concrete states
@@ -200,7 +203,7 @@ class ObjectState(ABC, Generic[T]):
 	
 	@context.setter
 	def context(self, context: T) -> None:
-		"""Setter function for the context"""
+		"""Setter function for the context, which is the object class"""
 		self._context = context
 	
 	@abstractmethod
@@ -215,7 +218,9 @@ class ObjectState(ABC, Generic[T]):
 
 
 class Door(GameObject):
-	"""Door GameObject class"""
+	"""Door GameObject class. Functions based off different states managed
+	by the ObjectState class. The two states are the LockedDoorState and 
+	UnlockedDoorState classes."""
 	def __init__(self, position: tuple[int, int], state: ObjectState['Door']) -> None:
 		
 		default_image = pygame.image.load("assets/door.png").convert_alpha()
@@ -239,7 +244,7 @@ class Door(GameObject):
 		self._state.handle(player, maze)
 
 	def update(self) -> None:
-		"""Delegates updating to the state class. Does nothing here."""
+		"""Delegates updating to the state class."""
 		self._state.update()
 
 	def draw(self, screen) -> None:
@@ -251,8 +256,9 @@ class LockedDoorState(ObjectState['Door']):
 	"""class for simple functionality of a locked door (can't pass)"""
 	def handle(self, player: Player, maze: list[list[int]]) -> None:
 		if player.key_count > 0:
-			print("key used")
 			player.key_count -= 1
+			print("key used, new key count: ", player.key_count)
+
 
 			# change image to unlocked:
 			new_img = pygame.image.load("assets/door_unlocked.png").convert_alpha()
@@ -303,8 +309,6 @@ class UnlockedDoorState(ObjectState['Door']):
 # 		super().__init__("Key", position, default_image)
 
 
-
-
 # class Goal(GameObject):
 #     """Goal GameObject class"""
 #     def __init__(self, position: tuple[int, int], image: pygame.Surface | None = None) -> None:
@@ -315,3 +319,14 @@ class UnlockedDoorState(ObjectState['Door']):
 #             default_image = image
 
 #         super().__init__("Goal", position, default_image)
+
+
+"""" Game object ideas:
+switches
+	also switches that change a 1 or 0 in a register for a puzzle
+teleporters
+one way wires you ride on
+pushable blocks
+sliding tiles
+different enemies
+ """
