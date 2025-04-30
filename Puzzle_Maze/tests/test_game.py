@@ -242,12 +242,7 @@ class TestGame(unittest.TestCase):
         self._game.update()
         self.assertEqual(0, self._game.maze[0][0])
 
-    @patch('pygame.image.load')
-    @patch("pygame.transform.scale")
-    def test_single_iteration(self, mock_image, mock_transform):
-        mock_surface = MagicMock(spec=pygame.Surface)
-        mock_image.return_value = mock_surface
-        mock_transform.return_value = mock_surface
+    def test_single_iteration(self):
         self._game = Game()
         mock_game_update = MagicMock()
         mock_enemy_update = MagicMock()
