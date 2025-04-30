@@ -193,7 +193,7 @@ class Game:
         row = self.player.rect.top // TILE_SIZE
         col = self.player.rect.left // TILE_SIZE
         tile_name = self.tileset.get_tile_name(self.maze[row][col])
-
+        print(tile_name)
         ######################################
         for door in self.doors:
             if self.player.collides_with(door):
@@ -215,13 +215,8 @@ class Game:
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
-            self.player.update(self.maze)
-            for enemy in self.enemies:
-                enemy.update(self.maze, self.player)
-            self.update()
-            self.draw()
-            self.clock.tick(FPS)
-    #ADDED
+            self.single_iteration()
+            
     def single_iteration(self):
         self.player.update(self.maze)
         for enemy in self.enemies:
@@ -234,7 +229,3 @@ class Game:
 def game_loop():
     Game().run()
 
-
-
-if __name__ == "__main__":
-    game_loop()
