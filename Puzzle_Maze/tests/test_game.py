@@ -258,10 +258,48 @@ class TestGame(unittest.TestCase):
         self._game.player.update = mock_player_update
         self._game.enemies[0].update = mock_enemy_update
         self._game.draw = mock_draw
-
+        self._game.maze = self.LEVEL_1
         self._game.single_iteration()
 
         mock_game_update.assert_called()
         mock_enemy_update.assert_called()
         mock_player_update.assert_called()
         mock_draw.assert_called()
+
+    def test_get_tile_name0(self) -> None:
+        tile = 0
+        tile_name = "empty"
+        tile_class = TileSet()
+        self.assertEqual(tile_class.get_tile_name(tile), tile_name)
+    
+    def test_get_tile_name1(self) -> None:
+        tile = 1
+        tile_name = "wall"
+        tile_class = TileSet()
+        self.assertEqual(tile_class.get_tile_name(tile), tile_name)
+    
+    def test_get_tile_name2(self) -> None:
+        tile = 2
+        tile_name = "goal"
+        tile_class = TileSet()
+        self.assertEqual(tile_class.get_tile_name(tile), tile_name)
+
+    def test_get_tile_name3(self) -> None:
+        tile = 3
+        tile_name = "door"
+        tile_class = TileSet()
+        self.assertEqual(tile_class.get_tile_name(tile), tile_name)
+    
+    def test_get_tile_name4(self) -> None:
+        tile = 4
+        tile_name = "key"
+        tile_class = TileSet()
+        self.assertEqual(tile_class.get_tile_name(tile), tile_name)
+
+    def test_get_tile_name5(self) -> None:
+        tile = 5
+        tile_name = "door_unlocked"
+        tile_class = TileSet()
+        self.assertEqual(tile_class.get_tile_name(tile), tile_name)
+
+        
