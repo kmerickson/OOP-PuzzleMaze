@@ -4,8 +4,11 @@ RUN apt update \
   && apt install -y \
   g++ gcc make sqlite3 time curl git nano dos2unix \
   net-tools iputils-ping iproute2 sudo gdb less \
-  #sudo apt-get install python3-pip python3-pygame
-  && apt clean;
+  # dependencies for pygame:
+  libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev \
+  libsmpeg-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev libfreetype6-dev \
+  && apt clean
+
 
 # Install Java and Graphviz for plantuml
 RUN apt install default-jre graphviz -y

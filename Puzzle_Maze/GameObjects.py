@@ -3,11 +3,7 @@ and other"""
 
 from __future__ import annotations
 from __future__ import annotations
-import sys
-# import os
 from typing import Type, Tuple
-from abc import ABC, abstractmethod
-from typing import TypeVar, Generic
 from abc import ABC, abstractmethod
 from typing import TypeVar, Generic
 import pygame
@@ -83,13 +79,13 @@ class Player(GameObject):
 		# pull all functionality from the GameObject init function
 		super().__init__("Player", position, default_image)
 
-        self.key_count = 0
-        self.last_move_time = 0
+		self.key_count = 0
+		self.last_move_time = 0
         # self.level_index = 0  # no longer needed
     
-    def draw(self, screen):
-        # print(f"[DEBUG] Drawing player at {self.rect.topleft}")
-        super().draw(screen)
+	def draw(self, screen) -> None:
+		# print(f"[DEBUG] Drawing player at {self.rect.topleft}")
+		super().draw(screen)
 
 	# handle movement
 	def update(self, maze: list[list[int]]) -> None:
@@ -217,11 +213,11 @@ class Enemy(GameObject):
 		self.last_move_time = current_time
 
 		if self.collides_with(player):
-            print("You Died!")
-            #ADDED to make return to main menu with player death
-            #Will return if player presses escape or dies, as an escape key click is mocked
-            mock_event = pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE)
-            pygame.event.post(mock_event)
+			print("You Died!")
+			#ADDED to make return to main menu with player death
+			#Will return if player presses escape or dies, as an escape key click is mocked
+			mock_event = pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE)
+			pygame.event.post(mock_event)
 
 T = TypeVar('T', bound=GameObject)
 
@@ -363,4 +359,4 @@ one way wires you ride on
 pushable blocks
 sliding tiles
 different enemies
- """
+"""
