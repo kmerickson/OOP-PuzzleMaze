@@ -29,7 +29,7 @@ class Drawable <<abstract>>{
     + __init__( screen: pygame.Surface, factor_of_x_pos: float,
                  factor_of_y_pos: float, image_dir: str,
                  size: float, data: Any): None
-    + _draw_(): void
+    + _draw_(): None
     + _dynamically_draw_(): None
     - __adjust_to_changes_(): None
 }

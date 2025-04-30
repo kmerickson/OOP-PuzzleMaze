@@ -109,7 +109,7 @@ class MainMenu(Screen):
             screen, "Info", self.X_FACTOR, self.Y_FACTOR_OPTIONS_BUTTON)
         self._quit_button: GameButton = GameButton(
             screen, "Quit", self.X_FACTOR, self.Y_FACTOR_QUIT_BUTTON)
-        self._menu_text = GameText(
+        self._menu_text: GameText = GameText(
             self._screen, "Chip's Core Escape", self.X_FACTOR, self.Y_FACTOR_MENU_TEXT,
             (self.screen_width * self.FACTOR_FOR_MAIN_TEXT_SIZE))
 
