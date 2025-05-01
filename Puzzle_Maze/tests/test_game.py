@@ -1,12 +1,14 @@
-"""Testing with unittest for the Movie Title class
+"""Testing with unittest for game module
 """
 
 __author__ = "Jessica Story"
-__date__ = "4/1/25"
+__date__ = "5/2/25"
 __license__ = "MIT"
 
 import unittest
 import sys
+from io import StringIO
+import os
 from hypothesis import given
 from hypothesis.strategies import integers
 from unittest.mock import patch, MagicMock
@@ -15,15 +17,11 @@ import pytest
 from game import TileSet, Game
 from GameObjects import Enemy
 import pygame
-from io import StringIO
-from hypothesis import given
-from hypothesis.strategies import integers
-import os
 from hypothesis.strategies import sampled_from
 
 
 class TestGame(unittest.TestCase):
-    """Unittesting Movie Title class
+    """Unittesting Game and Tileset class
     """
     TILE_SIZE: int = 64
     LEVEL_1: List[List[int]] = [
@@ -79,11 +77,21 @@ class TestGame(unittest.TestCase):
 
     @given(integers(min_value=0, max_value=2))
     def test_load_levels(self, index: int) -> None:
+        """Tests load levels funtion of Game class
+
+        Args:
+            index (int): Goes through all level indexes
+        """
         returnValue: List[List[int]] = self._game.load_levels()
         self.assertEqual(returnValue[index], self.LEVELS[index])
 
     @given(integers(min_value=0, max_value=2))
     def test_load_level(self, index: int) -> None:
+        """Tests load level funtion of Game class
+
+        Args:
+            index (int): Goes through all level indexes
+        """
         self._game.load_level(index)
         self.assertEqual(self._game.maze, self.LEVELS[index])
 
@@ -92,6 +100,15 @@ class TestGame(unittest.TestCase):
     def test_load_level_index_1_enemies(
         self, mock_image: unittest.mock.Mock,
             mock_transform: unittest.mock.Mock) -> None:
+        """Tests that the first level generates enemies
+           correctly. Test load level of Game class
+
+        Args:
+            mock_image (unittest.mock.Mock): As Enemy constructor
+            loads an image, it needs to be mockied
+            mock_transform (unittest.mock.Mock): As Enemy constructor
+            transform an image, it needs to be mockied
+        """
 
         mock_surface = MagicMock(spec=pygame.Surface)
         mock_image.return_value = mock_surface
@@ -110,7 +127,15 @@ class TestGame(unittest.TestCase):
     def test_load_level_index_2_enemies(
         self, mock_image: unittest.mock.Mock,
             mock_transform: unittest.mock.Mock) -> None:
+        """Tests that the second level generates enemies
+           correctly. Test load level of Game class
 
+        Args:
+            mock_image (unittest.mock.Mock): As Enemy constructor
+            loads an image, it needs to be mockied
+            mock_transform (unittest.mock.Mock): As Enemy constructor
+            transform an image, it needs to be mockied
+        """
         mock_surface = pygame.Surface((10, 10))
         mock_image.return_value = mock_surface
         mock_transform.return_value = mock_surface
@@ -124,6 +149,9 @@ class TestGame(unittest.TestCase):
             self.assertEqual(enemy.image, expected_enemy.image)
 
     def test_load_level_player(self) -> None:
+        """Tests that the player is set correctly
+           correctly. Test load level of Game class
+        """
         self._game.load_level(0)
         expected_player_key_count: int = 0
         expected_player_last_move_time: int = 0
@@ -132,6 +160,9 @@ class TestGame(unittest.TestCase):
         self.assertEqual(self._game.player.last_move_time, expected_player_last_move_time)
 
     def test_door_logic(self) -> None:
+        """Tests that the doors are set correctly
+           correctly. Test load level of Game class
+        """
         test_maze: List[List[int]] = [[
             [1, 0, 1, 0],
             [3, 3, 3, 1],
@@ -144,6 +175,8 @@ class TestGame(unittest.TestCase):
         self.assertEqual(self._game.door_unlock_time, None)
 
     def test_draw(self) -> None:
+        """Tests draw function of Game class
+        """
         mock_screen = MagicMock(spec=pygame.Surface)
         self._game.screen = mock_screen
         self._game.load_levels()
@@ -158,6 +191,12 @@ class TestGame(unittest.TestCase):
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_update_level_complete(self, mock_stdout: StringIO) -> None:
+        """Test update function of Game class. Verifies
+            winning condition when there's a level
+            to advance to
+        Args:
+            mock_stdout (StringIO): Output displayed on console
+        """
         test_tile = [[2, 2], [2, 2]]
         self._game.maze = test_tile
         self._game.level_index = 0
@@ -170,6 +209,12 @@ class TestGame(unittest.TestCase):
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_update_level_end_game(self, mock_stdout: StringIO) -> None:
+        """Test update function of Game class. Verifies
+            winning condition when thereis not a level
+            to advance to
+        Args:
+            mock_stdout (StringIO): Output displayed on console
+        """
         test_tile: List[List[int]] = [[2, 2], [2, 2]]
         self._game.maze = test_tile
         self._game.level_index = 4
@@ -185,6 +230,14 @@ class TestGame(unittest.TestCase):
     def test_update_game_unlocked_key(
         self, mock_image: unittest.mock.Mock,
             mock_transform: unittest.mock.Mock) -> None:
+        """Test update function of Game class. Tests
+           when player unlocks a door
+        Args:
+            mock_image (unittest.mock.Mock): To load
+            images associated with doors and keys
+            mock_transform (unittest.mock.Mock): To
+            transform images associated with doors and keys
+        """
         mock_surface = MagicMock(spec=pygame.Surface)
         mock_image.return_value = mock_surface
         mock_transform.return_value = mock_surface
@@ -199,6 +252,8 @@ class TestGame(unittest.TestCase):
         self.assertEqual(0, self._game.maze[0][0])
 
     def test_single_iteration(self) -> None:
+        """Test single iteration function of Game class
+        """
         mock_game_update = MagicMock()
         mock_enemy_update = MagicMock()
         mock_player_update = MagicMock()
@@ -214,25 +269,13 @@ class TestGame(unittest.TestCase):
             mock_player_update.assert_called()
             mock_draw.assert_called()
 
-    @given(sampled_from(
-        [(0, "empty"), (1, "wall"), (2, "goal"),
-         (3, "door"), (4, "key"), (5, "door_unlocked")]))
-    def test_get_tile_name(self, tile_data: Tuple[int, str]) -> None:
-        tile_index: int = tile_data[0]
-        tile_name: str = tile_data[1]
-        self.assertEqual(self._tile_class.get_tile_name(tile_index), tile_name)
-
-    @given(integers(min_value=6))
-    def test_get_tile_name_invalid(self, tile: int) -> None:
-        with self.assertRaises(IndexError):
-            self._tile_class.get_tile_name(tile)
-
     @patch('pygame.event.get')
     @patch('sys.exit', side_effect=SystemExit)
     def test_run_quit(
         self, mock_exit: unittest.mock.Mock,
             mock_event_get: unittest.mock.Mock) -> None:
-
+        """Test quitting in run function of Game class
+        """
         mock_event_get.return_value = [pygame.event.Event(pygame.QUIT)]
 
         with self.assertRaises(SystemExit):
@@ -244,6 +287,8 @@ class TestGame(unittest.TestCase):
     def test_run_functions(
         self, mock_exit: unittest.mock.Mock,
             mock_event_queue: unittest.mock.Mock) -> None:
+        """Test calling of other functions in run function of Game class
+        """
         with patch.object(self._game, 'single_iteration', autospec=True) as mock_single_iteration:
 
             mock_event_queue.side_effect = [
@@ -258,6 +303,8 @@ class TestGame(unittest.TestCase):
 
     @patch.object(Game, 'run')
     def test_game_loop(self, mock_run: MagicMock) -> None:
+        """Test game_loop function of Game class
+        """
         Game.game_loop()
         mock_run.assert_called_once()
 
@@ -266,6 +313,8 @@ class TestGame(unittest.TestCase):
     def test_fallback_when_file_missing(
         self, mock_surface_class: unittest.mock.Mock,
             mock_exists: unittest.mock.Mock) -> None:
+        """Test load images and load or color function of Tileset class
+        """
         self._tile_class = TileSet()
         mock_surface = MagicMock()
         mock_surface_class.return_value = mock_surface
@@ -274,3 +323,21 @@ class TestGame(unittest.TestCase):
         mock_exists.assert_called()
         mock_surface_class.assert_called()
         mock_surface.fill.assert_called()
+
+    @given(sampled_from(
+        [(0, "empty"), (1, "wall"), (2, "goal"),
+         (3, "door"), (4, "key"), (5, "door_unlocked")]))
+    def test_get_tile_name(self, tile_data: Tuple[int, str]) -> None:
+        """Test get tile name of Tileset class with valid inputs
+        """
+        tile_index: int = tile_data[0]
+        tile_name: str = tile_data[1]
+        self.assertEqual(self._tile_class.get_tile_name(tile_index), tile_name)
+
+    @given(integers(min_value=6))
+    def test_get_tile_name_invalid(self, tile: int) -> None:
+        """Test get tile name of Tileset class with invalid inputs
+        """
+        with self.assertRaises(IndexError):
+            self._tile_class.get_tile_name(tile)
+

@@ -1,6 +1,11 @@
 """Modules containing various screens that will
   for different states within the game
 """
+
+__author__ = "Jessica Story"
+__date__ = "5/2/25"
+__license__ = "MIT"
+
 from abc import ABC, abstractmethod
 from typing_extensions import override
 import pygame

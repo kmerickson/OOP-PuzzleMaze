@@ -3,6 +3,11 @@
     and texts. Uses the state design
     pattern
 """
+
+__author__ = "Jessica Story"
+__date__ = "5/2/25"
+__license__ = "MIT"
+
 from abc import ABC, abstractmethod
 from typing import Any
 from enum import Enum

@@ -2,6 +2,11 @@
    directly associated with program run.
    Done via state pattern
 """
+
+__author__ = "Jessica Story"
+__date__ = "5/2/25"
+__license__ = "MIT"
+
 from abc import ABC, abstractmethod
 from enum import Enum
 from typing import Optional

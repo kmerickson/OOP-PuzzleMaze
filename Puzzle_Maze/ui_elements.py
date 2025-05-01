@@ -2,6 +2,11 @@
    and buttons for the UI. Uses the decorator
    design pattern
 """
+
+__author__ = "Jessica Story"
+__date__ = "5/2/25"
+__license__ = "MIT"
+
 from abc import ABC, abstractmethod
 from typing_extensions import override
 import pygame
