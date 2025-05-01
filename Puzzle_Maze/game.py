@@ -3,6 +3,7 @@ import sys
 import os
 from pygame.locals import *
 from GameObjects import *
+from typing import List, Dict
 
 # Constants
 TILE_SIZE = 64
@@ -20,23 +21,23 @@ ASSET_DIR = "assets"
 
 class TileSet:
     def __init__(self):
-        self.tiles = ['empty', 'wall', 'goal', 'door', 'key', 'door_unlocked']
-        self.images = self._load_images()
+        self.tiles: List[str] = ['empty', 'wall', 'goal', 'door', 'key', 'door_unlocked']
+        self.images: Dict[str, pygame.Surface] = self._load_images()
 
-    def _load_images(self):
-        images = {}
+    def _load_images(self) -> Dict[str, pygame.Surface]:
+        images: Dict[str, pygame.Surface] = {}
 
-        def load_or_color(name, fallback_color):
-            path = os.path.join(ASSET_DIR, f"{name}.png")
+        def load_or_color(name: str, fallback_color: str) -> pygame.Surface:
+            path: str = os.path.join(ASSET_DIR, f"{name}.png")
             if os.path.exists(path):
-                img = pygame.image.load(path).convert_alpha()
-                img = pygame.transform.scale(img, (TILE_SIZE, TILE_SIZE))
+                img: pygame.Surface = pygame.image.load(path).convert_alpha()
+                img: pygame.Surface = pygame.transform.scale(img, (TILE_SIZE, TILE_SIZE))
                 if name in {"key", "goal", "door", "door_unlocked"}:
                     base = images["empty"].copy()
                     base.blit(img, (0, 0))
                     return base
                 return img
-            surf = pygame.Surface((TILE_SIZE, TILE_SIZE))
+            surf: pygame.Surface = pygame.Surface((TILE_SIZE, TILE_SIZE))
             surf.fill(fallback_color)
             return surf
 
@@ -51,10 +52,10 @@ class TileSet:
 
         return images
 
-    def get_image(self, tile_index):
+    def get_image(self, tile_index) -> pygame.Surface:
         return self.images[self.tiles[tile_index]]
 
-    def get_tile_name(self, tile_index):
+    def get_tile_name(self, tile_index) -> str:
         return self.tiles[tile_index]
 
 
@@ -62,8 +63,8 @@ class TileSet:
 
 
 class Game:
-    def __init__(self):
-        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    def __init__(self) -> None:
+        self.screen: pygame.Surface = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("Tile Puzzle")
         self.clock = pygame.time.Clock()
 
@@ -80,7 +81,7 @@ class Game:
         self.door_unlock_time = None
         self.load_level(self.level_index)
 
-    def load_levels(self):
+    def load_levels(self) -> List[List[int]]:
         return [
             [
                 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -126,7 +127,7 @@ class Game:
             ]
         ]
 
-    def load_level(self, index):
+    def load_level(self, index) -> None:
         self.maze = self.levels[index]
         ###############################
         self.doors = []  # reset list of doors for the level
@@ -154,7 +155,7 @@ class Game:
 
         self.door_unlock_time = None
 
-    def draw(self):
+    def draw(self) -> None:
         self.screen.fill((0, 0, 0))
         for row in range(len(self.maze)):
             for col in range(len(self.maze[row])):
@@ -182,7 +183,7 @@ class Game:
             enemy.draw(self.screen)
         pygame.display.flip()
 
-    def update(self):
+    def update(self) -> None:
         if self.door_unlock_time and pygame.time.get_ticks() - self.door_unlock_time > 300:
             for r in range(len(self.maze)):
                 for c in range(len(self.maze[r])):
@@ -190,16 +191,16 @@ class Game:
                         self.maze[r][c] = 0
             self.door_unlock_time = None
 
-        row = self.player.rect.top // TILE_SIZE
-        col = self.player.rect.left // TILE_SIZE
-        tile_name = self.tileset.get_tile_name(self.maze[row][col])
+        row: int = self.player.rect.top // TILE_SIZE
+        col: int = self.player.rect.left // TILE_SIZE
+        tile_name: str = self.tileset.get_tile_name(self.maze[row][col])
         print(tile_name)
         ######################################
         for door in self.doors:
             if self.player.collides_with(door):
                 door.interact(self.player, self.maze)
 
-        if tile_name == 'goal':
+        if tile_name: str == 'goal':
             print("Level complete!")
             self.level_index += 1
             if self.level_index < len(self.levels):
@@ -209,7 +210,7 @@ class Game:
                 pygame.quit()
                 sys.exit()
 
-    def run(self):
+    def run(self) -> None:
         while True:
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -217,7 +218,7 @@ class Game:
                     sys.exit()
             self.single_iteration()
 
-    def single_iteration(self):
+    def single_iteration(self) -> None:
         self.player.update(self.maze)
         for enemy in self.enemies:
             enemy.update(self.maze, self.player)

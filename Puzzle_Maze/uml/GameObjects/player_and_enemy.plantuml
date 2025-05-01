@@ -1,0 +1,40 @@
+@startuml
+title "Player and Enemy Diagram"
+
+class GameObject {
+    ..Instance Variables..
+    - name: str
+    - image: pygame.Surface
+    - rect: pygame.Rect
+    ..Instance Methods..
+    + draw(screen) : None
+    - 
+    + update(*args: Any, **kwargs: Any): None
+    + move_to(x: int, y: int) : None
+    + collides_with(other: GameObject) : bool
+    + change_img(new_img: pygame.Surface) : None
+}
+
+class Player {
+    ..Instance Variables..
+    + key_count: int
+    + last_move_time: int
+    ..Instance Methods..
+    + draw(screen) : None
+    - _move(maze: list[list[int]], doors: list[Door], dy: int,
+              dx: int, current_time: int)
+    + update(maze: list[list[int]], doors: list[Door]) : None
+}
+
+class Enemy {
+    ..Instance Variables..
+    - velocity: int
+    - last_move_time: int
+    ..Instance Methods..
+    + update(maze: list[list[int]], player: GameObject) : None
+}
+
+GameObject <|-- Player
+GameObject <|-- Enemy
+
+@enduml
