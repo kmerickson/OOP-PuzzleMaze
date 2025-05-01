@@ -1,10 +1,10 @@
 import pygame
 import sys
 import os
-from pygame.locals import *
-from GameObjects import *
 from typing import List, Dict, Tuple
-from GameObjects import Player, Enemy, Door, TILE_SIZE, PLAYER_MOVE_DELAY, ENEMY_MOVE_DELAY
+from GameObjects import Player, Enemy, Door, TILE_SIZE, LockedDoorState
+from GameObjects import TILE_EMPTY, TILE_WALL, TILE_GOAL, TILE_KEY
+from pygame.locals import QUIT
 # Constants
 GRID_WIDTH: int = 12
 GRID_HEIGHT: int = 12
@@ -164,7 +164,8 @@ class Game:
                 else:
                     # filles in the empty and tilespots behind doors:
                     tile_img = self.tileset.get_image(TILE_EMPTY)
-                # tile_img = self.tileset.images['door_unlocked'] if tile_value == 5 else self.tileset.get_image(tile_value)
+                # tile_img = self.tileset.images['door_unlocked']
+                # if tile_value == 5 else self.tileset.get_image(tile_value)
                 self.screen.blit(tile_img, (col * TILE_SIZE, row * TILE_SIZE))
 
         #####################################
@@ -191,7 +192,6 @@ class Game:
         row: int = self.player.rect.top // TILE_SIZE
         col: int = self.player.rect.left // TILE_SIZE
         tile_name: str = self.tileset.get_tile_name(self.maze[row][col])
-        print(tile_name)
         ######################################
         for door in self.doors:
             if self.player.collides_with(door):
