@@ -18,6 +18,7 @@ import pytest
 import sys
 from hypothesis import given
 from hypothesis.strategies import integers
+import os 
 
 class TestGame(unittest.TestCase):
     """Unittesting Movie Title class
@@ -337,4 +338,15 @@ class TestGame(unittest.TestCase):
     def test_game_loop(self, mock_run: MagicMock) -> None:
         Game.game_loop()
         mock_run.assert_called_once()
-        
+
+    @patch('os.path.exists', return_value=False)
+    @patch('pygame.Surface')
+    def test_fallback_when_file_missing(self, mock_surface_class, mock_exists):
+        tile_class = TileSet()
+        mock_surface = MagicMock()
+        mock_surface_class.return_value = mock_surface
+        tile_class._load_images()
+
+        mock_exists.assert_called()
+        mock_surface_class.assert_called()
+        mock_surface.fill.assert_called()
