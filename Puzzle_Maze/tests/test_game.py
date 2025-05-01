@@ -71,47 +71,36 @@ class TestGame(unittest.TestCase):
         """Setup method
         """
         pygame.init()
-        self._game = None
+        self._game = Game()
+        self._tile_class = TileSet()
 
     def test_load_levels_level1(self) -> None:
-        self._game = Game()
         returnValue = self._game.load_levels()
         self.assertEqual(returnValue[0], self.LEVEL_1)
 
     def test_load_levels_level2(self) -> None:
-        self._game = Game()
         returnValue = self._game.load_levels()
         self.assertEqual(returnValue[1], self.LEVEL_2)
     
     def test_load_levels_level3(self) -> None:
-        self._game = Game()
         returnValue = self._game.load_levels()
         self.assertEqual(returnValue[2], self.LEVEL_3)
 
-    @patch('pygame.image.load')
-    @patch("pygame.transform.scale")
-    def test_load_level_index_0_level_loaded(self, mock_load, mock_scale) -> None:
-        self._game = Game()
-        mock_surface = MagicMock(spec=pygame.Surface)
-        mock_load.return_value = mock_surface 
-        mock_scale.return_value = mock_surface
+    def test_load_level_index_0_level_loaded(self) -> None:
         self._game.load_level(0)
         self.assertEqual(self._game.maze, self.LEVEL_1)
 
     def test_load_level_index_1_level_loaded(self) -> None:
-        self._game = Game()
         self._game.load_level(1)
         self.assertEqual(self._game.maze, self.LEVEL_2)
 
     def test_load_level_index_2_level_loaded(self) -> None:
-        self._game = Game()
         self._game.load_level(2)
         self.assertEqual(self._game.maze, self.LEVEL_3)
     
     @patch('pygame.image.load')
     @patch("pygame.transform.scale")
     def test_load_level_index_1_enemies(self, mock_image, mock_transform) -> None:
-        self._game = Game()
         mock_surface = MagicMock(spec=pygame.Surface)
         mock_image.return_value = mock_surface
         mock_transform.return_value = mock_surface
@@ -128,7 +117,6 @@ class TestGame(unittest.TestCase):
     @patch('pygame.image.load')
     @patch("pygame.transform.scale")
     def test_load_level_index_2_enemies(self, mock_image, mock_transform) -> None:
-        self._game = Game()
         mock_surface = pygame.Surface((10, 10))
         mock_image.return_value = mock_surface
         mock_transform.return_value = mock_surface
@@ -141,14 +129,7 @@ class TestGame(unittest.TestCase):
             self.assertEqual(enemy.velocity, expected_enemy.velocity)
             self.assertEqual(enemy.image, expected_enemy.image)
 
-
-    @patch('pygame.image.load')
-    @patch("pygame.transform.scale")
-    def test_load_level_player(self, mock_load, mock_scale) -> None:
-        self._game = Game()
-        mock_surface = MagicMock(spec=pygame.Surface)
-        mock_load.return_value = mock_surface
-        mock_scale.return_value = mock_surface
+    def test_load_level_player(self) -> None:
         self._game.load_level(0)
         expected_player_key_count = 0
         expected_player_last_move_time = 0
@@ -156,13 +137,7 @@ class TestGame(unittest.TestCase):
         self.assertEqual(self._game.player.key_count, expected_player_key_count)
         self.assertEqual(self._game.player.last_move_time, expected_player_last_move_time)
 
-    @patch('pygame.image.load')
-    @patch("pygame.transform.scale")
-    def test_door_logic(self, mock_load, mock_scale) -> None:
-        self._game = Game()
-        mock_surface = MagicMock(spec=pygame.Surface)
-        mock_load.return_value = mock_surface
-        mock_scale.return_value = mock_surface
+    def test_door_logic(self) -> None:
         test_maze = [[
             [1, 0, 1, 0], 
             [3, 3, 3, 1],
@@ -173,13 +148,7 @@ class TestGame(unittest.TestCase):
         self.assertEqual(len(self._game.doors), expected_size)
         self.assertEqual(self._game.door_unlock_time, None)
 
-    @patch('pygame.image.load')
-    @patch("pygame.transform.scale")
-    def test_draw(self, mock_image, mock_transform):
-        self._game = Game()
-        mock_surface = MagicMock(spec=pygame.Surface)
-        mock_image.return_value = mock_surface
-        mock_transform.return_value = mock_surface
+    def test_draw(self):
         mock_screen = MagicMock(spec=pygame.Surface)
         self._game.screen = mock_screen
         self._game.load_levels()
@@ -193,13 +162,7 @@ class TestGame(unittest.TestCase):
         self.assertEqual(mock_screen.blit.call_count, total_call_count)
 
     @patch('sys.stdout', new_callable=StringIO)
-    @patch('pygame.image.load')
-    @patch("pygame.transform.scale")
-    def test_update_level_complete(self, mock_image, mock_transform, mock_stdout):
-        mock_surface = MagicMock(spec=pygame.Surface)
-        mock_image.return_value = mock_surface
-        mock_transform.return_value = mock_surface
-        self._game = Game()
+    def test_update_level_complete(self, mock_stdout):
         test_tile = [[2, 2], [2, 2]]
         self._game.maze = test_tile
         self._game.level_index = 0
@@ -210,15 +173,8 @@ class TestGame(unittest.TestCase):
         expected_output = "Level complete!"
         self.assertIn(expected_output, mock_stdout.getvalue())
 
-
     @patch('sys.stdout', new_callable=StringIO)
-    @patch('pygame.image.load')
-    @patch("pygame.transform.scale")
-    def test_update_level_end_game(self, mock_image, mock_transform, mock_stdout):
-        mock_surface = MagicMock(spec=pygame.Surface)
-        mock_image.return_value = mock_surface
-        mock_transform.return_value = mock_surface
-        self._game = Game()
+    def test_update_level_end_game(self, mock_stdout):
         test_tile = [[2, 2], [2, 2]]
         self._game.maze = test_tile
         self._game.level_index = 4
@@ -246,7 +202,6 @@ class TestGame(unittest.TestCase):
         self.assertEqual(0, self._game.maze[0][0])
 
     def test_single_iteration(self):
-        self._game = Game()
         mock_game_update = MagicMock()
         mock_enemy_update = MagicMock()
         mock_player_update = MagicMock()
@@ -267,49 +222,41 @@ class TestGame(unittest.TestCase):
     def test_get_tile_name0(self) -> None:
         tile = 0
         tile_name = "empty"
-        tile_class = TileSet()
-        self.assertEqual(tile_class.get_tile_name(tile), tile_name)
+        self.assertEqual(self._tile_class.get_tile_name(tile), tile_name)
     
     def test_get_tile_name1(self) -> None:
         tile = 1
         tile_name = "wall"
-        tile_class = TileSet()
-        self.assertEqual(tile_class.get_tile_name(tile), tile_name)
+        self.assertEqual(self._tile_class.get_tile_name(tile), tile_name)
     
     def test_get_tile_name2(self) -> None:
         tile = 2
         tile_name = "goal"
-        tile_class = TileSet()
-        self.assertEqual(tile_class.get_tile_name(tile), tile_name)
+        self.assertEqual(self._tile_class.get_tile_name(tile), tile_name)
 
     def test_get_tile_name3(self) -> None:
         tile = 3
         tile_name = "door"
-        tile_class = TileSet()
-        self.assertEqual(tile_class.get_tile_name(tile), tile_name)
+        self.assertEqual(self._tile_class.get_tile_name(tile), tile_name)
     
     def test_get_tile_name4(self) -> None:
         tile = 4
         tile_name = "key"
-        tile_class = TileSet()
-        self.assertEqual(tile_class.get_tile_name(tile), tile_name)
+        self.assertEqual(self._tile_class.get_tile_name(tile), tile_name)
 
     def test_get_tile_name5(self) -> None:
         tile = 5
         tile_name = "door_unlocked"
-        tile_class = TileSet()
-        self.assertEqual(tile_class.get_tile_name(tile), tile_name)
+        self.assertEqual(self._tile_class.get_tile_name(tile), tile_name)
 
     @given(integers(min_value=6))
     def test_get_tile_name_invalid(self, tile):
         with self.assertRaises(IndexError):
-            tile_class = TileSet()
-            tile_class.get_tile_name(tile)
+            self._tile_class.get_tile_name(tile)
 
     @patch('pygame.event.get')
     @patch('sys.exit', side_effect=SystemExit)
     def test_run_quit(self, mock_exit, mock_event_get):
-        self._game = Game()
 
         mock_event_get.return_value = [pygame.event.Event(pygame.QUIT)]
 
@@ -320,7 +267,6 @@ class TestGame(unittest.TestCase):
     @patch('pygame.event.get')
     @patch('sys.exit', side_effect=SystemExit)
     def test_run_functions(self, mock_exit, mock_event_queue):
-        self._game = Game()
         self._game.single_iteration = MagicMock()
 
         mock_event_queue.side_effect = [
@@ -342,10 +288,10 @@ class TestGame(unittest.TestCase):
     @patch('os.path.exists', return_value=False)
     @patch('pygame.Surface')
     def test_fallback_when_file_missing(self, mock_surface_class, mock_exists):
-        tile_class = TileSet()
+        self._tile_class = TileSet()
         mock_surface = MagicMock()
         mock_surface_class.return_value = mock_surface
-        tile_class._load_images()
+        self._tile_class._load_images()
 
         mock_exists.assert_called()
         mock_surface_class.assert_called()
