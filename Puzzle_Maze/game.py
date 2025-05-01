@@ -215,15 +215,15 @@ class Game:
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
-            self.player.update(self.maze)
+            self.player.update(self.maze, self.doors)
             for enemy in self.enemies:
                 enemy.update(self.maze, self.player)
             self.update()
             self.draw()
             self.clock.tick(FPS)
-    #ADDED
+    # ADDED
     def single_iteration(self):
-        self.player.update(self.maze)
+        self.player.update(self.maze, self.doors)
         for enemy in self.enemies:
             enemy.update(self.maze, self.player)
         self.update()
