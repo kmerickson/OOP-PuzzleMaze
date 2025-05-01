@@ -20,6 +20,7 @@ TILE_DOOR = 3
 TILE_KEY = 4
 TILE_UNLOCKED = 5
 
+
 class GameObject:
     """Game object class from which objects such as player and enemy are derived"""
 
@@ -134,7 +135,7 @@ class Enemy(GameObject):
         self.last_move_time = 0
 
     def update(self, maze: list[list[int]], player: GameObject) -> None:
-        """Update logic for the enemy class, pass in the maze 2D array and 
+        """Update logic for the enemy class, pass in the maze 2D array and
         the player game object."""
         current_time = pygame.time.get_ticks()
         if current_time - self.last_move_time < ENEMY_MOVE_DELAY:
@@ -161,6 +162,7 @@ class Enemy(GameObject):
 
 
 T = TypeVar('T', bound=GameObject)
+
 
 class ObjectState(ABC, Generic[T]):
     """Base abstract state class. Declares methods that all concrete states
@@ -189,7 +191,7 @@ class ObjectState(ABC, Generic[T]):
 
 class Door(GameObject):
     """Door GameObject class. Functions based off different states managed
-    by the ObjectState class. The two states are the LockedDoorState and 
+    by the ObjectState class. The two states are the LockedDoorState and
     UnlockedDoorState classes."""
 
     def __init__(self, position: tuple[int, int], state: ObjectState['Door']) -> None:

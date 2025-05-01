@@ -63,7 +63,7 @@ class PlayState(GameState):
             will contain states
         """
         outer_class.play.single_iteration()
-    
+
     @override
     def handle_event(self, outer_class: "ChipsCoreEscape", event: GameEvents):
         """Method to that decides which events to deal with it and how
@@ -90,7 +90,7 @@ class InfoState(GameState):
             will contain states
         """
         outer_class.info.draw_screen()
-    
+
     @override
     def handle_event(self, outer_class: "ChipsCoreEscape", event: GameEvents):
         """Method to that decides which events to deal with it and how
@@ -121,7 +121,7 @@ class MainMenuState(GameState):
             will contain states
         """
         outer_class.menu.draw_screen()
-    
+
     def handle_event(self, outer_class: "ChipsCoreEscape", event: GameEvents):
         """Method to that decides which events to deal with it and how
            to deal with them in the main menu state
@@ -135,7 +135,7 @@ class MainMenuState(GameState):
             mouse_position = pygame.mouse.get_pos()
             if (outer_class.menu.play_button.button.rect.collidepoint(mouse_position)):
                 outer_class.play = Game()
-                outer_class.state = PlayState() 
+                outer_class.state = PlayState()
             elif (outer_class.menu.info_button.button.rect.collidepoint(mouse_position)):
                 outer_class.state = InfoState()
             elif (outer_class.menu.quit_button.button.rect.collidepoint(mouse_position)):
@@ -175,7 +175,7 @@ class ChipsCoreEscape:
         return pygame.display.set_mode(
             (self.DEFAULT_WIDTH, self.DEFUALT_HEIGHT),
             pygame.RESIZABLE)
-    
+
     def display_screen(self) -> None:
         """Display screen related to current state
         """
@@ -211,7 +211,7 @@ class ChipsCoreEscape:
             _play: object related to play state
         """
         return self._play
-    
+
     @play.setter
     def play(self, game_obj: Game) -> None:
         """Setter for play attribute
@@ -229,7 +229,7 @@ class ChipsCoreEscape:
             _info: object related to info state
         """
         return self._info
-    
+
     @property
     def menu(self) -> MainMenu:
         """Getter for menu attribute
@@ -238,7 +238,7 @@ class ChipsCoreEscape:
             _menu: object related to main menu state
         """
         return self._menu
-    
+
     @property
     def state(self) -> GameState:
         """Getter for state attribute
@@ -248,7 +248,7 @@ class ChipsCoreEscape:
             is currently is in
         """
         return self._state
-    
+
     @state.setter
     def state(self, state: GameState) -> None:
         """_Setter for state variable
@@ -282,6 +282,6 @@ class ChipsCoreEscape:
         game = ChipsCoreEscape()
         game.chips_core_escape()
 
-        
+
 if __name__ == "__main__":
     ChipsCoreEscape.main()  # pragma: no cover

@@ -117,7 +117,7 @@ class Drawable(ABC):
             screen width by idealized position on screen
         """
         return self._screen_width * self._factor_of_x_pos
-    
+
     @property
     def factor_of_x_pos(self) -> float:
         """Getter for the factor of x pos variable
@@ -128,7 +128,7 @@ class Drawable(ABC):
             will be on the screen horizontally
         """
         return self._factor_of_x_pos
-    
+
     @factor_of_x_pos.setter
     def factor_of_x_pos(self, factor_of_x_pos: float) -> float:
         """Setter for the factor of x pos variable
@@ -150,7 +150,7 @@ class Drawable(ABC):
             will be on the screen vertically
         """
         return self._factor_of_y_pos
-    
+
     @factor_of_y_pos.setter
     def factor_of_y_pos(self, factor_of_y_pos: float) -> float:
         """Setter for the factor of y pos variable
@@ -161,7 +161,7 @@ class Drawable(ABC):
             will be on the screen vertically
         """
         self._factor_of_y_pos = factor_of_y_pos
-    
+
     @property
     def y_pos(self) -> float:
         """Getter for the y (vertical) coordinate

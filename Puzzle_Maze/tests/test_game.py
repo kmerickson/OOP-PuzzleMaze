@@ -8,12 +8,10 @@ __license__ = "MIT"
 import unittest
 import sys
 from io import StringIO
-import os
 from hypothesis import given
 from hypothesis.strategies import integers
 from unittest.mock import patch, MagicMock
 from typing import List, Tuple
-import pytest
 from game import TileSet, Game
 from GameObjects import Enemy
 import pygame
@@ -340,4 +338,3 @@ class TestGame(unittest.TestCase):
         """
         with self.assertRaises(IndexError):
             self._tile_class.get_tile_name(tile)
-

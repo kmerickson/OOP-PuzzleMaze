@@ -17,7 +17,7 @@ from ui_elements import Text, Outline, Button, Drawable
 
 
 class Events(Enum):
-    """Enum containing 
+    """Enum containing
         all the states UI
         elements can be in
     """
@@ -28,6 +28,7 @@ class Events(Enum):
 class State(ABC):
     """Base state class for state design pattern
     """
+
     def __init__(self, drawable: Drawable):
         """Constructor for State class
 
@@ -46,7 +47,7 @@ class State(ABC):
             to use to draw and handle events with
         """
         return self._drawable
-    
+
     def draw(self):
         """Draws UI element
         """
@@ -67,11 +68,12 @@ class InteractiveDrawable:
     """Interface for classes that will employ
        the state pattern
     """
+
     def __init__(self):
         """Constructor for Interactive Drawable class
         """
         self._state: State | None = None
-    
+
     @property
     def state(self):
         """Getter for state variable
@@ -81,7 +83,7 @@ class InteractiveDrawable:
             class is in
         """
         return self._state
-    
+
     @state.setter
     def state(self, state: State):
         """Setter for state variable
@@ -90,25 +92,25 @@ class InteractiveDrawable:
             state (State): state to change to
         """
         self._state = state
-    
+
     def draw(self):
         """Draws UI element based on current state
         """
         self._state.draw()
 
     def handle_event(self, event: Events):
-        """Change needed attributes depending 
+        """Change needed attributes depending
            on state
 
         Args:
             event (Events): Event that will determine state
         """
         self._state.handle_event(self, event)
-    
+
     @abstractmethod
     def handle_mouse_position(self):
         """Method that will determine which state
-           the UI element is current is in depending 
+           the UI element is current is in depending
            on user's mouse position
         """
         pass
@@ -117,6 +119,7 @@ class InteractiveDrawable:
 class IdleText(State):
     """Deals with text when it's in an idle state
     """
+
     def __init__(self, drawable: Drawable):
         """Constructor for IdleText class
 
@@ -141,6 +144,7 @@ class IdleText(State):
 class HoverText(State):
     """Deals with text when it's in a hover state
     """
+
     def __init__(self, drawable: Drawable):
         """Constructor for HoverText class
 
@@ -165,6 +169,7 @@ class HoverText(State):
 class IdleButton(State):
     """Deals with buttons when they're in an idle state
     """
+
     def __init__(self, drawable: Drawable):
         """Constructor for IdleButton class
 
@@ -190,6 +195,7 @@ class IdleButton(State):
 class HoverButton(State):
     """Deals with buttons when they're in a hover state
     """
+
     def __init__(self, drawable: Drawable):
         """Constructor for HoverButton class
 
@@ -215,12 +221,13 @@ class HoverButton(State):
 class InteractiveText(InteractiveDrawable):
     """Context class for state pattern
     """
+
     def __init__(
         self, screen: pygame.Surface, factor_of_x_pos: float,
         factor_of_y_pos: float, image_dir: str, size: float,
         text_to_draw: str, color: str, hover_color: str,
         outline_color: str, outline_size: str
-            ):
+    ):
         """Constructor for InteractiveText class
 
         Args:
@@ -261,7 +268,7 @@ class InteractiveText(InteractiveDrawable):
             state
         """
         return self._outline
-    
+
     @property
     def hover_color(self):
         """Getter for hover color variable
@@ -271,7 +278,7 @@ class InteractiveText(InteractiveDrawable):
             when hovered over
         """
         return self._hover_color
-    
+
     @property
     def color(self):
         """Getter for color variable
@@ -280,7 +287,7 @@ class InteractiveText(InteractiveDrawable):
             _color (str): Color of text in idle state
         """
         return self._color
-    
+
     @override
     def draw(self):
         self.handle_mouse_position()
@@ -302,6 +309,7 @@ class InteractiveText(InteractiveDrawable):
 class InteractiveButton(InteractiveText):
     """Context class for state pattern
     """
+
     def __init__(self, screen: pygame.Surface, factor_of_x_pos: float,
                  factor_of_y_pos: float, image_dir: str, size: float,
                  text_to_place: str, color: str, hover_color: str,
@@ -337,7 +345,7 @@ class InteractiveButton(InteractiveText):
             state
         """
         return self._button
-    
+
     @override
     def handle_mouse_position(self):
         """Determines when text is in a hover and idle state
@@ -349,7 +357,7 @@ class InteractiveButton(InteractiveText):
             super().handle_event(Events.HOVER)
         else:
             super().handle_event(Events.IDLE)
-        
+
 
 class GameText(InteractiveText):
     """Class to avoid large parameter lists while
@@ -375,7 +383,7 @@ class GameText(InteractiveText):
                          self.FONT_DIRECTORY, size, text_to_place,
                          self.IDLE_COLOR, self.HOVER_COLOR,
                          self.OUTLINE_COLOR, 1)
-        
+
 
 class GameButton(InteractiveButton):
     """Class to avoid large parameter lists while
@@ -403,4 +411,3 @@ class GameButton(InteractiveButton):
                          self.FONT_DIRECTORY, 0, text_to_place,
                          self.IDLE_COLOR, self.HOVER_COLOR,
                          self.OUTLINE_COLOR, 10, self.BUTTON_IMAGE_DIR)
-        

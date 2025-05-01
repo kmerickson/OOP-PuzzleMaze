@@ -216,7 +216,7 @@ class Game:
                     pygame.quit()
                     sys.exit()
             self.single_iteration()
-            
+
     def single_iteration(self):
         self.player.update(self.maze)
         for enemy in self.enemies:
