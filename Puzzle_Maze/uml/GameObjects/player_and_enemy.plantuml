@@ -1,6 +1,6 @@
 @startuml
 title "Player and Enemy Diagram"
-
+scale 2
 class GameObject {
     ..Instance Variables..
     - name: str
@@ -8,14 +8,14 @@ class GameObject {
     - rect: pygame.Rect
     ..Instance Methods..
     + draw(screen) : None
-    - 
-    + update(*args: Any, **kwargs: Any): None
     + move_to(x: int, y: int) : None
     + collides_with(other: GameObject) : bool
     + change_img(new_img: pygame.Surface) : None
+    ..Abstract Methods..
+    {abstract}+ update(*args: Any, **kwargs: Any): None
 }
 
-class Player {
+class Player implements GameObject{
     ..Instance Variables..
     + key_count: int
     + last_move_time: int
@@ -26,15 +26,11 @@ class Player {
     + update(maze: list[list[int]], doors: list[Door]) : None
 }
 
-class Enemy {
+class Enemy implements GameObject{
     ..Instance Variables..
     - velocity: int
     - last_move_time: int
-    ..Instance Methods..
+    ....Overridden Methods..
     + update(maze: list[list[int]], player: GameObject) : None
 }
-
-GameObject <|-- Player
-GameObject <|-- Enemy
-
 @enduml

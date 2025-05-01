@@ -21,8 +21,8 @@ class Events(Enum):
         all the states UI
         elements can be in
     """
-    IDLE: int = 0
-    HOVER: int = 1
+    IDLE = 0
+    HOVER = 1
 
 
 class State(ABC):
@@ -39,7 +39,7 @@ class State(ABC):
         self._drawable = drawable
 
     @property
-    def drawable(self):
+    def drawable(self) -> Drawable:
         """Getter for drawable variable
 
         Returns:
@@ -48,13 +48,13 @@ class State(ABC):
         """
         return self._drawable
 
-    def draw(self):
+    def draw(self) -> None:
         """Draws UI element
         """
         self._drawable.dynamically_draw()
 
     @abstractmethod
-    def handle_event(self, outer_class: Any, event: Events):
+    def handle_event(self, outer_class: Any, event: Events) -> None:
         """Sets state depending on given event
 
         Args:
@@ -69,13 +69,13 @@ class InteractiveDrawable:
        the state pattern
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Constructor for Interactive Drawable class
         """
         self._state: State | None = None
 
     @property
-    def state(self):
+    def state(self) -> State | None:
         """Getter for state variable
 
         Returns:
@@ -85,7 +85,7 @@ class InteractiveDrawable:
         return self._state
 
     @state.setter
-    def state(self, state: State):
+    def state(self, state: State) -> None:
         """Setter for state variable
 
         Args:
@@ -93,22 +93,24 @@ class InteractiveDrawable:
         """
         self._state = state
 
-    def draw(self):
+    def draw(self) -> None:
         """Draws UI element based on current state
         """
-        self._state.draw()
+        if self._state is not None:
+            self._state.draw()
 
-    def handle_event(self, event: Events):
+    def handle_event(self, event: Events) -> None:
         """Change needed attributes depending
            on state
 
         Args:
             event (Events): Event that will determine state
         """
-        self._state.handle_event(self, event)
+        if self._state is not None:
+            self._state.handle_event(self, event)
 
     @abstractmethod
-    def handle_mouse_position(self):
+    def handle_mouse_position(self) -> None:
         """Method that will determine which state
            the UI element is current is in depending
            on user's mouse position
@@ -120,7 +122,7 @@ class IdleText(State):
     """Deals with text when it's in an idle state
     """
 
-    def __init__(self, drawable: Drawable):
+    def __init__(self, drawable: Drawable) -> None:
         """Constructor for IdleText class
 
         Args:
@@ -129,7 +131,7 @@ class IdleText(State):
         """
         super().__init__(drawable)
 
-    def handle_event(self, outer_class: Any, event: Events):
+    def handle_event(self, outer_class: Any, event: Events) -> None:
         """Switches state depending on given event
 
         Args:
@@ -145,7 +147,7 @@ class HoverText(State):
     """Deals with text when it's in a hover state
     """
 
-    def __init__(self, drawable: Drawable):
+    def __init__(self, drawable: Drawable) -> None:
         """Constructor for HoverText class
 
         Args:
@@ -154,7 +156,7 @@ class HoverText(State):
         """
         super().__init__(drawable)
 
-    def handle_event(self, outer_class: Any, event: Events):
+    def handle_event(self, outer_class: Any, event: Events) -> None:
         """Switches state depending on given event
 
         Args:
@@ -170,7 +172,7 @@ class IdleButton(State):
     """Deals with buttons when they're in an idle state
     """
 
-    def __init__(self, drawable: Drawable):
+    def __init__(self, drawable: Drawable) -> None:
         """Constructor for IdleButton class
 
         Args:
@@ -179,7 +181,7 @@ class IdleButton(State):
         """
         super().__init__(drawable)
 
-    def handle_event(self, outer_class: Any, event: Events):
+    def handle_event(self, outer_class: Any, event: Events) -> None:
         """Switches state depending on given event
 
         Args:
@@ -196,7 +198,7 @@ class HoverButton(State):
     """Deals with buttons when they're in a hover state
     """
 
-    def __init__(self, drawable: Drawable):
+    def __init__(self, drawable: Drawable) -> None:
         """Constructor for HoverButton class
 
         Args:
@@ -205,7 +207,7 @@ class HoverButton(State):
         """
         super().__init__(drawable)
 
-    def handle_event(self, outer_class: Any, event: Events):
+    def handle_event(self, outer_class: Any, event: Events) -> None:
         """Switches state depending on given event
 
         Args:
@@ -226,8 +228,8 @@ class InteractiveText(InteractiveDrawable):
         self, screen: pygame.Surface, factor_of_x_pos: float,
         factor_of_y_pos: float, image_dir: str, size: float,
         text_to_draw: str, color: str, hover_color: str,
-        outline_color: str, outline_size: str
-    ):
+        outline_color: str, outline_size: float
+    ) -> None:
         """Constructor for InteractiveText class
 
         Args:
@@ -251,7 +253,7 @@ class InteractiveText(InteractiveDrawable):
         self.state = IdleText(self._text)
 
     @property
-    def text(self):
+    def text(self) -> Text:
         """Getter for text variable
 
         Returns:
@@ -260,7 +262,7 @@ class InteractiveText(InteractiveDrawable):
         return self._text
 
     @property
-    def outline(self):
+    def outline(self) -> Outline:
         """Getter for outline variable
 
         Returns:
@@ -270,7 +272,7 @@ class InteractiveText(InteractiveDrawable):
         return self._outline
 
     @property
-    def hover_color(self):
+    def hover_color(self) -> str:
         """Getter for hover color variable
 
         Returns:
@@ -280,7 +282,7 @@ class InteractiveText(InteractiveDrawable):
         return self._hover_color
 
     @property
-    def color(self):
+    def color(self) -> str:
         """Getter for color variable
 
         Returns:
@@ -289,21 +291,22 @@ class InteractiveText(InteractiveDrawable):
         return self._color
 
     @override
-    def draw(self):
+    def draw(self) -> None:
         self.handle_mouse_position()
         super().draw()
 
     @override
-    def handle_mouse_position(self):
+    def handle_mouse_position(self) -> None:
         """Determines when text is in a hover and idle state
            based on user's mouse position in relation to
            instance variables
         """
-        mouse_pos = pygame.mouse.get_pos()
-        if (self._text.rect.collidepoint(mouse_pos)):
-            super().handle_event(Events.HOVER)
-        else:
-            super().handle_event(Events.IDLE)
+        if self._text.rect is not None:
+            mouse_pos = pygame.mouse.get_pos()
+            if (self._text.rect.collidepoint(mouse_pos)):
+                super().handle_event(Events.HOVER)
+            else:
+                super().handle_event(Events.IDLE)
 
 
 class InteractiveButton(InteractiveText):
@@ -314,7 +317,7 @@ class InteractiveButton(InteractiveText):
                  factor_of_y_pos: float, image_dir: str, size: float,
                  text_to_place: str, color: str, hover_color: str,
                  outline_color: str, outline_size: float,
-                 button_image_dir: str):
+                 button_image_dir: str) -> None:
         """Constructor for InteractiveButton class
 
         Args:
@@ -337,7 +340,7 @@ class InteractiveButton(InteractiveText):
         self.state = IdleButton(self._button)
 
     @property
-    def button(self):
+    def button(self) -> Button:
         """Getter for button variable
 
         Returns:
@@ -347,16 +350,17 @@ class InteractiveButton(InteractiveText):
         return self._button
 
     @override
-    def handle_mouse_position(self):
+    def handle_mouse_position(self) -> None:
         """Determines when text is in a hover and idle state
            based on user's mouse position in relation to
            instance variables
         """
-        mouse_pos = pygame.mouse.get_pos()
-        if (self._button.rect.collidepoint(mouse_pos)):
-            super().handle_event(Events.HOVER)
-        else:
-            super().handle_event(Events.IDLE)
+        if self._button.rect is not None:
+            mouse_pos = pygame.mouse.get_pos()
+            if (self._button.rect.collidepoint(mouse_pos)):
+                super().handle_event(Events.HOVER)
+            else:
+                super().handle_event(Events.IDLE)
 
 
 class GameText(InteractiveText):
@@ -368,8 +372,11 @@ class GameText(InteractiveText):
     HOVER_COLOR: str = "Light Green"
     OUTLINE_COLOR: str = "Black"
     OUTLINE_SIZE: int = 1
-    def __init__(self, screen: pygame.Surface, text_to_place: str,
-                 factor_of_x_pos: float, factor_of_y_pos, size: float):
+
+    def __init__(
+            self, screen: pygame.Surface, text_to_place: str,
+            factor_of_x_pos: float,
+            factor_of_y_pos: float, size: float) -> None:
         """Constructor for GameText class
 
         Args:
@@ -397,7 +404,8 @@ class GameButton(InteractiveButton):
     BUTTON_IMAGE_DIR: str = "assets/button.png"
 
     def __init__(self, screen: pygame.Surface, text_to_place: str,
-                 factor_of_x_pos: float, factor_of_y_pos):
+                 factor_of_x_pos: float,
+                 factor_of_y_pos: float) -> None:
         """Constructor for GameButton class
 
         Args:

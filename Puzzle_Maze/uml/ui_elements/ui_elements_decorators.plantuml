@@ -8,9 +8,8 @@ class DrawableDecorator implements Drawable{
     - _drawable: Drawable
     + drawable: Drawable
     + original_size: float
-    .. Instance Methods ..
-    + __init__(drawable: Drawable): None
-    + draw(): void
+    ..Overridden Methods..
+    + draw(): None
     + dynamically_draw(): None
     - adjust_to_changes(): None
 }
@@ -22,9 +21,7 @@ class Outline extends DrawableDecorator{
     - _font: pygame.font.Font
     - _surface: pygame.Surface
     - _rect: pygame.Rect
-    .. Instance Methods ..
-    +__init__(self, drawable: Text, outline_color: str,
-                 outline_size: float)
+    .. Overridden Methods..
     + draw(): void
     + dynamically_draw(): None
     - adjust_to_changes(): None
@@ -38,8 +35,7 @@ class Button extends DrawableDecorator{
     - _button_height: float
     - _surface: pygame.Surface
     - _rect: pygame.Rect
-    .. Instance Methods ..
-    + __init__(self, drawable: Drawable, image_dir: str)
+    .. Overridden Methods..
     + draw(): void
     + dynamically_draw(): None
     - adjust_to_changes(): None

@@ -130,7 +130,7 @@ class Drawable(ABC):
         return self._factor_of_x_pos
 
     @factor_of_x_pos.setter
-    def factor_of_x_pos(self, factor_of_x_pos: float) -> float:
+    def factor_of_x_pos(self, factor_of_x_pos: float) -> None:
         """Setter for the factor of x pos variable
 
         Args:
@@ -152,7 +152,7 @@ class Drawable(ABC):
         return self._factor_of_y_pos
 
     @factor_of_y_pos.setter
-    def factor_of_y_pos(self, factor_of_y_pos: float) -> float:
+    def factor_of_y_pos(self, factor_of_y_pos: float) -> None:
         """Setter for the factor of y pos variable
 
         Args:

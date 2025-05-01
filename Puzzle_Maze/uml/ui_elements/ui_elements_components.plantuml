@@ -25,13 +25,10 @@ class Drawable <<abstract>>{
     + size: float
     - _data: str
     + _data: str
-    .. Instance Methods ..
-    + __init__( screen: pygame.Surface, factor_of_x_pos: float,
-                 factor_of_y_pos: float, image_dir: str,
-                 size: float, data: Any): None
-    + _draw_(): None
-    + _dynamically_draw_(): None
-    - __adjust_to_changes_(): None
+    .. Abstract Methods..
+    {abstract} + draw(): None
+    {abstract}+ dynamically_draw(): None
+    {abstract}- _adjust_to_changes_(): None
 }
 
 class Text implements Drawable{
@@ -40,10 +37,7 @@ class Text implements Drawable{
     + color: str
     - _font: pygame.font.Font
     + font: pygame.font.Font
-    .. Instance Methods ..
-    + __init__(self, screen: pygame.Surface, factor_of_x_pos: float,
-                 factor_of_y_pos: float, image_dir: str, size: float,
-                 text: str, color: str): None
+    ..Overridden Methods..
     + draw(): void
     + dynamically_draw(): None
     - adjust_to_changes(): None

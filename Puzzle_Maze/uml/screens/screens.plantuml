@@ -1,0 +1,58 @@
+@startuml
+scale 2
+title "Screens Inheritance Diagram"
+    class Screen  <<abstract>>{
+    ..Instance Variables..
+    - _screen: pygame.Surface
+    - _screen_width: float
+    - _screen_height: float
+    + screen: pygame.Surface
+    + screen_width: float
+    + screen_height: float
+    ..Instance Methods..
+    + main_loop(): None
+    + resize_screen_variables(): None
+    ..Abstract Methods..
+    {abstract} + draw_screen(): None
+    {abstract} + adjust_to_screen(): None
+}
+
+class MainMenu implements Screen{
+    ..Instance Variables..
+    - _background_picture: pygame.Surface
+    - _scaled_picture: pygame.Surface
+    - _play_button: GameButton
+    - _info_button: GameButton
+    - _quit_button: GameButton
+    - _menu_text: GameText
+    + background_picture: pygame.Surface
+    + scaled_picture: pygame.Surface
+    + play_button: GameButton
+    + info_button: GameButton
+    + quit_button: GameButton
+    + main_text: GameText
+    ..Overridden Methods..
+    + adjust_to_screen(): None
+    + draw_screen(): None
+}
+
+class InfoScreen implements Screen{
+    ..Instance Variables..
+    - _main_text: GameText
+    - _body_text_line1: GameText
+    - _body_text_line2: GameText
+    - _body_text_line3: GameText
+    - _body_text_line4: GameText
+    - _back_button: GameButton
+    + main_text: GameText
+    + body_text_line1: GameText
+    + body_text_line_2: GameText
+    + body_text_line_3: GameText
+    + body_text_line_4: GameText
+    + back_button: GameButton
+    ..Overridden Methods..
+    + adjust_to_screen(): None
+    + draw_screen(): None
+}
+
+@enduml

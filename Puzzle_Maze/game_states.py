@@ -21,15 +21,15 @@ class GameEvents(Enum):
         all the states the
         game can be in
     """
-    USER_CLICK: int = 0,
-    ESCAPE: int = 1
+    USER_CLICK = 0,
+    ESCAPE = 1
 
 
 class GameState(ABC):
     """Base state class
     """
     @abstractmethod
-    def display_screen(self, outer_class: "ChipsCoreEscape"):
+    def display_screen(self, outer_class: "ChipsCoreEscape") -> None:
         """Method to display screen dependent on current state
 
         Args:
@@ -39,7 +39,8 @@ class GameState(ABC):
         pass
 
     @abstractmethod
-    def handle_event(self, outer_class: "ChipsCoreEscape", event: GameEvents):
+    def handle_event(self, outer_class: "ChipsCoreEscape",
+                     event: GameEvents) -> None:
         """Method to that decides which events to deal with it and how
            to deal with them depending on current state
 
@@ -55,7 +56,7 @@ class PlayState(GameState):
     """The concrete state class of play
     """
     @override
-    def display_screen(self, outer_class: "ChipsCoreEscape"):
+    def display_screen(self, outer_class: "ChipsCoreEscape") -> None:
         """Method to display screen in the play state
 
         Args:
@@ -65,7 +66,8 @@ class PlayState(GameState):
         outer_class.play.single_iteration()
 
     @override
-    def handle_event(self, outer_class: "ChipsCoreEscape", event: GameEvents):
+    def handle_event(self, outer_class: "ChipsCoreEscape",
+                     event: GameEvents) -> None:
         """Method to that decides which events to deal with it and how
            to deal with them in the play state
 
@@ -82,7 +84,7 @@ class InfoState(GameState):
     """The concrete state class of info
     """
     @override
-    def display_screen(self, outer_class: "ChipsCoreEscape"):
+    def display_screen(self, outer_class: "ChipsCoreEscape") -> None:
         """Method to display screen in the info state
 
         Args:
@@ -92,7 +94,8 @@ class InfoState(GameState):
         outer_class.info.draw_screen()
 
     @override
-    def handle_event(self, outer_class: "ChipsCoreEscape", event: GameEvents):
+    def handle_event(self, outer_class: "ChipsCoreEscape",
+                     event: GameEvents) -> None:
         """Method to that decides which events to deal with it and how
            to deal with them in the info state
 
@@ -105,7 +108,10 @@ class InfoState(GameState):
             outer_class.state = MainMenuState()
         if event == GameEvents.USER_CLICK:
             mouse_position = pygame.mouse.get_pos()
-            if (outer_class.info.back_button.button.rect.collidepoint(mouse_position)):
+            if (
+                outer_class.info.back_button.button.rect is not None and
+                outer_class.info.back_button.button.rect.collidepoint(mouse_position)
+            ):
                 outer_class.state = MainMenuState()
 
 
@@ -113,7 +119,7 @@ class MainMenuState(GameState):
     """The concrete state class of main menu
     """
     @override
-    def display_screen(self, outer_class: "ChipsCoreEscape"):
+    def display_screen(self, outer_class: "ChipsCoreEscape") -> None:
         """Method to display screen in the main menu state
 
         Args:
@@ -122,7 +128,8 @@ class MainMenuState(GameState):
         """
         outer_class.menu.draw_screen()
 
-    def handle_event(self, outer_class: "ChipsCoreEscape", event: GameEvents):
+    def handle_event(self, outer_class: "ChipsCoreEscape",
+                     event: GameEvents) -> None:
         """Method to that decides which events to deal with it and how
            to deal with them in the main menu state
 
@@ -133,14 +140,22 @@ class MainMenuState(GameState):
         """
         if event == GameEvents.USER_CLICK:
             mouse_position = pygame.mouse.get_pos()
-            if (outer_class.menu.play_button.button.rect.collidepoint(mouse_position)):
+            if (
+                outer_class.menu.play_button.button.rect is not None and
+                outer_class.menu.play_button.button.rect.collidepoint(mouse_position)
+            ):
                 outer_class.play = Game()
                 outer_class.state = PlayState()
-            elif (outer_class.menu.info_button.button.rect.collidepoint(mouse_position)):
+            elif (
+                    outer_class.menu.info_button.button.rect is not None and
+                    outer_class.menu.info_button.button.rect.collidepoint(mouse_position)
+            ):
                 outer_class.state = InfoState()
-            elif (outer_class.menu.quit_button.button.rect.collidepoint(mouse_position)):
+            elif (
+                    outer_class.menu.quit_button.button.rect is not None and
+                    outer_class.menu.quit_button.button.rect.collidepoint(mouse_position)
+            ):
                 pygame.quit()
-
         if event == GameEvents.ESCAPE:
             pygame.quit()
 
@@ -154,7 +169,7 @@ class ChipsCoreEscape:
     DEFAULT_WIDTH: int = 1280
     DEFUALT_HEIGHT: int = 720
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Constructor for the ChipsCoreEscape class
         """
         if ChipsCoreEscape._instance:

@@ -1,19 +1,19 @@
 @startuml
 scale 2
-title "Screen Diagram"
-class Screen <<abstract>>{
-    .. Instance Variables ..
+title "Screens Inheritance Diagram"
+    class Screen  <<abstract>>{
+    ..Instance Variables..
     - _screen: pygame.Surface
     - _screen_width: float
     - _screen_height: float
     + screen: pygame.Surface
     + screen_width: float
     + screen_height: float
-    .. Instance Methods ..
-    + __init__(screen: pygame.Surface): None
-    + draw_screen(): None
-    + adjust_to_screen(): None
+    ..Instance Methods..
     + main_loop(): None
     + resize_screen_variables(): None
+    ..Abstract Methods..
+    {abstract} + draw_screen(): None
+    {abstract} + adjust_to_screen(): None
 }
 @enduml

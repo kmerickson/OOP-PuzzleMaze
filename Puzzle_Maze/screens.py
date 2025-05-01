@@ -38,7 +38,7 @@ class Screen(ABC):
         """
         pass
 
-    def main_loop(self):
+    def main_loop(self) -> None:
         """Display screen on its own
         """
         while True:
@@ -210,9 +210,9 @@ class InfoScreen(Screen):
     X_FACTOR: float = 0.5
 
     Y_FACTOR_MAIN_TEXT: float = 0.08
-    FACTOR_FOR_TEXT_SIZE: float = 0.3
+    FACTOR_FOR_TEXT_SIZE: float = 0.09
 
-    SIZE_FOR_LINES: int = 70
+    SIZE_FOR_LINES: int = 40
     Y_FACTOR_LINE_1: float = 0.25
     Y_FACTOR_LINE_2: float = 0.35
     Y_FACTOR_LINE_3: float = 0.45
@@ -256,7 +256,7 @@ class InfoScreen(Screen):
         """Adjusts variables depending on screen change
         """
         self.resize_screen_variables()
-        self._main_text.size = self.screen_width * self.FACTOR_FOR_TEXT_SIZE
+        self._main_text.text.size = self.screen_width * self.FACTOR_FOR_TEXT_SIZE
 
     @override
     def draw_screen(self) -> None:

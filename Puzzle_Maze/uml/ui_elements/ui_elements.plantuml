@@ -1,6 +1,6 @@
 @startuml
 scale 2
-title "UI Elements Diagram"
+title "UI Elements Simplified Diagram"
 class Drawable <<abstract>>{
     .. Instance Methods ..
     + __init__( screen: pygame.Surface, factor_of_x_pos: float,
