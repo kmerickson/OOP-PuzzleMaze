@@ -3,37 +3,34 @@ import sys
 import os
 from pygame.locals import *
 from GameObjects import *
-from typing import List, Dict
-
+from typing import List, Dict, Tuple
+from GameObjects import Player, Enemy, Door, TILE_SIZE, PLAYER_MOVE_DELAY, ENEMY_MOVE_DELAY
 # Constants
-TILE_SIZE = 64
-GRID_WIDTH = 12
-GRID_HEIGHT = 12
-WIDTH = TILE_SIZE * GRID_WIDTH
-HEIGHT = TILE_SIZE * GRID_HEIGHT
-FPS = 60
-PLAYER_MOVE_DELAY = 200
-ENEMY_MOVE_DELAY = 500
-ASSET_DIR = "assets"
+GRID_WIDTH: int = 12
+GRID_HEIGHT: int = 12
+WIDTH: int = TILE_SIZE * GRID_WIDTH
+HEIGHT: int = TILE_SIZE * GRID_HEIGHT
+FPS: int = 60
+ASSET_DIR: str = "assets"
 
 # Tile management
 
 
 class TileSet:
-    def __init__(self):
+    def __init__(self) -> None:
         self.tiles: List[str] = ['empty', 'wall', 'goal', 'door', 'key', 'door_unlocked']
         self.images: Dict[str, pygame.Surface] = self._load_images()
 
     def _load_images(self) -> Dict[str, pygame.Surface]:
         images: Dict[str, pygame.Surface] = {}
 
-        def load_or_color(name: str, fallback_color: str) -> pygame.Surface:
+        def load_or_color(name: str, fallback_color: Tuple[int, int, int]) -> pygame.Surface:
             path: str = os.path.join(ASSET_DIR, f"{name}.png")
             if os.path.exists(path):
                 img: pygame.Surface = pygame.image.load(path).convert_alpha()
-                img: pygame.Surface = pygame.transform.scale(img, (TILE_SIZE, TILE_SIZE))
+                img = pygame.transform.scale(img, (TILE_SIZE, TILE_SIZE))
                 if name in {"key", "goal", "door", "door_unlocked"}:
-                    base = images["empty"].copy()
+                    base: pygame.Surface = images["empty"].copy()
                     base.blit(img, (0, 0))
                     return base
                 return img
@@ -52,10 +49,10 @@ class TileSet:
 
         return images
 
-    def get_image(self, tile_index) -> pygame.Surface:
+    def get_image(self, tile_index: int) -> pygame.Surface:
         return self.images[self.tiles[tile_index]]
 
-    def get_tile_name(self, tile_index) -> str:
+    def get_tile_name(self, tile_index: int) -> str:
         return self.tiles[tile_index]
 
 
@@ -66,22 +63,22 @@ class Game:
     def __init__(self) -> None:
         self.screen: pygame.Surface = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("Tile Puzzle")
-        self.clock = pygame.time.Clock()
+        self.clock: pygame.time.Clock = pygame.time.Clock()
 
-        self.tileset = TileSet()
-        self.levels = self.load_levels()
-        self.level_index = 0
+        self.tileset: TileSet = TileSet()
+        self.levels: List[List[List[int]]] = self.load_levels()
+        self.level_index: int = 0
 
         ###############################
         # added to hold a list of doors
-        self.doors = []
+        self.doors: List[Door] = []
         # if an object class is created for keys and goals as well, could
         # create an object array in the same way and simplify updates
         ###############################
-        self.door_unlock_time = None
+        self.door_unlock_time: int | None = None
         self.load_level(self.level_index)
 
-    def load_levels(self) -> List[List[int]]:
+    def load_levels(self) -> List[List[List[int]]]:
         return [
             [
                 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -127,11 +124,11 @@ class Game:
             ]
         ]
 
-    def load_level(self, index) -> None:
-        self.maze = self.levels[index]
+    def load_level(self, index: int) -> None:
+        self.maze: List[List[int]] = self.levels[index]
         ###############################
         self.doors = []  # reset list of doors for the level
-        self.player = Player((1 * TILE_SIZE, 1 * TILE_SIZE))
+        self.player: Player = Player((1 * TILE_SIZE, 1 * TILE_SIZE))
 
         if index == 2:
             self.enemies = [
@@ -149,8 +146,8 @@ class Game:
         for row in range(len(self.maze)):
             for col in range(len(self.maze[0])):
                 if self.maze[row][col] == 3:
-                    door_pos = (col * TILE_SIZE, row * TILE_SIZE)
-                    door = Door(door_pos, LockedDoorState())
+                    door_pos: Tuple[int, int] = (col * TILE_SIZE, row * TILE_SIZE)
+                    door: Door = Door(door_pos, LockedDoorState())
                     self.doors.append(door)
 
         self.door_unlock_time = None
@@ -159,11 +156,11 @@ class Game:
         self.screen.fill((0, 0, 0))
         for row in range(len(self.maze)):
             for col in range(len(self.maze[row])):
-                tile_value = self.maze[row][col]
+                tile_value: int = self.maze[row][col]
                 ###################################
                 # need to add in the empty tile image behind doors:
                 if tile_value in {TILE_WALL, TILE_GOAL, TILE_KEY}:
-                    tile_img = self.tileset.get_image(tile_value)
+                    tile_img: pygame.Surface = self.tileset.get_image(tile_value)
                 else:
                     # filles in the empty and tilespots behind doors:
                     tile_img = self.tileset.get_image(TILE_EMPTY)
@@ -200,7 +197,7 @@ class Game:
             if self.player.collides_with(door):
                 door.interact(self.player, self.maze)
 
-        if tile_name: str == 'goal':
+        if tile_name == 'goal':
             print("Level complete!")
             self.level_index += 1
             if self.level_index < len(self.levels):
@@ -219,7 +216,7 @@ class Game:
             self.single_iteration()
 
     def single_iteration(self) -> None:
-        self.player.update(self.maze)
+        self.player.update(self.maze, self.doors)
         for enemy in self.enemies:
             enemy.update(self.maze, self.player)
         self.update()
