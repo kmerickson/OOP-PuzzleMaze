@@ -225,7 +225,7 @@ class Game:
         self.draw()
         self.clock.tick(FPS)
 
-
-def game_loop():
-    Game().run()
-
+    @staticmethod
+    def game_loop() -> None:
+        game_iteration = Game()
+        game_iteration.run()

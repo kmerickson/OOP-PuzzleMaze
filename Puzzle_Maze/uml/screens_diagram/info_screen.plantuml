@@ -1,0 +1,35 @@
+@startuml
+scale 2
+title "Info Screen"
+class InfoScreen implements Screen{
+    .. Instance Variables ..
+    _main_text: GameText
+    _body_text_line1: GameText
+    _body_text_line2: GameText
+    _body_text_line3: GameText
+    _body_text_line4: GameText
+    _back_button: GameButton
+
+    + main_text: GameText
+    + body_text_line1: GameText
+    + body_text_line2: GameText
+    + body_text_line3: GameText
+    + body_text_line4: GameText
+    + back_button: GameButton
+    .. Class Variables .. 
+    - BACKGROUND_COLOR: str
+    - X_FACTOR: float
+    - Y_FACTOR_MAIN_TEXT: float
+    - FACTOR_FOR_TEXT_SIZE: float
+    - SIZE_FOR_LINES: int
+    - Y_FACTOR_LINE_1: float
+    - Y_FACTOR_LINE_2: float
+    - Y_FACTOR_LINE_3: float 
+    - Y_FACTOR_LINE_4: float
+    - Y_FACTOR_BACK_BUTTON: float
+    .. Instance Methods ..
+    + __init__(): None
+    + draw_screen(): None
+    + adjust_to_screen(): None
+}
+@enduml

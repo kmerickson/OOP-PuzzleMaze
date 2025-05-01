@@ -16,6 +16,8 @@ from typing import List, Tuple
 from io import StringIO
 import pytest
 import sys
+from hypothesis import given
+from hypothesis.strategies import integers
 
 class TestGame(unittest.TestCase):
     """Unittesting Movie Title class
@@ -297,4 +299,42 @@ class TestGame(unittest.TestCase):
         tile_class = TileSet()
         self.assertEqual(tile_class.get_tile_name(tile), tile_name)
 
+    @given(integers(min_value=6))
+    def test_get_tile_name_invalid(self, tile):
+        with self.assertRaises(IndexError):
+            tile_class = TileSet()
+            tile_class.get_tile_name(tile)
+
+    @patch('pygame.event.get')
+    @patch('sys.exit', side_effect=SystemExit)
+    def test_run_quit(self, mock_exit, mock_event_get):
+        self._game = Game()
+
+        mock_event_get.return_value = [pygame.event.Event(pygame.QUIT)]
+
+        with self.assertRaises(SystemExit):
+            self._game.run()
+        mock_exit.assert_called_once()
+
+    @patch('pygame.event.get')
+    @patch('sys.exit', side_effect=SystemExit)
+    def test_run_functions(self, mock_exit, mock_event_queue):
+        self._game = Game()
+        self._game.single_iteration = MagicMock()
+
+        mock_event_queue.side_effect = [
+            [],
+            [pygame.event.Event(pygame.QUIT)]
+        ]
+
+        with self.assertRaises(SystemExit):
+            self._game.run()
+
+        self._game.single_iteration.assert_called_once()
+        mock_exit.assert_called_once()
+
+    @patch.object(Game, 'run')
+    def test_game_loop(self, mock_run: MagicMock) -> None:
+        Game.game_loop()
+        mock_run.assert_called_once()
         
