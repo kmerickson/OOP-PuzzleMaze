@@ -1,0 +1,58 @@
+@startuml
+
+class GameObject {
+    -name: str
+    -image: Surface
+    -rect: Rect
+    +draw(screen): void
+    +update(): void
+    +move_to(x: int, y: int): void
+    +collides_with(other: GameObject): bool
+    +change_img(new_img: Surface): void
+}
+
+class Player {
+    -key_count: int
+    -last_move_time: int
+    +update(maze: list, doors: list): void
+}
+
+class Enemy {
+    -velocity: int
+    -last_move_time: int
+    +update(maze: list, player: GameObject): void
+}
+
+class Door {
+    -_state: ObjectState
+    +transition_to(state: ObjectState): void
+    +interact(player: Player, maze: list): void
+    +update(): void
+}
+
+abstract class ObjectState {
+    -_context: T
+    +handle(player: Player, maze: list): void
+    +update(): void
+}
+
+class LockedDoorState {
+    +handle(player: Player, maze: list): void
+    +update(): void
+    +is_passable(): bool
+}
+
+class UnlockedDoorState {
+    +handle(player: Player, maze: list): void
+    +update(): void
+    +is_passable(): bool
+}
+
+GameObject <|-- Player
+GameObject <|-- Enemy
+GameObject <|-- Door
+ObjectState <|-- LockedDoorState
+ObjectState <|-- UnlockedDoorState
+Door --> ObjectState
+
+@enduml

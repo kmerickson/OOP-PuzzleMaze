@@ -1,0 +1,32 @@
+@startuml
+
+class Game {
+    -screen: Surface
+    -clock: Clock
+    -tileset: TileSet
+    -levels: list
+    -level_index: int
+    -doors: list
+    -door_unlock_time: int
+    -player: Player
+    -enemies: list
+    +load_level(index: int): void
+    +draw(): void
+    +update(): void
+    +run(): void
+    +single_iteration(): void
+}
+
+class TileSet {
+    -tiles: list
+    -images: dict
+    +get_image(tile_index: int): Surface
+    +get_tile_name(tile_index: int): str
+}
+
+Game --> TileSet
+Game --> Player
+Game --> Enemy
+Game --> Door
+
+@enduml
