@@ -5,8 +5,9 @@ RUN apt update \
   g++ gcc make sqlite3 time curl git nano dos2unix \
   net-tools iputils-ping iproute2 sudo gdb less \
   # dependencies for pygame:
-  libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev \
-  libsmpeg-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev libfreetype6-dev \
+  python3-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev \
+  libsdl1.2-dev libsmpeg-dev libportmidi-dev libavformat-dev libswscale-dev \
+  libjpeg-dev libfreetype6-dev \
   && apt clean
 
 
@@ -30,6 +31,7 @@ RUN useradd -m -s /bin/bash -N -u $UID $USER && \
 WORKDIR ${HOME}
 
 RUN pip install --upgrade pip
+RUN pip install pygame
 
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
