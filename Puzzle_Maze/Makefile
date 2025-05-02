@@ -13,7 +13,7 @@ kattis-test:
 	@kattis test
 
 unittest:
-	$(PYTHON) -m pytest -v
+	$(PYTHON) -m pytest -v --cov
 
 clean:
 	find . -type d -name ".pytest_cache" -exec rm -rf {} +
