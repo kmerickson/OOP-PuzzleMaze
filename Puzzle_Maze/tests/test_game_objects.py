@@ -38,6 +38,7 @@ class DummyScreen:
 
 class Pressed:
     """Emulates pygame.key.get_pressed() for arbitrary key constants."""
+
     def __init__(self, key):
         self.key = key
 
@@ -111,7 +112,7 @@ class TestPlayer(unittest.TestCase):
         for (r, c), v in mod.items():
             maze[r][c] = v
         with mock.patch('pygame.key.get_pressed', return_value=Pressed(key)), \
-             mock.patch('pygame.time.get_ticks', return_value=after):
+                mock.patch('pygame.time.get_ticks', return_value=after):
             p.update(maze, [])
         return p, maze
 
@@ -137,18 +138,20 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(p.rect.topleft, (0, TILE_SIZE))
 
     def test_move_unlocked(self):
-        p, _ = self.simulate(pygame.K_RIGHT, 0, PLAYER_MOVE_DELAY + 1, (0, 0), {(0, 1): TILE_UNLOCKED})
+        p, _ = self.simulate(pygame.K_RIGHT, 0, PLAYER_MOVE_DELAY +
+                             1, (0, 0), {(0, 1): TILE_UNLOCKED})
         self.assertEqual(p.rect.topleft, (TILE_SIZE, 0))
 
     def test_pickup_and_open(self):
         p, _ = self.simulate(pygame.K_DOWN, 0, PLAYER_MOVE_DELAY + 1, (0, 0), {(1, 0): TILE_KEY})
         self.assertEqual(p.key_count, 1)
-        door_maze = [[TILE_DOOR if (r, c) == (2, 0) else TILE_EMPTY for c in range(5)] for r in range(5)]
+        door_maze = [[TILE_DOOR if (r, c) == (2, 0) else TILE_EMPTY for c in range(5)]
+                     for r in range(5)]
         p2 = Player((0, 3 * TILE_SIZE), image=self.surface)
         p2.key_count = 1
         door = Door((0, 2 * TILE_SIZE), LockedDoorState())
         with mock.patch('pygame.key.get_pressed', return_value=Pressed(pygame.K_UP)), \
-             mock.patch('pygame.time.get_ticks', return_value=PLAYER_MOVE_DELAY + 1):
+                mock.patch('pygame.time.get_ticks', return_value=PLAYER_MOVE_DELAY + 1):
             p2.update(door_maze, [door])
         self.assertEqual(p2.key_count, 0)
         self.assertEqual(door_maze[2][0], TILE_UNLOCKED)
@@ -240,9 +243,10 @@ class TestEnemy(unittest.TestCase):
         e.last_move_time = 0
         pygame.event.clear()
         with mock.patch('pygame.time.get_ticks', return_value=ENEMY_MOVE_DELAY + 1), \
-             mock.patch('builtins.print') as mock_print:
+                mock.patch('builtins.print') as mock_print:
             e.update([[TILE_EMPTY]], player)
         mock_print.assert_called_with("You Died!")
+
 
 class TestDefaultImageLoading(unittest.TestCase):
     def setUp(self):
@@ -258,10 +262,10 @@ class TestDefaultImageLoading(unittest.TestCase):
         mock_surf = DummySurface()
         mock_load.return_value = mock_surf
         with mock.patch('pygame.transform.scale') as mock_scale:
-            p = Player((0, 0))
+            _ = Player((0, 0))
         mock_load.assert_called_once_with("assets/player.png")
         self.assertTrue(mock_scale.called)
-        # verify scale called with correct size
+        # verify scaling size
         posargs = mock_scale.call_args[0]
         self.assertEqual(posargs[1], (TILE_SIZE, TILE_SIZE))
 
@@ -271,8 +275,9 @@ class TestDefaultImageLoading(unittest.TestCase):
         mock_surf = DummySurface()
         mock_load.return_value = mock_surf
         with mock.patch('pygame.transform.scale') as mock_scale:
-            e = Enemy((0, 0))
+            _ = Enemy((0, 0))
         mock_load.assert_called_once_with("assets/enemy.png")
         self.assertTrue(mock_scale.called)
+        # verify scaling size
         posargs = mock_scale.call_args[0]
         self.assertEqual(posargs[1], (TILE_SIZE, TILE_SIZE))
