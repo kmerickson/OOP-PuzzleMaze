@@ -5,26 +5,6 @@ class Drawable <<abstract>>{
     .. Instance Variables ..
     - _screen: pygame.Surface
     + screen: pygame.Surface
-    - _screen_width: float
-    + _screen_width: float
-    - _screen_height: float
-    + screen_height: float
-    - _factor_of_x_pos: float
-    + factor_of_x_pos: float
-    - _factor_of_y_pos: float
-    + factor_of_y_pos: float
-    + x_pos: float
-    + y_pos: float
-    - _rect: pygame.Rect | None
-    + rect: pygame.Rect | None
-    - _surface: pygame.Surface | None
-    + surface: pygame.Surface | None
-    - _image_dir: str
-    + image_dir: str
-    - _size: float 
-    + size: float
-    - _data: str
-    + _data: str
     .. Abstract Methods..
     {abstract} + draw(): None
     {abstract}+ dynamically_draw(): None
@@ -33,10 +13,6 @@ class Drawable <<abstract>>{
 
 class Text implements Drawable{
     .. Instance Variables ..
-    - _color: str
-    + color: str
-    - _font: pygame.font.Font
-    + font: pygame.font.Font
     ..Overridden Methods..
     + draw(): void
     + dynamically_draw(): None

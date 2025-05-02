@@ -28,15 +28,7 @@ class MainMenuState implements GameState {
 class ChipsCoreEscape {
     ..Instance Methods..
     - _instance: None | ChipsCoreEscape
-    - _screen: pygame.Surface
-    - _play: Game
-    - _menu: MainMenu
-    - _info: InfoScreen
     - _state: GameState
-    + play : Game
-    + info : InfoScreen
-    + menu : MainMenu
-    + state : GameState
     ..Instance Methods..
     + display_screen() : None
     + handle_user(event: GameEvents) : None

@@ -4,11 +4,6 @@ title "Screens Inheritance Diagram"
     class Screen  <<abstract>>{
     ..Instance Variables..
     - _screen: pygame.Surface
-    - _screen_width: float
-    - _screen_height: float
-    + screen: pygame.Surface
-    + screen_width: float
-    + screen_height: float
     ..Instance Methods..
     + main_loop(): None
     + resize_screen_variables(): None

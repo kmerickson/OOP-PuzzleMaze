@@ -3,18 +3,9 @@ scale 2
 title "Main Menu Class Diagram"
 class MainMenu implements Screen{
     ..Instance Variables..
-    - _background_picture: pygame.Surface
-    - _scaled_picture: pygame.Surface
-    - _play_button: GameButton
-    - _info_button: GameButton
-    - _quit_button: GameButton
-    - _menu_text: GameText
-    + background_picture: pygame.Surface
-    + scaled_picture: pygame.Surface
-    + play_button: GameButton
-    + info_button: GameButton
-    + quit_button: GameButton
-    + main_text: GameText
+    - background_picture: pygame.Surface
+    - text: GameText
+    - buttons: GameButtons
     ..Overridden Methods..
     + adjust_to_screen(): None
     + draw_screen(): None

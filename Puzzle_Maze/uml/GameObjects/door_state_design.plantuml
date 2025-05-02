@@ -2,10 +2,6 @@
 title "State Design for Door Object Diagram"
 
 class GameObject {
-    ..Instance Variables..
-    - name: str
-    - image: pygame.Surface
-    - rect: pygame.Rect
     ..Instance Methods..
     + draw(screen: pygame.Surface) : None
     + update() : None
@@ -15,11 +11,7 @@ class GameObject {
 }
 
 class ObjectState {
-    ..Instance Variables..
-    - _context: T
     ..Instance Methods..
-    + context: T
-    + context(context: GameObject) : None
     + handle(player: Player, maze: list[list[int]]) : None
     + update() : None
 }
@@ -28,7 +20,6 @@ class Door {
     ..Instance Variables..
     - _state: ObjectState[Door]
     ..Instance Methods..
-    + __init__(position: tuple[int, int], state: ObjectState[Door]) : None
     + transition_to(state: ObjectState[Door]) : None
     + interact(player: Player, maze: list[list[int]]) : None
     + update() : None

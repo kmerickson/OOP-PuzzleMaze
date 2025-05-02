@@ -3,18 +3,8 @@ scale 2
 title "Info Screen Class Diagram"
 class InfoScreen implements Screen{
     ..Instance Variables..
-    - _main_text: GameText
-    - _body_text_line1: GameText
-    - _body_text_line2: GameText
-    - _body_text_line3: GameText
-    - _body_text_line4: GameText
-    - _back_button: GameButton
-    + main_text: GameText
-    + body_text_line1: GameText
-    + body_text_line_2: GameText
-    + body_text_line_3: GameText
-    + body_text_line_4: GameText
-    + back_button: GameButton
+    - _text: GameText
+    - button: GameButton
     ..Overridden Methods..
     + adjust_to_screen(): None
     + draw_screen(): None

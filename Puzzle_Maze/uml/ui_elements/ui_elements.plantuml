@@ -3,9 +3,6 @@ scale 2
 title "UI Elements Simplified Diagram"
 class Drawable <<abstract>>{
     .. Instance Methods ..
-    + __init__( screen: pygame.Surface, factor_of_x_pos: float,
-                 factor_of_y_pos: float, image_dir: str,
-                 size: float, data: Any): None
     + _draw_(): None
     + _dynamically_draw_(): None
     - __adjust_to_changes_(): None
@@ -13,9 +10,6 @@ class Drawable <<abstract>>{
 
 class Text implements Drawable{
     .. Instance Methods ..
-    + __init__(self, screen: pygame.Surface, factor_of_x_pos: float,
-                 factor_of_y_pos: float, image_dir: str, size: float,
-                 text: str, color: str): None
     + draw(): void
     + dynamically_draw(): None
     - adjust_to_changes(): None
@@ -24,7 +18,6 @@ class Text implements Drawable{
 
 class DrawableDecorator implements Drawable{
     .. Instance Methods ..
-    + __init__(drawable: Drawable): None
     + draw(): void
     + dynamically_draw(): None
     - adjust_to_changes(): None
@@ -32,8 +25,6 @@ class DrawableDecorator implements Drawable{
 
 class Outline extends DrawableDecorator{
     .. Instance Methods ..
-    +__init__(self, drawable: Text, outline_color: str,
-                 outline_size: float)
     + draw(): void
     + dynamically_draw(): None
     - adjust_to_changes(): None

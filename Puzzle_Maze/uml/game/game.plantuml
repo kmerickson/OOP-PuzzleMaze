@@ -17,12 +17,9 @@ class TileSet {
 class Game {
     .. Instance Variables ..
     - screen: pygame.Surface
-    - clock: pygame.time.Clock
     - tileset: TileSet
     - levels: List[List[int]]
-    - level_index: int
     - doors: List[Door]
-    - door_unlock_time: None | int
 
     .. Instance Methods ..
     + load_levels(): List[List[int]]

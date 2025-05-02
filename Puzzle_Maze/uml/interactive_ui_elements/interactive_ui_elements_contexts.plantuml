@@ -3,23 +3,20 @@ title "Class Diagrams for Contexts in Interactive UI Elements Module"
 class InteractiveDrawable <<abstract>>{
     ..Instance Variables..
     - _state : State
-    + state() : State
-    + state(state : State) : void
+    + state: State
+    ..Instance  Methods..
     + draw() : void
     + handle_event(event : Events) : void
+    ..Abstract Methods..
     + handle_mouse_position() : void
+
+
 }
 
 class InteractiveText implements InteractiveDrawable{
     ..Instance Methods..
-    - _text : Text
-    - _hover_color : str
-    - _color : str
-    - _outline : Outline
-    + text : Text
-    + outline : Outline
-    + hover_color : str
-    + color : str
+    - _text: Text
+    + _text: Text
     ..Overridden Methods..
     + draw() : void
     + handle_mouse_position() : void

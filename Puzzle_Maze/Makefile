@@ -42,7 +42,7 @@ create-cov-report:
 	@echo "Coverage report created in $(DOCS) folder"
 
 .PHONY: uml-diagrams-game
-uml-diagrams:
+uml-diagrams-game:
 	plantuml ./uml/game/game.plantuml
 
 .PHONY: uml-diagrams-game-state

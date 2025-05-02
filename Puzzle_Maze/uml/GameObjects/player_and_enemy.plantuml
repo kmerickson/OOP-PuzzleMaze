@@ -2,10 +2,6 @@
 title "Player and Enemy Diagram"
 scale 2
 class GameObject {
-    ..Instance Variables..
-    - name: str
-    - image: pygame.Surface
-    - rect: pygame.Rect
     ..Instance Methods..
     + draw(screen) : None
     + move_to(x: int, y: int) : None
@@ -17,8 +13,7 @@ class GameObject {
 
 class Player implements GameObject{
     ..Instance Variables..
-    + key_count: int
-    + last_move_time: int
+    + player_info: int
     ..Instance Methods..
     + draw(screen) : None
     - _move(maze: list[list[int]], doors: list[Door], dy: int,
@@ -28,8 +23,7 @@ class Player implements GameObject{
 
 class Enemy implements GameObject{
     ..Instance Variables..
-    - velocity: int
-    - last_move_time: int
+    + enemy_info: int
     ....Overridden Methods..
     + update(maze: list[list[int]], player: GameObject) : None
 }
