@@ -13,7 +13,8 @@ class GameObject {
 
 class Player implements GameObject{
     ..Instance Variables..
-    + player_info: int
+    - key_count: int
+    - last_move_time: int
     ..Instance Methods..
     + draw(screen) : None
     - _move(maze: list[list[int]], doors: list[Door], dy: int,
@@ -23,7 +24,8 @@ class Player implements GameObject{
 
 class Enemy implements GameObject{
     ..Instance Variables..
-    + enemy_info: int
+    - velocity: int
+    - last_move_time: int
     ....Overridden Methods..
     + update(maze: list[list[int]], player: GameObject) : None
 }
