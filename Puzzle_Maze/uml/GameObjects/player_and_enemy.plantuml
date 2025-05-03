@@ -1,0 +1,32 @@
+@startuml
+title "Player and Enemy Diagram"
+scale 2
+class GameObject {
+    ..Instance Methods..
+    + draw(screen) : None
+    + move_to(x: int, y: int) : None
+    + collides_with(other: GameObject) : bool
+    + change_img(new_img: pygame.Surface) : None
+    ..Abstract Methods..
+    {abstract}+ update(*args: Any, **kwargs: Any): None
+}
+
+class Player implements GameObject{
+    ..Instance Variables..
+    - key_count: int
+    - last_move_time: int
+    ..Instance Methods..
+    + draw(screen) : None
+    - _move(maze: list[list[int]], doors: list[Door], dy: int,
+              dx: int, current_time: int)
+    + update(maze: list[list[int]], doors: list[Door]) : None
+}
+
+class Enemy implements GameObject{
+    ..Instance Variables..
+    - velocity: int
+    - last_move_time: int
+    ....Overridden Methods..
+    + update(maze: list[list[int]], player: GameObject) : None
+}
+@enduml

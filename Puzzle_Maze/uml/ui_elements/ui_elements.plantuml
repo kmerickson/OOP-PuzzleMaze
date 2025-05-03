@@ -1,0 +1,41 @@
+@startuml
+scale 2
+title "UI Elements Simplified Diagram"
+class Drawable <<abstract>>{
+    .. Instance Methods ..
+    + _draw_(): None
+    + _dynamically_draw_(): None
+    - __adjust_to_changes_(): None
+}
+
+class Text implements Drawable{
+    .. Instance Methods ..
+    + draw(): void
+    + dynamically_draw(): None
+    - adjust_to_changes(): None
+}
+
+
+class DrawableDecorator implements Drawable{
+    .. Instance Methods ..
+    + draw(): void
+    + dynamically_draw(): None
+    - adjust_to_changes(): None
+}
+
+class Outline extends DrawableDecorator{
+    .. Instance Methods ..
+    + draw(): void
+    + dynamically_draw(): None
+    - adjust_to_changes(): None
+
+}
+
+class Button extends DrawableDecorator{
+    .. Instance Methods ..
+    + __init__(self, drawable: Drawable, image_dir: str)
+    + draw(): void
+    + dynamically_draw(): None
+    - adjust_to_changes(): None
+}
+@enduml

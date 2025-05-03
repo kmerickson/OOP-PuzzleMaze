@@ -1,0 +1,31 @@
+@startuml
+title "Class Diagrams for States for State Design in Interactive UI Elements Module"
+class State <<abstract>>{
+  - drawable : Drawable
+  ..Instance Methods..
+   + draw() : void
+  ..Abstract Methods..
+  + handle_event(outer_class : Any, event : Events) : None
+}
+
+class IdleText implements State{
+ ..Overridden Methods..
+  + handle_event(outer_class : Any, event : Events) : void
+}
+
+class HoverText implements State{
+  ..Overridden Methods..
+  + handle_event(outer_class : Any, event : Events) : void
+}
+
+class IdleButton implements State{
+  ..Overridden Methods..
+  + handle_event(outer_class : Any, event : Events) : void
+}
+
+class HoverButton implements State{
+  ..Overridden Methods..
+  + handle_event(outer_class : Any, event : Events) : void
+}
+
+@enduml

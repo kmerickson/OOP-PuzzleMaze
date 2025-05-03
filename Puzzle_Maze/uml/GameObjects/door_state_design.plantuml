@@ -1,0 +1,50 @@
+@startuml
+title "State Design for Door Object Diagram"
+
+class GameObject {
+    ..Instance Methods..
+    + draw(screen: pygame.Surface) : None
+    + update() : None
+    + move_to(x: int, y: int) : None
+    + collides_with(other: GameObject) : bool
+    + change_img(new_img: pygame.Surface) : None
+}
+
+class ObjectState {
+    ..Instance Methods..
+    + handle(player: Player, maze: list[list[int]]) : None
+    + update() : None
+}
+
+class Door {
+    ..Instance Variables..
+    - _state: ObjectState[Door]
+    ..Instance Methods..
+    + transition_to(state: ObjectState[Door]) : None
+    + interact(player: Player, maze: list[list[int]]) : None
+    + update() : None
+    + draw(screen) : None
+}
+
+class LockedDoorState {
+    ..Instance Methods..
+    + handle(player: Player, maze: list[list[int]]) : None
+    + update() : None
+    + is_passable() : bool
+}
+
+class UnlockedDoorState {
+    ..Instance Methods..
+    + handle(player: Player, maze: list[list[int]]) : None
+    + update() : None
+    + is_passable() : bool
+}
+
+GameObject <|-- Door
+ObjectState <|-- LockedDoorState
+ObjectState <|-- UnlockedDoorState
+Door --> ObjectState : "contains state"
+Door --> "1" LockedDoorState : "can transition to"
+Door --> "1" UnlockedDoorState : "can transition to"
+
+@enduml

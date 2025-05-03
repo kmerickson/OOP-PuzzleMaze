@@ -1,6 +1,11 @@
 """Modules containing various screens that will
   for different states within the game
 """
+
+__author__ = "Jessica Story"
+__date__ = "5/2/25"
+__license__ = "MIT"
+
 from abc import ABC, abstractmethod
 from typing_extensions import override
 import pygame
@@ -10,6 +15,7 @@ from interactive_ui_elements import GameText, GameButton
 class Screen(ABC):
     """Class acting as common interface for screens
     """
+
     def __init__(self, screen: pygame.Surface) -> None:
         """Constructor for screen class
 
@@ -17,7 +23,7 @@ class Screen(ABC):
             screen (pygame.Surface): screen to draw on
         """
         self._screen: pygame.Surface = screen
-        self._screen_width: float = self._screen.get_size()[0] 
+        self._screen_width: float = self._screen.get_size()[0]
         self._screen_height: float = self._screen.get_size()[1]
 
     @abstractmethod
@@ -32,7 +38,7 @@ class Screen(ABC):
         """
         pass
 
-    def main_loop(self):
+    def main_loop(self) -> None:
         """Display screen on its own
         """
         while True:
@@ -50,7 +56,7 @@ class Screen(ABC):
             _screen (pygame.Surface): surface that is drawn on
         """
         return self._screen
-    
+
     @property
     def screen_width(self) -> float:
         """Getter for screen width variable
@@ -70,7 +76,7 @@ class Screen(ABC):
             variable
         """
         return self._screen_height
-    
+
     def resize_screen_variables(self) -> None:
         """Resize size variables after screen change
         """
@@ -102,14 +108,14 @@ class MainMenu(Screen):
             self.BACKGROUND_PICTURE_DIRECTORY)
         self._scaled_picture: pygame.Surface = pygame.transform.scale(
             self._background_picture, (self.screen_width, self.screen_height))
-        
+
         self._play_button: GameButton = GameButton(
             screen, "Play", self.X_FACTOR, self.Y_FACTOR_PLAY_BUTTON)
         self._info_button: GameButton = GameButton(
             screen, "Info", self.X_FACTOR, self.Y_FACTOR_OPTIONS_BUTTON)
         self._quit_button: GameButton = GameButton(
             screen, "Quit", self.X_FACTOR, self.Y_FACTOR_QUIT_BUTTON)
-        self._menu_text = GameText(
+        self._menu_text: GameText = GameText(
             self._screen, "Chip's Core Escape", self.X_FACTOR, self.Y_FACTOR_MENU_TEXT,
             (self.screen_width * self.FACTOR_FOR_MAIN_TEXT_SIZE))
 
@@ -120,7 +126,7 @@ class MainMenu(Screen):
         self.resize_screen_variables()
         self._scaled_picture = pygame.transform.scale(self._background_picture,
                                                       (self.screen_width, self.screen_height))
-        
+
         self._menu_text.text.size = self.screen_width * self.FACTOR_FOR_MAIN_TEXT_SIZE
 
     @override
@@ -133,7 +139,7 @@ class MainMenu(Screen):
         self._play_button.draw()
         self._info_button.draw()
         self._quit_button.draw()
-    
+
     @property
     def background_picture(self) -> pygame.Surface:
         """Getter for background image surface
@@ -143,7 +149,7 @@ class MainMenu(Screen):
             background picture used to draw
         """
         return self._background_picture
-    
+
     @property
     def scaled_picture(self) -> pygame.Surface:
         """Getter for scaled picture variable
@@ -154,7 +160,7 @@ class MainMenu(Screen):
             screen size
         """
         return self._scaled_picture
-    
+
     @property
     def main_text(self) -> GameText:
         """Getter for text variable
@@ -164,7 +170,7 @@ class MainMenu(Screen):
             title card on main menu screen
         """
         return self._menu_text
-    
+
     @property
     def play_button(self) -> GameButton:
         """Getter for play button variable
@@ -174,7 +180,7 @@ class MainMenu(Screen):
             button connected to the play state
         """
         return self._play_button
-    
+
     @property
     def info_button(self) -> GameButton:
         """Getter for info button variable
@@ -184,7 +190,7 @@ class MainMenu(Screen):
             button connected to the info state
         """
         return self._info_button
-    
+
     @property
     def quit_button(self) -> GameButton:
         """Getter for quit button variable
@@ -204,14 +210,14 @@ class InfoScreen(Screen):
     X_FACTOR: float = 0.5
 
     Y_FACTOR_MAIN_TEXT: float = 0.08
-    FACTOR_FOR_TEXT_SIZE: float = 0.3
+    FACTOR_FOR_TEXT_SIZE: float = 0.09
 
-    SIZE_FOR_LINES: int = 70
+    SIZE_FOR_LINES: int = 40
     Y_FACTOR_LINE_1: float = 0.25
     Y_FACTOR_LINE_2: float = 0.35
     Y_FACTOR_LINE_3: float = 0.45
     Y_FACTOR_LINE_4: float = 0.55
-    
+
     Y_FACTOR_BACK_BUTTON: float = 0.85
 
     def __init__(self, screen: pygame.Surface) -> None:
@@ -225,32 +231,32 @@ class InfoScreen(Screen):
         self._main_text: GameText = GameText(
             screen, "Chip's Core Escape:", self.X_FACTOR, self.Y_FACTOR_MAIN_TEXT,
             self.screen_width * self.FACTOR_FOR_TEXT_SIZE)
-        
+
         self._body_text_line1: GameText = GameText(
             self.screen, " is a basic puzzle maze game.", self.X_FACTOR,
             self.Y_FACTOR_LINE_1, self.SIZE_FOR_LINES)
-        
+
         self._body_text_line2: GameText = GameText(
             self._screen, "It features the player going through a maze",
             self.X_FACTOR, self.Y_FACTOR_LINE_2, self.SIZE_FOR_LINES)
-        
+
         self._body_text_line3: GameText = GameText(
             self._screen, "having to avoid enemies while needing items",
             self.X_FACTOR, self.Y_FACTOR_LINE_3, self.SIZE_FOR_LINES)
-        
+
         self._body_text_line4: GameText = GameText(
             self._screen, "to advance. It was developed as our final project.",
             self.X_FACTOR, self.Y_FACTOR_LINE_4, self.SIZE_FOR_LINES)
-        
+
         self._back_button: GameButton = GameButton(
             screen, "Back", self.X_FACTOR, self.Y_FACTOR_BACK_BUTTON)
-    
+
     @override
     def adjust_to_screen(self) -> None:
         """Adjusts variables depending on screen change
         """
         self.resize_screen_variables()
-        self._main_text.size = self.screen_width * self.FACTOR_FOR_TEXT_SIZE
+        self._main_text.text.size = self.screen_width * self.FACTOR_FOR_TEXT_SIZE
 
     @override
     def draw_screen(self) -> None:
@@ -276,7 +282,7 @@ class InfoScreen(Screen):
             on screen
         """
         return self._main_text
-    
+
     @property
     def body_text_line1(self) -> GameText:
         """Getter for body text line 1 variable
@@ -286,7 +292,7 @@ class InfoScreen(Screen):
             line of the body of text displayed
         """
         return self._body_text_line1
-    
+
     @property
     def body_text_line_2(self) -> GameText:
         """Getter for body text line 2 variable
@@ -306,7 +312,7 @@ class InfoScreen(Screen):
             line of the body of text displayed
         """
         return self._body_text_line3
-    
+
     @property
     def body_text_line_4(self) -> GameText:
         """Getter for body text line 4 variable
@@ -316,7 +322,7 @@ class InfoScreen(Screen):
             line of the body of text displayed
         """
         return self._body_text_line4
-    
+
     @property
     def back_button(self) -> GameButton:
         """Getter for the back button

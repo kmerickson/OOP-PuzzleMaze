@@ -1,0 +1,32 @@
+@startuml LogicalView
+title Logical View - High-Level Architecture
+skinparam rankdir TB
+skinparam nodesep 10
+skinparam ranksep 15
+
+class GUI {
+  Renders game interface.
+}
+
+class GameEngine {
+  Controls game flow.
+}
+
+class Maze {
+  Stores maze structure and player movement rules.
+}
+
+class Puzzle {
+  Defines different puzzle types (logic gates, circuits, etc.).
+}
+
+class Player {
+  Manages player state and interactions.
+}
+
+GUI --> GameEngine
+GameEngine --> Maze
+Maze --> Puzzle
+Maze --> Player
+
+@enduml

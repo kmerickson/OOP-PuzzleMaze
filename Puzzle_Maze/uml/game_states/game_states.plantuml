@@ -1,0 +1,45 @@
+@startuml
+title "State Pattern for ChipsCoreEscape"
+
+class GameState <<abstract>>{
+    ..Abstract Methods..
+    + display_screen(outer_class: ChipsCoreEscape) : None
+    + handle_event(outer_class: ChipsCoreEscape, event: GameEvents) : None
+}
+
+class PlayState implements GameState{
+    ..Overridden Methods..
+    + display_screen(outer_class: ChipsCoreEscape) : None
+    + handle_event(outer_class: ChipsCoreEscape, event: GameEvents) : None
+}
+
+class InfoState implements GameState{
+    ..Overridden Methods..
+    + display_screen(outer_class: ChipsCoreEscape) : None
+    + handle_event(outer_class: ChipsCoreEscape, event: GameEvents) : None
+}
+
+class MainMenuState implements GameState {
+    ..Overridden Methods..
+    + display_screen(outer_class: ChipsCoreEscape) : None
+    + handle_event(outer_class: ChipsCoreEscape, event: GameEvents) : None
+}
+
+class ChipsCoreEscape {
+    ..Instance Methods..
+    - _instance: None | ChipsCoreEscape
+    - _state: GameState
+    ..Instance Methods..
+    + display_screen() : None
+    + handle_user(event: GameEvents) : None
+    + chips_core_escape() : void
+    ..Class Methods..
+    + get_instance() : None | ChipsCoreEscape
+    + reset_instance() : None
+    ..Static Methods..
+    + main() : None
+}
+
+ChipsCoreEscape --> GameState : "current state"
+
+@enduml

@@ -2,6 +2,11 @@
    and buttons for the UI. Uses the decorator
    design pattern
 """
+
+__author__ = "Jessica Story"
+__date__ = "5/2/25"
+__license__ = "MIT"
+
 from abc import ABC, abstractmethod
 from typing_extensions import override
 import pygame
@@ -112,7 +117,7 @@ class Drawable(ABC):
             screen width by idealized position on screen
         """
         return self._screen_width * self._factor_of_x_pos
-    
+
     @property
     def factor_of_x_pos(self) -> float:
         """Getter for the factor of x pos variable
@@ -123,9 +128,9 @@ class Drawable(ABC):
             will be on the screen horizontally
         """
         return self._factor_of_x_pos
-    
+
     @factor_of_x_pos.setter
-    def factor_of_x_pos(self, factor_of_x_pos: float) -> float:
+    def factor_of_x_pos(self, factor_of_x_pos: float) -> None:
         """Setter for the factor of x pos variable
 
         Args:
@@ -145,9 +150,9 @@ class Drawable(ABC):
             will be on the screen vertically
         """
         return self._factor_of_y_pos
-    
+
     @factor_of_y_pos.setter
-    def factor_of_y_pos(self, factor_of_y_pos: float) -> float:
+    def factor_of_y_pos(self, factor_of_y_pos: float) -> None:
         """Setter for the factor of y pos variable
 
         Args:
@@ -156,7 +161,7 @@ class Drawable(ABC):
             will be on the screen vertically
         """
         self._factor_of_y_pos = factor_of_y_pos
-    
+
     @property
     def y_pos(self) -> float:
         """Getter for the y (vertical) coordinate

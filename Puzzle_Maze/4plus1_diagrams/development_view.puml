@@ -1,0 +1,33 @@
+@startuml DevelopmentView
+title Development View - Code Organization
+skinparam rankdir TB
+skinparam nodesep 5
+skinparam ranksep 5
+skinparam classPadding 5
+
+class Main {
+  <<Entry Point>>
+}
+
+class GameEngine {
+  Controls levels and rules.
+}
+
+class Maze {
+  Stores grid-based structure.
+}
+
+class Puzzle {
+  Different puzzle logic.
+}
+
+class GUI {
+  Handles rendering and user interaction.
+}
+
+Main --> GameEngine : imports
+Main --> Maze : imports
+Main --> Puzzle : imports
+Main --> GUI : imports
+
+@enduml
