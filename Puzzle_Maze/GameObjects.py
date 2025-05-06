@@ -42,7 +42,7 @@ class GameObject:
         # # print(f"[DEBUG] Setting self.rect.topleft = ({x}, {y})")
         self.rect.topleft = (x, y)
 
-    def collides_with(self, other: 'GameObject') -> bool:
+    def collides_with(self, other: 'GameObject') -> Any:
         """Checks for collision between this object and input object.
         Incorporates the colliderect() function."""
         return self.rect.colliderect(other.rect)

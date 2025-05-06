@@ -21,13 +21,19 @@ clean:
 
 type-check:
 	$(TYPE_CHECK)
+	@echo "Passed mypy test"
 
 style-check:
-	flake8
+	flake8 .
+	@echo "Passed flake8 test"
 
 fix-style:
 	autopep8 --in-place --recursive --aggressive --aggressive .
 
+.PHONY: aesthetics check-style check-types
+aesthetics: check-style check-types
+	@echo "Passed tests regarding following pep8..."
+	
 .PHONY: create-docs-folder
 create-docs-folder:
 	mkdir -p $(DOCS)
