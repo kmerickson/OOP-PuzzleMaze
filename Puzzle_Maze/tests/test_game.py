@@ -5,17 +5,16 @@ __author__ = "Jessica Story"
 __date__ = "5/2/25"
 __license__ = "MIT"
 
+from unittest.mock import patch, MagicMock
+from typing import List, Tuple
 import unittest
 import sys
 from io import StringIO
 from hypothesis import given
-from hypothesis.strategies import integers
-from unittest.mock import patch, MagicMock
-from typing import List, Tuple
+from hypothesis.strategies import integers, sampled_from
 from game import TileSet, Game
 from GameObjects import Enemy
 import pygame
-from hypothesis.strategies import sampled_from
 
 
 class TestGame(unittest.TestCase):
@@ -71,7 +70,6 @@ class TestGame(unittest.TestCase):
         """
         pygame.init()
         self._game: Game = Game()
-        self._tile_class: TileSet = TileSet()
 
     @given(integers(min_value=0, max_value=2))
     def test_load_levels(self, index: int) -> None:
@@ -305,6 +303,14 @@ class TestGame(unittest.TestCase):
         """
         Game.game_loop()
         mock_run.assert_called_once()
+
+
+class TestTileSet(unittest.TestCase):
+    def setUp(self) -> None:
+        """Setup method
+        """
+        pygame.init()
+        self._tile_class: TileSet = TileSet()
 
     @patch('os.path.exists', return_value=False)
     @patch('pygame.Surface')
