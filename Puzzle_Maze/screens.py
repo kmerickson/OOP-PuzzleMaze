@@ -9,7 +9,7 @@ __license__ = "MIT"
 from abc import ABC, abstractmethod
 from typing_extensions import override
 import pygame
-from interactive_ui_elements import GameText, GameButton
+from interactive_drawables import GameButton, GameText
 
 
 class Screen(ABC):

@@ -1,50 +1,46 @@
-"""Module containing classes
-   directly associated with program run.
-   Done via state pattern
-"""
-
-from __future__ import annotations
-from typing_extensions import override
-from typing import TYPE_CHECKING
+from abc import ABC, abstractmethod
+from enum import Enum
 import sys
+from typing import Any
+from typing_extensions import override
 import pygame
 from game import Game
-from game_state import GameEvents, GameState
-
-if TYPE_CHECKING:
-    from chips_core_escape import ChipsCoreEscape
-
-__author__ = "Jessica Story"
-__date__ = "5/2/25"
-__license__ = "MIT"
 
 
-class PlayState(GameState):
-    """The concrete state class of play
+class GameEvents(Enum):
+    """Enum containing
+        all the states the
+        game can be in
     """
-    @override
-    def display_screen(self, outer_class: "ChipsCoreEscape") -> None:
-        """Method to display screen in the play state
+    USER_CLICK = 0,
+    ESCAPE = 1
+
+
+class GameState(ABC):
+    """Base state class
+    """
+    @abstractmethod
+    def display_screen(self, outer_class: Any) -> None:
+        """Method to display screen dependent on current state
 
         Args:
             outer_class (ChipsCoreEscape): the class that
             will contain states
         """
-        outer_class.play.single_iteration()
+        raise NotImplementedError("Subclasses must implement this method")
 
-    @override
-    def handle_event(self, outer_class: "ChipsCoreEscape",
+    @abstractmethod
+    def handle_event(self, outer_class: Any,
                      event: GameEvents) -> None:
         """Method to that decides which events to deal with it and how
-           to deal with them in the play state
+           to deal with them depending on current state
 
         Args:
             outer_class (ChipsCoreEscape): the class that
             will contain states
             event (GameEvents): the event to react to
         """
-        if event == GameEvents.ESCAPE:
-            outer_class.state = MainMenuState()
+        raise NotImplementedError("Subclasses must implement this method")
 
 
 class InfoState(GameState):
@@ -127,3 +123,31 @@ class MainMenuState(GameState):
         if event == GameEvents.ESCAPE:
             pygame.quit()
             sys.exit()
+
+
+class PlayState(GameState):
+    """The concrete state class of play
+    """
+    @override
+    def display_screen(self, outer_class: "ChipsCoreEscape") -> None:
+        """Method to display screen in the play state
+
+        Args:
+            outer_class (ChipsCoreEscape): the class that
+            will contain states
+        """
+        outer_class.play.single_iteration()
+
+    @override
+    def handle_event(self, outer_class: "ChipsCoreEscape",
+                     event: GameEvents) -> None:
+        """Method to that decides which events to deal with it and how
+           to deal with them in the play state
+
+        Args:
+            outer_class (ChipsCoreEscape): the class that
+            will contain states
+            event (GameEvents): the event to react to
+        """
+        if event == GameEvents.ESCAPE:
+            outer_class.state = MainMenuState()

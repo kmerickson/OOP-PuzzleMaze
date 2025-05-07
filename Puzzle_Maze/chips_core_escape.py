@@ -1,7 +1,6 @@
 from typing import Optional
-from game_states import MainMenuState
+from game_states import MainMenuState, GameEvents, GameState
 from screens import MainMenu, InfoScreen
-from game_state import GameEvents, GameState
 import pygame
 from game import Game
 import sys

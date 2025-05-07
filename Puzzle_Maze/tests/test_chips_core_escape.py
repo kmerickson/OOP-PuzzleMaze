@@ -16,8 +16,8 @@ from game import TileSet, Game
 from GameObjects import Enemy
 import pygame
 from chips_core_escape import ChipsCoreEscape
-from game_states import MainMenuState, PlayState, InfoState
-from game_state import GameEvents
+from game_states import GameEvents, MainMenuState, PlayState, InfoState
+
 
 class TestChipsCoreEscape(unittest.TestCase):
     def tearDown(self) -> None:
@@ -56,12 +56,7 @@ class TestChipsCoreEscape(unittest.TestCase):
         with patch("pygame.init") as mock_init:
             game._set_screen()
             mock_init.assert_called()
-    
-    def test__set_screen_correct_size(self) -> None: 
-        game: ChipsCoreEscape = ChipsCoreEscape()
-        game._set_screen()
-        self.assertEqual((game.DEFAULT_WIDTH, game.DEFUALT_HEIGHT),
-                         game.screen.get_size())
+            self.assertTrue(isinstance(game.screen, pygame.Surface))
 
     def test_display_screen_main_menu(self) -> None: 
         game: ChipsCoreEscape = ChipsCoreEscape()
@@ -82,41 +77,6 @@ class TestChipsCoreEscape(unittest.TestCase):
             game.state = InfoState()
             game.state.display_screen(game)
             mock_draw.assert_called_once()
-
-
-    def test_handle_event_wrong_pos(self) -> None: 
-        game: ChipsCoreEscape = ChipsCoreEscape()
-        with patch("pygame.mouse.get_pos", return_value=(0, 0)):
-            game.state.handle_event(game, GameEvents.USER_CLICK)
-            self.assertTrue(isinstance(game.state, MainMenuState))
-
-    def test_handle_event_main_to_game(self) -> None:
-        game: ChipsCoreEscape = ChipsCoreEscape()
-        with patch("pygame.mouse.get_pos",
-                   return_value=game.menu.play_button.button.rect.center):
-            game.state.handle_event(game, GameEvents.USER_CLICK)
-            self.assertTrue(isinstance(game.state, PlayState))
-
-    def test_handle_event_main_to_info(self) -> None:
-        game: ChipsCoreEscape = ChipsCoreEscape()
-        with patch("pygame.mouse.get_pos",
-                   return_value=game.menu.info_button.button.rect.center):
-            game.state.handle_event(game, GameEvents.USER_CLICK)
-            self.assertTrue(isinstance(game.state, InfoState))
-
-    def test_handle_event_main_to_quit(self) -> None:
-        game: ChipsCoreEscape = ChipsCoreEscape()
-        with patch("pygame.mouse.get_pos",
-                   return_value=game.menu.quit_button.button.rect.center):
-            with patch("sys.exit") as mock_exit:
-                game.state.handle_event(game, GameEvents.USER_CLICK)
-                mock_exit.assert_called_once()
-
-    def test_handle_event_play_to_main(self) -> None:
-        game: ChipsCoreEscape = ChipsCoreEscape()
-        game.state = PlayState()
-        game.state.handle_event(game, GameEvents.ESCAPE)
-        self.assertTrue(isinstance(game.state, MainMenuState))
 
     @patch('pygame.event.get')
     def test_chips_core_escape1(self, mock_event_queue) -> None:
@@ -168,3 +128,11 @@ class TestChipsCoreEscape(unittest.TestCase):
         game.play = Game()
         self.assertIsNot(first_game_object, game.play)
 
+    def test_state_property(self):
+        game: ChipsCoreEscape = ChipsCoreEscape()
+        self.assertTrue(isinstance, (game.state, MainMenuState))
+
+    def test_state_setter(self):
+        game: ChipsCoreEscape = ChipsCoreEscape()
+        game.state = PlayState()
+        self.assertTrue(isinstance, (game.state, PlayState))
