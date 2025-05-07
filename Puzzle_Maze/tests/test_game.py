@@ -310,6 +310,7 @@ class TestTileSet(unittest.TestCase):
         """Setup method
         """
         pygame.init()
+        self._game = Game()
         self._tile_class: TileSet = TileSet()
 
     @patch('os.path.exists', return_value=False)

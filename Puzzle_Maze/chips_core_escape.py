@@ -131,6 +131,7 @@ class ChipsCoreEscape:
             on
         """
         return self._screen
+    
     @classmethod
     def get_instance(cls) -> Optional['ChipsCoreEscape']:
         """Returns the instance of the class

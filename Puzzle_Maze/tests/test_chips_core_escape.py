@@ -62,7 +62,7 @@ class TestChipsCoreEscape(unittest.TestCase):
         game._set_screen()
         self.assertEqual((game.DEFAULT_WIDTH, game.DEFUALT_HEIGHT),
                          game.screen.get_size())
-    
+
     def test_display_screen_main_menu(self) -> None: 
         game: ChipsCoreEscape = ChipsCoreEscape()
         with patch.object(game.menu, "draw_screen") as mock_draw:
@@ -82,6 +82,7 @@ class TestChipsCoreEscape(unittest.TestCase):
             game.state = InfoState()
             game.state.display_screen(game)
             mock_draw.assert_called_once()
+
 
     def test_handle_event_wrong_pos(self) -> None: 
         game: ChipsCoreEscape = ChipsCoreEscape()
@@ -110,3 +111,60 @@ class TestChipsCoreEscape(unittest.TestCase):
             with patch("sys.exit") as mock_exit:
                 game.state.handle_event(game, GameEvents.USER_CLICK)
                 mock_exit.assert_called_once()
+
+    def test_handle_event_play_to_main(self) -> None:
+        game: ChipsCoreEscape = ChipsCoreEscape()
+        game.state = PlayState()
+        game.state.handle_event(game, GameEvents.ESCAPE)
+        self.assertTrue(isinstance(game.state, MainMenuState))
+
+    @patch('pygame.event.get')
+    def test_chips_core_escape1(self, mock_event_queue) -> None:
+        game: ChipsCoreEscape = ChipsCoreEscape()
+        with patch.object(game.state, 'display_screen', autospec=True) as mock_display_screen:
+
+            mock_event_queue.side_effect = [
+                [],
+                [pygame.event.Event(pygame.QUIT)]
+            ]
+            with self.assertRaises(SystemExit):
+                game.chips_core_escape()
+            mock_display_screen.assert_called()
+    
+    @patch('pygame.event.get')
+    def test_chips_core_escape2(self, mock_event_queue) -> None:
+        game: ChipsCoreEscape = ChipsCoreEscape()
+        with patch.object(game.state, 'handle_event', autospec=True) as mock_handle_event:
+
+            mock_event_queue.side_effect = [
+                [pygame.event.Event(pygame.MOUSEBUTTONDOWN)],
+                [pygame.event.Event(pygame.QUIT)]
+            ]
+            with self.assertRaises(SystemExit):
+                game.chips_core_escape()
+            mock_handle_event.assert_called()
+
+    @patch('pygame.event.get')
+    def test_chips_core_escape3(self, mock_event_queue) -> None:
+        game: ChipsCoreEscape = ChipsCoreEscape()
+        with patch.object(game.state, 'handle_event', autospec=True) as mock_handle_event:
+
+            mock_event_queue.side_effect = [
+                [pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE)],
+                [pygame.event.Event(pygame.QUIT)]
+            ]
+            with self.assertRaises(SystemExit):
+                game.chips_core_escape()
+            mock_handle_event.assert_called()
+
+    @patch.object(ChipsCoreEscape, 'chips_core_escape')
+    def test_main(self, mock_chips_core_escape):
+        ChipsCoreEscape.main()
+        mock_chips_core_escape.assert_called_once()
+
+    def test_new_game_instance(self):
+        game: ChipsCoreEscape = ChipsCoreEscape()
+        first_game_object: Game = game.play
+        game.play = Game()
+        self.assertIsNot(first_game_object, game.play)
+
