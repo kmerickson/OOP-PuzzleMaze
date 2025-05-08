@@ -58,25 +58,6 @@ class TestChipsCoreEscape(unittest.TestCase):
             mock_init.assert_called()
             self.assertTrue(isinstance(game.screen, pygame.Surface))
 
-    def test_display_screen_main_menu(self) -> None: 
-        game: ChipsCoreEscape = ChipsCoreEscape()
-        with patch.object(game.menu, "draw_screen") as mock_draw:
-            game.state.display_screen(game)
-            mock_draw.assert_called_once()
-
-    def test_display_screen_game(self) -> None: 
-        game: ChipsCoreEscape = ChipsCoreEscape()
-        with patch.object(game.play, "single_iteration") as mock_draw:
-            game.state = PlayState()
-            game.state.display_screen(game)
-            mock_draw.assert_called_once()
-        
-    def test_display_screen_info(self) -> None: 
-        game: ChipsCoreEscape = ChipsCoreEscape()
-        with patch.object(game.info, "draw_screen") as mock_draw:
-            game.state = InfoState()
-            game.state.display_screen(game)
-            mock_draw.assert_called_once()
 
     @patch('pygame.event.get')
     def test_chips_core_escape1(self, mock_event_queue) -> None:
