@@ -1,27 +1,19 @@
-"""Testing with unittest for game module
+"""Testing with unittest for game_states, and screen_state (inherited ABC) modules
 """
 
 __author__ = "Jessica Story"
 __date__ = "5/2/25"
 __license__ = "MIT"
 
-from unittest.mock import patch, MagicMock
-from typing import List, Tuple
+from unittest.mock import patch
 import unittest
-import sys
-from io import StringIO
-from hypothesis import given
-from hypothesis.strategies import integers, sampled_from
-from Puzzle_Maze.code.game import TileSet, Game
-from Puzzle_Maze.code.GameObjects import Enemy
-import pygame
-from Puzzle_Maze.code.chips_core_escape import ChipsCoreEscape
-from Puzzle_Maze.code.game_ui_logic.game_states import PlayState, MainMenuState, InfoState, ChipsCoreEscapeEvents
-from typing import Any
-import pytest
+from chips_core_escape import ChipsCoreEscape
+from game_states import PlayState, MainMenuState, InfoState, ChipsCoreEscapeEvents
 
 
 class TestChipsCoreEscape(unittest.TestCase):
+    """
+    """
     def tearDown(self) -> None:
         """Tear down method to avoid
             issues with singleton

@@ -3,11 +3,11 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 from enum import Enum
-from Puzzle_Maze.interactive_drawable_state import InteractiveDrawableState
+from interactive_drawable_state import InteractiveDrawableState
 from drawable import Drawable
 
 if TYPE_CHECKING:
-    from Puzzle_Maze.interactive_ui_elements.interactive_text import InteractiveText
+    from interactive_text import InteractiveText
 
 
 class TextEvents(Enum):

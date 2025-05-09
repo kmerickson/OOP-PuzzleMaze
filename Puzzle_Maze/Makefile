@@ -20,10 +20,10 @@ clean:
 	find . -type d -name "__pycache__" -exec rm -rf {} +
 
 type-check:
-	export PYTHONPATH=$(pwd)/code && $(TYPE_CHECK) code/
+	$(TYPE_CHECK)
 
 style-check:
-	export PYTHONPATH=$(pwd)/code && flake8 code/
+	flake8 .
 
 fix-style:
 	autopep8 --in-place --recursive --aggressive --aggressive .
@@ -33,7 +33,7 @@ create-docs-folder:
 	mkdir -p $(DOCS)
 .PHONY: run
 run:
-	export PYTHONPATH=$(shell pwd)/code && python3 -m chips_core_escape
+	python3 chips_core_escape.py
 
 .PHONY: create-docs
 create-docs: create-docs-folder
