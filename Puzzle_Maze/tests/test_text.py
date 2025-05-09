@@ -17,24 +17,31 @@ from GameObjects import Enemy
 import pygame
 from text import Drawable, Text
 
-class TestDrawable(unittest.TestCase):
-    def setUp(self) -> None:
-        """Setup method
-        """
-        pygame.init()
 
-    @patch.object(Drawable, '__abstractmethods__', set())
-    def test_display_screen_base_class(self):
-        class IncompleteDrawable(Drawable):
-            pass
-        state = IncompleteDrawable()
-        with self.assertRaises(NotImplementedError):
-            state.display_screen(None)
+import unittest
+from unittest.mock import MagicMock
+import pygame
+from text import Text
+class TestTextClass(unittest.TestCase):
+    def setUp(self):
 
-    @patch.object(Drawable, '__abstractmethods__', set())
-    def test_handle_event_base_class(self):
-        class IncompleteGameState(GameState):
-            pass
-        state = IncompleteGameState()
-        with self.assertRaises(NotImplementedError):
-            state.handle_event(None, None)
+        self.screen_mock = MagicMock(spec=pygame.Surface)
+        self.screen_mock.blit = MagicMock()
+        
+        self.text = Text(
+            screen=self.screen_mock,
+            factor_of_x_pos=100.0,
+            factor_of_y_pos=100.0,
+            image_dir='path/to/font.ttf',
+            size=30.0,
+            text='Hello, World!',
+            color='blue'
+        )
+
+    def test_draw_method(self):
+        """Test if the draw method is called correctly"""
+        # Call the draw method
+        self.text.draw()
+
+        # Verify if the `blit` method was called on the screen mock
+        self.screen_mock.blit.assert_called_once()

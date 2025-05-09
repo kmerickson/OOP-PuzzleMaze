@@ -16,7 +16,7 @@ from game import TileSet, Game
 from GameObjects import Enemy
 import pygame
 from chips_core_escape import ChipsCoreEscape
-from game_states import GameEvents, MainMenuState, PlayState, InfoState, GameState
+from chips_core_escape_states import PlayState, MainMenuState, InfoState, ChipsCoreEscapeEvents
 from typing import Any
 import pytest
 
@@ -32,27 +32,27 @@ class TestChipsCoreEscape(unittest.TestCase):
     def test_handle_event_wrong_pos(self) -> None: 
         game: ChipsCoreEscape = ChipsCoreEscape()
         with patch("pygame.mouse.get_pos", return_value=(0, 0)):
-            game.state.handle_event(game, GameEvents.USER_CLICK)
+            game.state.handle_event(game, ChipsCoreEscapeEvents.USER_CLICK)
             self.assertTrue(isinstance(game.state, MainMenuState))
 
     def test_handle_event_main_to_game(self) -> None:
         game: ChipsCoreEscape = ChipsCoreEscape()
         with patch("pygame.mouse.get_pos",
                    return_value=game.menu.play_button.button.rect.center):
-            game.state.handle_event(game, GameEvents.USER_CLICK)
+            game.state.handle_event(game, ChipsCoreEscapeEvents.USER_CLICK)
             self.assertTrue(isinstance(game.state, PlayState))
 
     def test_handle_event_main_to_info(self) -> None:
         game: ChipsCoreEscape = ChipsCoreEscape()
         with patch("pygame.mouse.get_pos",
                    return_value=game.menu.info_button.button.rect.center):
-            game.state.handle_event(game, GameEvents.USER_CLICK)
+            game.state.handle_event(game, ChipsCoreEscapeEvents.USER_CLICK)
             self.assertTrue(isinstance(game.state, InfoState))
 
     def test_handle_event_main_to_quit1(self) -> None:
         game: ChipsCoreEscape = ChipsCoreEscape()
         with patch("sys.exit") as mock_exit:
-            game.state.handle_event(game, GameEvents.ESCAPE)
+            game.state.handle_event(game, ChipsCoreEscapeEvents.ESCAPE)
             mock_exit.assert_called_once()
 
     def test_handle_event_main_to_quit2(self) -> None:
@@ -61,12 +61,13 @@ class TestChipsCoreEscape(unittest.TestCase):
                    return_value=game.menu.quit_button.button.rect.center):
             with patch("sys.exit") as mock_exit:
          
-                game.state.handle_event(game, GameEvents.USER_CLICK)
+                game.state.handle_event(game, ChipsCoreEscapeEvents.USER_CLICK)
                 mock_exit.assert_called_once()
+                
     def test_handle_event_play_to_main(self) -> None:
         game: ChipsCoreEscape = ChipsCoreEscape()
         game.state = PlayState()
-        game.state.handle_event(game, GameEvents.ESCAPE)
+        game.state.handle_event(game, ChipsCoreEscapeEvents.ESCAPE)
         self.assertTrue(isinstance(game.state, MainMenuState))
 
     def test_handle_event_info_to_main1(self) -> None:
@@ -74,30 +75,14 @@ class TestChipsCoreEscape(unittest.TestCase):
         game.state = InfoState()
         with patch("pygame.mouse.get_pos",
                    return_value=game.info.back_button.button.rect.center):
-            game.state.handle_event(game, GameEvents.USER_CLICK)
+            game.state.handle_event(game, ChipsCoreEscapeEvents.USER_CLICK)
             self.assertTrue(isinstance(game.state, MainMenuState))
 
     def test_handle_event_info_to_main2(self) -> None:
         game: ChipsCoreEscape = ChipsCoreEscape()
         game.state = InfoState()
-        game.state.handle_event(game, GameEvents.ESCAPE)
+        game.state.handle_event(game, ChipsCoreEscapeEvents.ESCAPE)
         self.assertTrue(isinstance(game.state, MainMenuState))
-
-    @patch.object(GameState, '__abstractmethods__', set())
-    def test_display_screen_base_class(self):
-        class IncompleteGameState(GameState):
-            pass
-        state = IncompleteGameState()
-        with self.assertRaises(NotImplementedError):
-            state.display_screen(None)
-
-    @patch.object(GameState, '__abstractmethods__', set())
-    def test_handle_event_base_class(self):
-        class IncompleteGameState(GameState):
-            pass
-        state = IncompleteGameState()
-        with self.assertRaises(NotImplementedError):
-            state.handle_event(None, None)
 
     def test_display_screen_main_menu(self) -> None: 
         game: ChipsCoreEscape = ChipsCoreEscape()

@@ -1,46 +1,25 @@
-from abc import ABC, abstractmethod
+"""_summary_
+"""
+from __future__ import annotations
+from typing import TYPE_CHECKING
 from enum import Enum
 import sys
-from typing import Any
 from typing_extensions import override
 import pygame
 from game import Game
+from game_state import GameState
+
+if TYPE_CHECKING:
+    from chips_core_escape import ChipsCoreEscape
 
 
-class GameEvents(Enum):
+class ChipsCoreEscapeEvents(Enum):
     """Enum containing
         all the states the
         game can be in
     """
     USER_CLICK = 0,
     ESCAPE = 1
-
-
-class GameState(ABC):
-    """Base state class
-    """
-    @abstractmethod
-    def display_screen(self, outer_class: Any) -> None:
-        """Method to display screen dependent on current state
-
-        Args:
-            outer_class (ChipsCoreEscape): the class that
-            will contain states
-        """
-        raise NotImplementedError("Subclasses must implement this method")
-
-    @abstractmethod
-    def handle_event(self, outer_class: Any,
-                     event: GameEvents) -> None:
-        """Method to that decides which events to deal with it and how
-           to deal with them depending on current state
-
-        Args:
-            outer_class (ChipsCoreEscape): the class that
-            will contain states
-            event (GameEvents): the event to react to
-        """
-        raise NotImplementedError("Subclasses must implement this method")
 
 
 class InfoState(GameState):
@@ -58,18 +37,18 @@ class InfoState(GameState):
 
     @override
     def handle_event(self, outer_class: "ChipsCoreEscape",
-                     event: GameEvents) -> None:
+                     event: ChipsCoreEscapeEvents) -> None:
         """Method to that decides which events to deal with it and how
            to deal with them in the info state
 
         Args:
             outer_class (ChipsCoreEscape): the class that
             will contain states
-            event (GameEvents): the event to react to
+            event (ChipsCoreEscapeEvents): the event to react to
         """
-        if event == GameEvents.ESCAPE:
+        if event == ChipsCoreEscapeEvents.ESCAPE:
             outer_class.state = MainMenuState()
-        if event == GameEvents.USER_CLICK:
+        if event == ChipsCoreEscapeEvents.USER_CLICK:
             mouse_position = pygame.mouse.get_pos()
             if (
                 outer_class.info.back_button.button.rect is not None and
@@ -92,16 +71,16 @@ class MainMenuState(GameState):
         outer_class.menu.draw_screen()
 
     def handle_event(self, outer_class: "ChipsCoreEscape",
-                     event: GameEvents) -> None:
+                     event: ChipsCoreEscapeEvents) -> None:
         """Method to that decides which events to deal with it and how
            to deal with them in the main menu state
 
         Args:
             outer_class (ChipsCoreEscape): the class that
             will contain states
-            event (GameEvents): the event to react to
+            event (ChipsCoreEscapeEvents): the event to react to
         """
-        if event == GameEvents.USER_CLICK:
+        if event == ChipsCoreEscapeEvents.USER_CLICK:
             mouse_position = pygame.mouse.get_pos()
             if (
                 outer_class.menu.play_button.button.rect is not None and
@@ -120,7 +99,7 @@ class MainMenuState(GameState):
             ):
                 pygame.quit()
                 sys.exit()
-        if event == GameEvents.ESCAPE:
+        if event == ChipsCoreEscapeEvents.ESCAPE:
             pygame.quit()
             sys.exit()
 
@@ -140,14 +119,14 @@ class PlayState(GameState):
 
     @override
     def handle_event(self, outer_class: "ChipsCoreEscape",
-                     event: GameEvents) -> None:
+                     event: ChipsCoreEscapeEvents) -> None:
         """Method to that decides which events to deal with it and how
            to deal with them in the play state
 
         Args:
             outer_class (ChipsCoreEscape): the class that
             will contain states
-            event (GameEvents): the event to react to
+            event (ChipsCoreEscapeEvents): the event to react to
         """
-        if event == GameEvents.ESCAPE:
+        if event == ChipsCoreEscapeEvents.ESCAPE:
             outer_class.state = MainMenuState()

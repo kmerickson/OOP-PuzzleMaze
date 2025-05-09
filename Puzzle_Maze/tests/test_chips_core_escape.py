@@ -16,7 +16,7 @@ from game import TileSet, Game
 from GameObjects import Enemy
 import pygame
 from chips_core_escape import ChipsCoreEscape
-from game_states import GameEvents, MainMenuState, PlayState, InfoState
+from chips_core_escape_states import MainMenuState, PlayState
 
 
 class TestChipsCoreEscape(unittest.TestCase):

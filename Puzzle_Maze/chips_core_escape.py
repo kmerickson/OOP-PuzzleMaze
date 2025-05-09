@@ -1,9 +1,12 @@
+"""
+"""
 from typing import Optional
-from game_states import MainMenuState, GameEvents, GameState
-from screens import MainMenu, InfoScreen
-import pygame
-from game import Game
 import sys
+import pygame
+from chips_core_escape_states import MainMenuState, ChipsCoreEscapeEvents
+from game_state import GameState
+from chips_core_escape_screens import MainMenu, InfoScreen
+from game import Game
 
 
 class ChipsCoreEscape:
@@ -42,11 +45,11 @@ class ChipsCoreEscape:
         """
         self._state.display_screen(self)
 
-    def handle_user(self, event: GameEvents) -> None:
+    def handle_user(self, event: ChipsCoreEscapeEvents) -> None:
         """Handle user events based on current state
 
         Args:
-            event (GameEvents): event to consider
+            event (ChipsCoreEscapeEvents): event to consider
         """
         self._state.handle_event(self, event)
 
@@ -60,9 +63,9 @@ class ChipsCoreEscape:
                     pygame.quit()
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    self.handle_user(GameEvents.USER_CLICK)
+                    self.handle_user(ChipsCoreEscapeEvents.USER_CLICK)
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                    self.handle_user(GameEvents.ESCAPE)
+                    self.handle_user(ChipsCoreEscapeEvents.ESCAPE)
             pygame.display.update()
 
     @property
