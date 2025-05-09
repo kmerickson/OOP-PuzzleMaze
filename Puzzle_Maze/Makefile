@@ -1,5 +1,5 @@
 PYTHON = python3
-TYPE_CHECK = mypy --strict --allow-untyped-decorators --ignore-missing-imports --explicit-package-bases .
+TYPE_CHECK = mypy --strict --allow-untyped-decorators --ignore-missing-imports --explicit-package-bases --follow-imports=normal
 #TYPE_CHECK = mypy --strict --allow-untyped-decorators --ignore-missing-imports .
 STYLE_CHECK = flake8
 DOCS = docs
@@ -20,10 +20,10 @@ clean:
 	find . -type d -name "__pycache__" -exec rm -rf {} +
 
 type-check:
-	$(TYPE_CHECK)
+	export PYTHONPATH=$(pwd)/code && $(TYPE_CHECK) code/
 
 style-check:
-	flake8 .
+	export PYTHONPATH=$(pwd)/code && flake8 code/
 
 fix-style:
 	autopep8 --in-place --recursive --aggressive --aggressive .

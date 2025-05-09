@@ -2,9 +2,9 @@
 """
 from typing_extensions import override
 import pygame
-from ui_elements.drawable import Drawable
-from ui_elements.text import Text
-from ui_elements.drawable_decorator import DrawableDecorator
+from drawable import Drawable
+from text import Text
+from drawable_decorator import DrawableDecorator
 
 
 class Outline(DrawableDecorator):

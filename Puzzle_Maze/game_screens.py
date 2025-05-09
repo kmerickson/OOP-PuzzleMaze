@@ -8,8 +8,8 @@ __license__ = "MIT"
 
 from typing_extensions import override
 import pygame
-from game_ui_logic.game_ui_elements import GameText, GameButton
-from game_ui_logic.screen import Screen
+from game_ui_elements import GameText, GameButton
+from screen import Screen
 
 
 class MainMenu(Screen):

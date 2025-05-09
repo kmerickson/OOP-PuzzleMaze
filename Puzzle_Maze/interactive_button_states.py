@@ -3,14 +3,14 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 from enum import Enum
-from interactive_ui_elements.interactive_drawable_state import InteractiveDrawableState
-from ui_elements.drawable import Drawable
+from interactive_drawable_state import InteractiveDrawableState
+from drawable import Drawable
 
 if TYPE_CHECKING:
-    from Puzzle_Maze.interactive_ui_elements.interactive_text import InteractiveText
+    from Puzzle_Maze.interactive_ui_elements.interactive_button import InteractiveButton
 
 
-class TextEvents(Enum):
+class ButtonEvents(Enum):
     """Enum containing
         all the states UI
         elements can be in
@@ -19,12 +19,12 @@ class TextEvents(Enum):
     HOVER = 1
 
 
-class IdleText(InteractiveDrawableState):
-    """Deals with text when it's in an idle state
+class IdleButton(InteractiveDrawableState):
+    """Deals with buttons when they're in an idle state
     """
 
     def __init__(self, drawable: Drawable) -> None:
-        """Constructor for IdleText class
+        """Constructor for IdleButton class
 
         Args:
             drawable (Drawable): The drawable
@@ -32,24 +32,25 @@ class IdleText(InteractiveDrawableState):
         """
         super().__init__(drawable)
 
-    def handle_event(self, outer_class: 'InteractiveText', event: TextEvents) -> None:
+    def handle_event(self, outer_class: 'InteractiveButton', event: ButtonEvents) -> None:
         """Switches state depending on given event
 
         Args:
             outer_class (Any): Object to change state of
             event (Events): Event that determines state
         """
-        if event == TextEvents.HOVER:
+        if event == ButtonEvents.HOVER:
+            outer_class.button.drawable = outer_class.outline
             outer_class.text.color = outer_class.hover_color
-            outer_class.state = HoverText(outer_class.outline)
+            outer_class.state = HoverButton(outer_class.button)
 
 
-class HoverText(InteractiveDrawableState):
-    """Deals with text when it's in a hover state
+class HoverButton(InteractiveDrawableState):
+    """Deals with buttons when they're in a hover state
     """
 
     def __init__(self, drawable: Drawable) -> None:
-        """Constructor for HoverText class
+        """Constructor for HoverButton class
 
         Args:
             drawable (Drawable): The drawable
@@ -57,13 +58,14 @@ class HoverText(InteractiveDrawableState):
         """
         super().__init__(drawable)
 
-    def handle_event(self, outer_class: 'InteractiveText', event: TextEvents) -> None:
+    def handle_event(self, outer_class: 'InteractiveButton', event: ButtonEvents) -> None:
         """Switches state depending on given event
 
         Args:
             outer_class (Any): Object to change state of
             event (Events): Event that determines state
         """
-        if event == TextEvents.IDLE:
+        if event == ButtonEvents.IDLE:
+            outer_class.button.drawable = outer_class.text
             outer_class.text.color = outer_class.color
-            outer_class.state = IdleText(outer_class.text)
+            outer_class.state = IdleButton(outer_class.button)

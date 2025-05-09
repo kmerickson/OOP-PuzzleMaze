@@ -3,9 +3,9 @@
 from typing import Optional
 import sys
 import pygame
-from game_ui_logic.game_states import MainMenuState, ChipsCoreEscapeEvents
-from game_ui_logic.screen_state import ScreenState
-from game_ui_logic.game_screens import MainMenu, InfoScreen
+from game_states import MainMenuState, ChipsCoreEscapeEvents
+from screen_state import ScreenState
+from game_screens import MainMenu, InfoScreen
 from game import Game
 
 

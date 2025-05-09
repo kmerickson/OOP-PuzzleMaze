@@ -2,7 +2,7 @@
 """
 from typing import Any
 from abc import ABC, abstractmethod
-from ui_elements.drawable import Drawable
+from drawable import Drawable
 
 
 class InteractiveDrawableState(ABC):

@@ -7,10 +7,10 @@ import sys
 from typing_extensions import override
 import pygame
 from game import Game
-from game_ui_logic.screen_state import ScreenState
+from screen_state import ScreenState
 
 if TYPE_CHECKING:
-    from Puzzle_Maze.code.chips_core_escape import ChipsCoreEscape
+    from Puzzle_Maze.chips_core_escape import ChipsCoreEscape
 
 
 class ChipsCoreEscapeEvents(Enum):
