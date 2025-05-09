@@ -50,14 +50,13 @@ class TestChipsCoreEscape(unittest.TestCase):
         self.assertIs(instance1, instance2)
         ChipsCoreEscape.reset_instance()
         self.assertIsNone(ChipsCoreEscape._instance)
-    
-    def test__set_screen_calls_pygame(self) -> None: 
+
+    def test__set_screen_calls_pygame(self) -> None:
         game: ChipsCoreEscape = ChipsCoreEscape()
         with patch("pygame.init") as mock_init:
             game._set_screen()
             mock_init.assert_called()
             self.assertTrue(isinstance(game.screen, pygame.Surface))
-
 
     @patch('pygame.event.get')
     def test_chips_core_escape1(self, mock_event_queue) -> None:
@@ -71,7 +70,7 @@ class TestChipsCoreEscape(unittest.TestCase):
             with self.assertRaises(SystemExit):
                 game.chips_core_escape()
             mock_display_screen.assert_called()
-    
+
     @patch('pygame.event.get')
     def test_chips_core_escape2(self, mock_event_queue) -> None:
         game: ChipsCoreEscape = ChipsCoreEscape()

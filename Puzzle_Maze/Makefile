@@ -23,7 +23,7 @@ type-check:
 	$(TYPE_CHECK)
 
 style-check:
-	flake8
+	flake8 .
 
 fix-style:
 	autopep8 --in-place --recursive --aggressive --aggressive .

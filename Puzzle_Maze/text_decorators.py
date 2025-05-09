@@ -1,7 +1,8 @@
 """
 """
 from typing_extensions import override
-from text import Drawable, Text
+from drawable import Drawable
+from text import Text
 import pygame
 from drawable_decorator import DrawableDecorator
 

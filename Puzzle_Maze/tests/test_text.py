@@ -22,12 +22,14 @@ import unittest
 from unittest.mock import MagicMock
 import pygame
 from text import Text
+
+
 class TestTextClass(unittest.TestCase):
     def setUp(self):
 
         self.screen_mock = MagicMock(spec=pygame.Surface)
         self.screen_mock.blit = MagicMock()
-        
+
         self.text = Text(
             screen=self.screen_mock,
             factor_of_x_pos=100.0,

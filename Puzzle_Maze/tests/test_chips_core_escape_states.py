@@ -20,6 +20,7 @@ from chips_core_escape_states import PlayState, MainMenuState, InfoState, ChipsC
 from typing import Any
 import pytest
 
+
 class TestChipsCoreEscape(unittest.TestCase):
     def tearDown(self) -> None:
         """Tear down method to avoid
@@ -29,7 +30,7 @@ class TestChipsCoreEscape(unittest.TestCase):
         ChipsCoreEscape.reset_instance()
         return super().tearDown()
 
-    def test_handle_event_wrong_pos(self) -> None: 
+    def test_handle_event_wrong_pos(self) -> None:
         game: ChipsCoreEscape = ChipsCoreEscape()
         with patch("pygame.mouse.get_pos", return_value=(0, 0)):
             game.state.handle_event(game, ChipsCoreEscapeEvents.USER_CLICK)
@@ -60,10 +61,10 @@ class TestChipsCoreEscape(unittest.TestCase):
         with patch("pygame.mouse.get_pos",
                    return_value=game.menu.quit_button.button.rect.center):
             with patch("sys.exit") as mock_exit:
-         
+
                 game.state.handle_event(game, ChipsCoreEscapeEvents.USER_CLICK)
                 mock_exit.assert_called_once()
-                
+
     def test_handle_event_play_to_main(self) -> None:
         game: ChipsCoreEscape = ChipsCoreEscape()
         game.state = PlayState()
@@ -84,20 +85,20 @@ class TestChipsCoreEscape(unittest.TestCase):
         game.state.handle_event(game, ChipsCoreEscapeEvents.ESCAPE)
         self.assertTrue(isinstance(game.state, MainMenuState))
 
-    def test_display_screen_main_menu(self) -> None: 
+    def test_display_screen_main_menu(self) -> None:
         game: ChipsCoreEscape = ChipsCoreEscape()
         with patch.object(game.menu, "draw_screen") as mock_draw:
             game.state.display_screen(game)
             mock_draw.assert_called_once()
 
-    def test_display_screen_game(self) -> None: 
+    def test_display_screen_game(self) -> None:
         game: ChipsCoreEscape = ChipsCoreEscape()
         with patch.object(game.play, "single_iteration") as mock_draw:
             game.state = PlayState()
             game.state.display_screen(game)
             mock_draw.assert_called_once()
-        
-    def test_display_screen_info(self) -> None: 
+
+    def test_display_screen_info(self) -> None:
         game: ChipsCoreEscape = ChipsCoreEscape()
         with patch.object(game.info, "draw_screen") as mock_draw:
             game.state = InfoState()
