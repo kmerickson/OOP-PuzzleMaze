@@ -1,10 +1,10 @@
+from typing import List, Dict, Tuple
 import pygame
 import sys
 import os
-from typing import List, Dict, Tuple
+from pygame.locals import QUIT
 from GameObjects import Player, Enemy, Door, TILE_SIZE, LockedDoorState
 from GameObjects import TILE_EMPTY, TILE_WALL, TILE_GOAL, TILE_KEY
-from pygame.locals import QUIT
 # Constants
 GRID_WIDTH: int = 12
 GRID_HEIGHT: int = 12

@@ -12,11 +12,11 @@ import sys
 from io import StringIO
 from hypothesis import given
 from hypothesis.strategies import integers, sampled_from
-from game import TileSet, Game
-from GameObjects import Enemy
+from Puzzle_Maze.code.game import TileSet, Game
+from Puzzle_Maze.code.GameObjects import Enemy
 import pygame
-from chips_core_escape import ChipsCoreEscape
-from chips_core_escape_states import PlayState, MainMenuState, InfoState, ChipsCoreEscapeEvents
+from Puzzle_Maze.code.chips_core_escape import ChipsCoreEscape
+from Puzzle_Maze.code.game_ui_logic.game_states import PlayState, MainMenuState, InfoState, ChipsCoreEscapeEvents
 from typing import Any
 import pytest
 

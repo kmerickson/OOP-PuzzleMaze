@@ -3,9 +3,9 @@
 from typing import Optional
 import sys
 import pygame
-from chips_core_escape_states import MainMenuState, ChipsCoreEscapeEvents
-from game_state import GameState
-from chips_core_escape_screens import MainMenu, InfoScreen
+from game_ui_logic.game_states import MainMenuState, ChipsCoreEscapeEvents
+from game_ui_logic.screen_state import ScreenState
+from game_ui_logic.game_screens import MainMenu, InfoScreen
 from game import Game
 
 
@@ -32,7 +32,7 @@ class ChipsCoreEscape:
         self._play: Game = Game()
         self._menu: MainMenu = MainMenu(self._screen)
         self._info: InfoScreen = InfoScreen(self._screen)
-        self._state: GameState = MainMenuState()
+        self._state: ScreenState = MainMenuState()
 
     def _set_screen(self) -> pygame.Surface:
         pygame.init()
@@ -105,7 +105,7 @@ class ChipsCoreEscape:
         return self._menu
 
     @property
-    def state(self) -> GameState:
+    def state(self) -> ScreenState:
         """Getter for state attribute
 
         Returns:
@@ -115,7 +115,7 @@ class ChipsCoreEscape:
         return self._state
 
     @state.setter
-    def state(self, state: GameState) -> None:
+    def state(self, state: ScreenState) -> None:
         """_Setter for state variable
 
         Args:

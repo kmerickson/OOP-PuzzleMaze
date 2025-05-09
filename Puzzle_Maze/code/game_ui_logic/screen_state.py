@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from typing import Any
 
 
-class GameState(ABC):
+class ScreenState(ABC):
     """Base state class
     """
     @abstractmethod

@@ -1,8 +1,8 @@
 """_summary_
 """
 import pygame
-from interactive_text import InteractiveText
-from interactive_button import InteractiveButton
+from interactive_ui_elements.interactive_text import InteractiveText
+from interactive_ui_elements.interactive_button import InteractiveButton
 
 
 class GameText(InteractiveText):

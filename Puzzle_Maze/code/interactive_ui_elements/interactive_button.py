@@ -2,9 +2,9 @@
 """
 import pygame
 from typing_extensions import override
-from text_decorators import Button
-from interactive_text import InteractiveText
-from interactive_button_states import ButtonEvents, IdleButton
+from ui_elements.text_decorators import Button
+from interactive_ui_elements.interactive_text import InteractiveText
+from interactive_ui_elements.interactive_button_states import ButtonEvents, IdleButton
 
 
 class InteractiveButton(InteractiveText):

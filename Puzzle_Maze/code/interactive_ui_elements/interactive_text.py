@@ -2,10 +2,10 @@
 """
 import pygame
 from typing_extensions import override
-from interactive_drawable import InteractiveDrawable
-from text import Text
-from text_decorators import Outline
-from interactive_text_states import IdleText, TextEvents
+from interactive_ui_elements.interactive_drawable import InteractiveDrawable
+from interactive_ui_elements.interactive_text_states import IdleText, TextEvents
+from ui_elements.text import Text
+from ui_elements.text_decorators import Outline
 
 
 class InteractiveText(InteractiveDrawable):

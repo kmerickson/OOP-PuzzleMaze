@@ -2,7 +2,7 @@
 """
 from typing_extensions import override
 import pygame
-from drawable import Drawable
+from ui_elements.drawable import Drawable
 
 
 class Text(Drawable):

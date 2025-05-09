@@ -7,10 +7,10 @@ import sys
 from typing_extensions import override
 import pygame
 from game import Game
-from game_state import GameState
+from game_ui_logic.screen_state import ScreenState
 
 if TYPE_CHECKING:
-    from chips_core_escape import ChipsCoreEscape
+    from Puzzle_Maze.code.chips_core_escape import ChipsCoreEscape
 
 
 class ChipsCoreEscapeEvents(Enum):
@@ -22,7 +22,7 @@ class ChipsCoreEscapeEvents(Enum):
     ESCAPE = 1
 
 
-class InfoState(GameState):
+class InfoState(ScreenState):
     """The concrete state class of info
     """
     @override
@@ -57,7 +57,7 @@ class InfoState(GameState):
                 outer_class.state = MainMenuState()
 
 
-class MainMenuState(GameState):
+class MainMenuState(ScreenState):
     """The concrete state class of main menu
     """
     @override
@@ -104,7 +104,7 @@ class MainMenuState(GameState):
             sys.exit()
 
 
-class PlayState(GameState):
+class PlayState(ScreenState):
     """The concrete state class of play
     """
     @override

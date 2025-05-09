@@ -31,6 +31,9 @@ fix-style:
 .PHONY: create-docs-folder
 create-docs-folder:
 	mkdir -p $(DOCS)
+.PHONY: run
+run:
+	export PYTHONPATH=$(shell pwd)/code && python3 -m chips_core_escape
 
 .PHONY: create-docs
 create-docs: create-docs-folder

@@ -1,7 +1,7 @@
 """
 """
 from typing_extensions import override
-from drawable import Drawable
+from ui_elements.drawable import Drawable
 
 
 class DrawableDecorator(Drawable):
