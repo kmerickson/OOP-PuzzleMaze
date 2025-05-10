@@ -1,5 +1,5 @@
 PYTHON = python3
-TYPE_CHECK = mypy --strict --allow-untyped-decorators --ignore-missing-imports --explicit-package-bases --follow-imports=normal
+TYPE_CHECK = mypy --strict --allow-untyped-decorators --ignore-missing-imports --explicit-package-bases
 #TYPE_CHECK = mypy --strict --allow-untyped-decorators --ignore-missing-imports .
 STYLE_CHECK = flake8
 DOCS = docs
@@ -41,7 +41,7 @@ create-docs: create-docs-folder
 
 .PHONY: create-cov-report
 create-cov-report:
-	pytest --verbose --color=yes --cov --cov-report term --cov-report=html:$(DOCS)/pycov tests/
+	pytest --verbose --color=yes --cov --cov-report term --cov-report xml:docs/coverage.xml --cov-report=html:docs/htmlcov tests/
 	@echo "Coverage report created in $(DOCS) folder"
 
 .PHONY: uml-diagrams-game

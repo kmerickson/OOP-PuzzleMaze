@@ -3,7 +3,7 @@ import pygame
 from unittest import mock
 from hypothesis import given, strategies as st
 
-from Puzzle_Maze.GameObjects import (
+from GameObjects import (
     GameObject,
     Player,
     Enemy,

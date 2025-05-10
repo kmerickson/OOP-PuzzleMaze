@@ -12,8 +12,8 @@ import sys
 from io import StringIO
 from hypothesis import given
 from hypothesis.strategies import integers, sampled_from
-from Puzzle_Maze.game import TileSet, Game
-from Puzzle_Maze.GameObjects import Enemy
+from game import TileSet, Game
+from GameObjects import Enemy
 import pygame
 
 
