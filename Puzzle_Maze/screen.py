@@ -28,13 +28,11 @@ class Screen(ABC):
     def draw_screen(self) -> None:
         """Draw screen for a single iteration
         """
-        pass
 
     @abstractmethod
     def adjust_to_screen(self) -> None:
         """Adjust variables to a size change
         """
-        pass
 
     def main_loop(self) -> None:
         """Display screen on its own

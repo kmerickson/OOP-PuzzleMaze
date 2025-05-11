@@ -1,10 +1,13 @@
-    """Tests text and drawable
-    """
+"""Tests text and drawable
+"""
+
 import unittest
 from unittest.mock import patch, MagicMock
 import pygame
 from text import Text
 from typing import Any
+from hypothesis import given
+from hypothesis.strategies import integers, floats
 
 
 class TestText(unittest.TestCase):
@@ -164,24 +167,29 @@ class TestText(unittest.TestCase):
         self.assertIs(text.font, mock_font)
 
     @patch('pygame.font.Font')
-    def test_font_getter2(self, mock_font_obj) -> None:
+    @given(new_size=integers(min_value=1, max_value=100))
+    def test_font_getter2(self, mock_font_obj, new_size) -> None:
         mock_font = MagicMock()
         mock_font_obj.return_value = mock_font
+
         text = Text(**self._text_parameters)
-        new_size: float = 55
         text.size = new_size
-        mock_font.size = new_size
-        self.assertEqual(text.font.size, new_size)
+        text._adjust_to_changes()
+        mock_font_obj.assert_called_with(text.image_dir, new_size)
 
     @patch('pygame.font.Font')
-    def test_font_getter3(self, mock_font_obj) -> None:
+    @given(integers(min_value=1, max_value=100))
+    def test_font_getter3(self, mock_font_obj, new_size) -> None:
         mock_font = MagicMock()
-        mock_font.size = self._text_parameters['size']
-        mock_font.name = self._text_parameters['image_dir']
         mock_font_obj.return_value = mock_font
+
         text = Text(**self._text_parameters)
-        self.assertEqual(text.font.size, self._text_parameters['size'])
-        self.assertEqual(text.font.name, self._text_parameters['image_dir'])
+
+        text.size = new_size
+        new_image_dir = "new_font_path"
+        text.image_dir = new_image_dir
+        text._adjust_to_changes()
+        mock_font_obj.assert_called_with(new_image_dir, new_size) 
 
     @patch('pygame.font.Font')
     def test_screen_getter_setter(self, mock_font_obj) -> None:
@@ -200,12 +208,13 @@ class TestText(unittest.TestCase):
         self.assertEqual(text.factor_of_x_pos, self._text_parameters['factor_of_x_pos'])
 
     @patch('pygame.font.Font')
-    def test_factor_of_x_pos2(self, mock_font_obj) -> None:
+    @given(floats(min_value=0, max_value=1)) 
+    def test_factor_of_x_pos2(self, mock_font_obj, new_factor) -> None:
         mock_font = MagicMock()
-        mock_font_obj.return_value = mock_font
-        mock_font.render.return_value = self._mock_screen
+        mock_font_obj.return_value = mock_font 
+
         text = Text(**self._text_parameters)
-        new_factor: float = 0.8
+
         text.factor_of_x_pos = new_factor
         self.assertEqual(text.factor_of_x_pos, new_factor)
 
@@ -218,12 +227,13 @@ class TestText(unittest.TestCase):
         self.assertEqual(text.factor_of_y_pos, self._text_parameters['factor_of_y_pos'])
 
     @patch('pygame.font.Font')
-    def test_factor_of_y_pos2(self, mock_font_obj) -> None:
+    @given(floats(min_value=0, max_value=1)) 
+    def test_factor_of_y_pos2(self, mock_font_obj, new_factor) -> None:
         mock_font = MagicMock()
-        mock_font_obj.return_value = mock_font
-        mock_font.render.return_value = self._mock_screen
+        mock_font_obj.return_value = mock_font 
+
         text = Text(**self._text_parameters)
-        new_factor: float = 0.8
+
         text.factor_of_y_pos = new_factor
         self.assertEqual(text.factor_of_y_pos, new_factor)
 

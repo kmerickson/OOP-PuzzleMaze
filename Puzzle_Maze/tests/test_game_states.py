@@ -96,3 +96,8 @@ class TestChipsCoreEscape(unittest.TestCase):
             game.state = InfoState()
             game.state.display_screen(game)
             mock_draw.assert_called_once()
+
+    def test_type_checking_import(self):
+        with patch('typing.TYPE_CHECKING', True):
+            from chips_core_escape import ChipsCoreEscape
+            assert ChipsCoreEscape

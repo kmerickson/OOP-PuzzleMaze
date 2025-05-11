@@ -9,9 +9,6 @@ import pygame
 from game import Game
 from screen_state import ScreenState
 
-if TYPE_CHECKING:
-    from Puzzle_Maze.chips_core_escape import ChipsCoreEscape
-
 
 class ChipsCoreEscapeEvents(Enum):
     """Enum containing
