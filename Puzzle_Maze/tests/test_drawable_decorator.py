@@ -23,7 +23,7 @@ class TestDrawableDecorator(unittest.TestCase):
             "size": 30,
             "text": "text",
             "color": "black"
-    }
+        }
         self._outline_color: str = "black"
         self._outline_size: int = 2
 
