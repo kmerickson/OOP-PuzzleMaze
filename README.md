@@ -34,5 +34,27 @@ Chip’s Core Escape is an object-oriented Python game that immerses players ins
   Self Grade: 85  
 
   Justification: Most of the requirements were fulfilled  
-  
 
+
+# Project Tasks
+
+| Task Description                        | Completed By   | Status      |
+|-----------------------------------------|----------------|-------------|
+| Create 4+1 diagrams                     | All            | Completed   |
+| Set Up Repo & Docker                    | Keegan         | Completed   |
+| Write code related to game objects      | Keegan         | Completed   |
+| Create UML diagrams for Game Obj.       | Keegan         | Completed   |
+| Create UML diagrams for game            | Keegan         | Completed   |
+| Update 4+1 diagrams                     | Keegan         | Completed   |
+| Set up basic game and game obj. logic   | Ethan          | Completed   |
+| Write game file                         | Ethan          | Completed   |
+| Write tests for game objects            | Ethan          | Completed   |
+| Create slides for presentation          | Ethan & Keegan | Completed   |
+| Make files pass style and type checking | Jessica        | Completed   |
+| Make UML diagrams for ui related        | Jessica        | Completed   |
+| Write entry point class file            | Jessica        | Completed   |
+| Write main menu file                    | Jessica        | Completed   |
+| Write ui elements related files         | Jessica        | Completed   |
+| Update repo after showcase              | Jessica        | Completed   |
+| Write test file for game                | Jessica        | Completed   |
+| Write test files for ui                 | Jessica        | In progress |
