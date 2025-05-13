@@ -1,0 +1,36 @@
+@startuml Logical View
+title  Logical View
+package "Game Logic" {
+  class Game
+  class Player
+  class Enemy
+  class Door
+  class DoorState
+  class LockedDoorState
+  class UnlockedDoorState
+}
+
+package "Main Menu" {
+  class GameStateManager
+  class UIScreen
+  class Button
+  class TextLabel
+  class InteractiveButton
+  class HoverableText
+}
+
+Game --> Player
+Game --> Enemy
+Game --> Door
+Door --> DoorState
+DoorState <|-- LockedDoorState
+DoorState <|-- UnlockedDoorState
+
+GameStateManager --> UIScreen
+UIScreen --> Button
+UIScreen --> TextLabel
+Button <|-- InteractiveButton
+TextLabel <|-- HoverableText
+
+GameStateManager --> Game
+@enduml

@@ -1,0 +1,17 @@
+@startuml Info Screen
+title Info Screen
+
+package "game_screens" {
+    class InfoScreen implements Screen{
+    ..Instance Variables..
+    - _texts: GameTexts
+    + texts: GameTexts
+    - button: GameButton
+    + button: GameButton
+    ..Overridden Methods..
+    + adjust_to_screen(): None
+    + draw_screen(): None
+}
+}
+
+@enduml

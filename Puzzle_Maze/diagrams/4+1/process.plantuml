@@ -1,0 +1,14 @@
+@startuml Process View
+title Process View
+start
+:Player launches script;
+:Title menu;
+:Press play;
+:Game starts level 1;
+repeat
+    :Player movement input;
+    :Game objects update;
+    :Screen redrawn;
+repeat while (Game not over)
+:Game ends;
+@enduml

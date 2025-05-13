@@ -1,0 +1,21 @@
+@startuml Developmental View
+title Developmental View
+package "ChipsCoreEscape" {
+    [ChipsCoreEscape.py] --> [game_states.py]
+    [game_states.py] --> [game.py]
+    [game_states.py] --> [game_screens.py]
+    [game_screens.py] --> [game_ui_elements.py]
+    [game_ui_elements.py] --> [interactive_text.py]
+    [game_ui_elements.py] --> [interactive_button.py]
+    [interactive_button.py] --> [interactive_button_states.py]
+    [interactive_text.py] --> [interactive_text_states.py]
+    [interactive_text.py] --> [text.py]
+    [interactive_button.py] --> [text_decorators.py]
+    [game.py] --> [GameObjects.py]
+}
+
+package "Assets" {
+}
+
+ChipsCoreEscape ..> Assets : uses
+@enduml

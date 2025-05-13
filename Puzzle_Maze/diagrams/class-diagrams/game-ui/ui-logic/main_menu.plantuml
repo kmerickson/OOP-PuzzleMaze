@@ -1,0 +1,19 @@
+@startuml Main Menu
+title Main Menu
+
+package "game_screens" {
+    class MainMenu implements Screen{
+        ..Instance Variables..
+        - background_picture: pygame.Surface
+        + background_picture: pygame.Surface
+        - text: GameText
+        + text: GameText
+        - buttons: GameButton
+        + buttons: GameButton
+        ..Overridden Methods..
+        + adjust_to_screen(): None
+        + draw_screen(): None
+    }
+}
+
+@enduml

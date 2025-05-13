@@ -1,0 +1,22 @@
+@startuml Game States
+title Game State
+
+class PlayState implements ScreenState{
+    ..Overridden Methods..
+    + display_screen(outer_class: ChipsCoreEscape) : None
+    + handle_event(outer_class: ChipsCoreEscape, event: GameEvents) : None
+}
+
+class InfoState implements ScreenState{
+    ..Overridden Methods..
+    + display_screen(outer_class: ChipsCoreEscape) : None
+    + handle_event(outer_class: ChipsCoreEscape, event: GameEvents) : None
+}
+
+class MainMenuState implements ScreenState {
+    ..Overridden Methods..
+    + display_screen(outer_class: ChipsCoreEscape) : None
+    + handle_event(outer_class: ChipsCoreEscape, event: GameEvents) : None
+}
+
+@enduml

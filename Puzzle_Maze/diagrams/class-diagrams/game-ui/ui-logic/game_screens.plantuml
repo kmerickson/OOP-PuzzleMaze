@@ -1,0 +1,26 @@
+@startuml Game Screens 
+title Game Screens
+class MainMenu implements Screen{
+    ..Instance Variables..
+    - background_picture: pygame.Surface
+    + background_picture: pygame.Surface
+    - text: GameText
+    + text: GameText
+    - buttons: GameButtons
+    + buttons: GameButtons
+    ..Overridden Methods..
+    + adjust_to_screen(): None
+    + draw_screen(): None
+}
+
+class InfoScreen implements Screen{
+    ..Instance Variables..
+    - _texts: GameTexts
+    + texts: GameTexts
+    - button: GameButton
+    + button: GameButton
+    ..Overridden Methods..
+    + adjust_to_screen(): None
+    + draw_screen(): None
+}
+@enduml

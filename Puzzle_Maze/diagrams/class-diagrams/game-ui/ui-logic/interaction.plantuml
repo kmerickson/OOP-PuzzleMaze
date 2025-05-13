@@ -1,0 +1,31 @@
+@startuml
+
+participant ChipsCoreEscape
+participant ScreenState
+participant PlayState
+participant InfoState
+participant MainMenuState
+participant Game
+participant InfoScreen
+participant MainMenu
+participant Screen
+
+ChipsCoreEscape -> ScreenState : has
+ScreenState -> PlayState : can be
+ScreenState -> InfoState : can be
+ScreenState -> MainMenuState : can be
+PlayState -> Game : uses
+InfoState -> InfoScreen : uses
+MainMenuState -> MainMenu : uses
+
+note right of InfoScreen
+  InfoScreen inherits Screen
+end note
+
+note right of MainMenu
+  MainMenu inherits Screen
+end note
+
+@enduml
+
+

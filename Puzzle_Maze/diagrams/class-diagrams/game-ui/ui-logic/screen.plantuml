@@ -1,0 +1,14 @@
+@startuml Screen
+title Screen
+    class Screen  <<abstract>>{
+    ..Instance Variables..
+    - _screen: pygame.Surface
+    ..Instance Methods..
+    + main_loop(): None
+    + resize_screen_variables(): None
+    ..Abstract Methods..
+    {abstract} + draw_screen(): None
+    {abstract} + adjust_to_screen(): None
+}
+
+@enduml

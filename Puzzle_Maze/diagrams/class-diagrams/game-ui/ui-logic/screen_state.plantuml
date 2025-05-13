@@ -1,0 +1,10 @@
+@startuml Screen State
+title Screen State
+
+class ScreenState <<abstract>>{
+    ..Abstract Methods..
+    {abstract} + display_screen(outer_class: ChipsCoreEscape) : None
+    {abstract} + handle_event(outer_class: ChipsCoreEscape, event: GameEvents) : None
+}
+
+@enduml

@@ -1,0 +1,26 @@
+@startuml Chips Core Escape
+title ChipsCoreEscape
+
+class ChipsCoreEscape {
+    ..Instance Methods..
+    - _instance: None | ChipsCoreEscape
+    - _state: ScreenState
+    + state: ScreenState
+    _ menu: MainMenu
+    + Menu: MainMenu
+    - info: InfoScreen
+    + info: InfoScreen
+    - _play: Game
+    + _play: Game
+    ..Instance Methods..
+    + display_screen() : None
+    + handle_user(event: GameEvents) : None
+    + chips_core_escape() : void
+    ..Class Methods..
+    + get_instance() : None | ChipsCoreEscape
+    + reset_instance() : None
+    ..Static Methods..
+    + main() : None
+}
+
+@endluml
