@@ -12,15 +12,6 @@ Team:
   
   Jessica Story
 
-
-## Repo set up steps
-```
-git init
-git remote add origin https://github.com/kmerickson/OOP-PuzzleMaze.git
-git fetch
-git checkout -b main origin/main
-```
-
 ## How to Run: 
   In Puzzle_Maze directory, run command: 
   `make run`
