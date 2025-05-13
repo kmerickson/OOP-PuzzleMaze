@@ -39,8 +39,9 @@ jobs:
           pytest --verbose Puzzle_Maze/tests
       - name: Generate coverage report
         run: |
-          cd Puzzle_Maze && pytest --verbose --color=yes --cov --cov-report term --cov-report xml:docs/coverage.xml --cov-report=html:docs/htmlcov tests/
-
+        cd Puzzle_Maze
+        $(COVERAGE) run --source=Puzzle_Maze -m pytest --cov-report=html:Puzzle_Maze/htmlcov --cov-report=term --cov=Puzzle_Maze ./tests
+        working-directory: ./Puzzle_Maze
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4.0.1
         with:
