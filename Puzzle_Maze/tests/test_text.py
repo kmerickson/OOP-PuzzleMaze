@@ -1,20 +1,23 @@
-"""Tests text and drawable
+"""Tests text class of Text module and drawable class
+    of Drawable module (base class it inherits)
 """
 
 import unittest
 from unittest.mock import patch, MagicMock
 import pygame
 from text import Text
-from typing import Any
 from hypothesis import given
 from hypothesis.strategies import integers, floats
+from Typing import Dict, Any
 
 
 class TestText(unittest.TestCase):
     def setUp(self) -> None:
+        pygame.init()
+
         self._mock_screen = MagicMock()
         self._mock_screen.get_size.return_value = (1024, 768)
-        self._text_parameters = {
+        self._text_parameters: Dict[str, Any] = {
             "screen": self._mock_screen,
             "factor_of_x_pos": 0.5,
             "factor_of_y_pos": 0.5,

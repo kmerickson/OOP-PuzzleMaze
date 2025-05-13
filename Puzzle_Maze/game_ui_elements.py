@@ -1,5 +1,11 @@
-"""_summary_
+"""Module containing text and button with the
+    parameters used throughout the game
 """
+
+__author__ = "Jessica Story"
+__date__ = "5/13/25"
+__license__ = "MIT"
+
 import pygame
 from interactive_text import InteractiveText
 from interactive_button import InteractiveButton

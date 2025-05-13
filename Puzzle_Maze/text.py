@@ -1,5 +1,10 @@
+"""Module containing text class
 """
-"""
+
+__author__ = "Jessica Story"
+__date__ = "5/13/25"
+__license__ = "MIT"
+
 from typing_extensions import override
 import pygame
 from drawable import Drawable

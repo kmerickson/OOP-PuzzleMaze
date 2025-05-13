@@ -1,5 +1,10 @@
+"""Module containing interactive text class
 """
-"""
+
+__author__ = "Jessica Story"
+__date__ = "5/13/25"
+__license__ = "MIT"
+
 import pygame
 from typing_extensions import override
 from interactive_drawable import InteractiveDrawable

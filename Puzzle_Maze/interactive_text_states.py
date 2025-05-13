@@ -1,13 +1,13 @@
+"""Module containing the states for interactive text class
 """
-"""
-from __future__ import annotations
-from typing import TYPE_CHECKING
+
+__author__ = "Jessica Story"
+__date__ = "5/13/25"
+__license__ = "MIT"
+
 from enum import Enum
 from interactive_drawable_state import InteractiveDrawableState
 from drawable import Drawable
-
-if TYPE_CHECKING:
-    from interactive_text import InteractiveText
 
 
 class TextEvents(Enum):

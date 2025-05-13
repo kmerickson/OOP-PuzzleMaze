@@ -1,5 +1,9 @@
-"""_summary_
+"""Module containing the base state for screens
 """
+
+__author__ = "Jessica Story"
+__date__ = "5/2/25"
+__license__ = "MIT"
 from abc import ABC, abstractmethod
 from typing import Any
 

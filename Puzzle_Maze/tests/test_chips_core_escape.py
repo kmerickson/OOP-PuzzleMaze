@@ -1,25 +1,20 @@
-"""Testing with unittest for game module
+"""Tests for Chips Core Escape class
 """
 
 __author__ = "Jessica Story"
-__date__ = "5/2/25"
+__date__ = "5/13/25"
 __license__ = "MIT"
 
-from unittest.mock import patch, MagicMock
-from typing import List, Tuple
+from unittest.mock import patch
 import unittest
-import sys
-from io import StringIO
-from hypothesis import given
-from hypothesis.strategies import integers, sampled_from
-from game import TileSet, Game
-from GameObjects import Enemy
 import pygame
 from chips_core_escape import ChipsCoreEscape
 from game_states import MainMenuState, PlayState
 
 
 class TestChipsCoreEscape(unittest.TestCase):
+    """Tests class for ChipsCoreEscape class
+    """
     def tearDown(self) -> None:
         """Tear down method to avoid
             issues with singleton
@@ -52,6 +47,8 @@ class TestChipsCoreEscape(unittest.TestCase):
         self.assertIsNone(ChipsCoreEscape._instance)
 
     def test__set_screen_calls_pygame(self) -> None:
+        """Tests set screen function
+        """
         game: ChipsCoreEscape = ChipsCoreEscape()
         with patch("pygame.init") as mock_init:
             game._set_screen()
@@ -60,6 +57,9 @@ class TestChipsCoreEscape(unittest.TestCase):
 
     @patch('pygame.event.get')
     def test_chips_core_escape1(self, mock_event_queue) -> None:
+        """Tests quitting the chips core escape function
+            by pressing X on screen
+        """
         game: ChipsCoreEscape = ChipsCoreEscape()
         with patch.object(game.state, 'display_screen', autospec=True) as mock_display_screen:
 
@@ -73,6 +73,9 @@ class TestChipsCoreEscape(unittest.TestCase):
 
     @patch('pygame.event.get')
     def test_chips_core_escape2(self, mock_event_queue) -> None:
+        """Tests quitting the chips core escape function
+            by pressing QUIT button
+        """
         game: ChipsCoreEscape = ChipsCoreEscape()
         with patch.object(game.state, 'handle_event', autospec=True) as mock_handle_event:
 
@@ -86,6 +89,9 @@ class TestChipsCoreEscape(unittest.TestCase):
 
     @patch('pygame.event.get')
     def test_chips_core_escape3(self, mock_event_queue) -> None:
+        """Tests quitting the chips core escape function
+            by pressing escape button
+        """
         game: ChipsCoreEscape = ChipsCoreEscape()
         with patch.object(game.state, 'handle_event', autospec=True) as mock_handle_event:
 
@@ -99,20 +105,28 @@ class TestChipsCoreEscape(unittest.TestCase):
 
     @patch.object(ChipsCoreEscape, 'chips_core_escape')
     def test_main(self, mock_chips_core_escape):
+        """Tests main function
+        """
         ChipsCoreEscape.main()
         mock_chips_core_escape.assert_called_once()
 
     def test_new_game_instance(self):
+        """Tests whether game can be restarted
+        """
         game: ChipsCoreEscape = ChipsCoreEscape()
         first_game_object: Game = game.play
         game.play = Game()
         self.assertIsNot(first_game_object, game.play)
 
     def test_state_property(self):
+        """Tests whether game starts out in main menu state
+        """
         game: ChipsCoreEscape = ChipsCoreEscape()
         self.assertTrue(isinstance, (game.state, MainMenuState))
 
     def test_state_setter(self):
+        """Tests that state can be set
+        """
         game: ChipsCoreEscape = ChipsCoreEscape()
         game.state = PlayState()
         self.assertTrue(isinstance, (game.state, PlayState))

@@ -1,5 +1,10 @@
+"""Module containing interactive button class
 """
-"""
+
+__author__ = "Jessica Story"
+__date__ = "5/13/25"
+__license__ = "MIT"
+
 import pygame
 from typing_extensions import override
 from text_decorators import Button

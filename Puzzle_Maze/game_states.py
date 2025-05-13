@@ -1,7 +1,11 @@
-"""_summary_
+"""Module containing classes related to the different
+    states that game can be in
 """
-from __future__ import annotations
-from typing import TYPE_CHECKING
+
+__author__ = "Jessica Story"
+__date__ = "5/13/25"
+__license__ = "MIT"
+
 from enum import Enum
 import sys
 from typing_extensions import override

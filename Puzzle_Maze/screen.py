@@ -1,9 +1,8 @@
-"""Modules containing various screens that will
-  for different states within the game
+"""Module containing base screen
 """
 
 __author__ = "Jessica Story"
-__date__ = "5/2/25"
+__date__ = "5/13/25"
 __license__ = "MIT"
 
 from abc import ABC, abstractmethod
@@ -33,16 +32,6 @@ class Screen(ABC):
     def adjust_to_screen(self) -> None:
         """Adjust variables to a size change
         """
-
-    def main_loop(self) -> None:
-        """Display screen on its own
-        """
-        while True:
-            self.draw_screen()
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-            pygame.display.update()
 
     @property
     def screen(self) -> pygame.Surface:

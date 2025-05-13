@@ -1,5 +1,10 @@
+"""Module containing Chip's Core Escape class
 """
-"""
+
+__author__ = "Jessica Story"
+__date__ = "5/13/25"
+__license__ = "MIT"
+
 from typing import Optional
 import sys
 import pygame
