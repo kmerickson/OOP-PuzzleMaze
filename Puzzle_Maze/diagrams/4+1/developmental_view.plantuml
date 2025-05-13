@@ -10,7 +10,7 @@ package "ChipsCoreEscape" {
     [interactive_button.py] --> [interactive_button_states.py]
     [interactive_text.py] --> [interactive_text_states.py]
     [interactive_text.py] --> [text.py]
-    [interactive_button.py] --> [text_decorators.py]
+    [interactive_button.py] --> [drawable_decorators.py]
     [game.py] --> [GameObjects.py]
 }
 

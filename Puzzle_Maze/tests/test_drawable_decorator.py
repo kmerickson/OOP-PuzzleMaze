@@ -11,7 +11,7 @@ from typing import Any, Dict
 import pygame
 from text import Text
 from drawable_decorator import DrawableDecorator
-from text_decorators import Outline
+from drawable_decorators import Outline
 from hypothesis import given
 from hypothesis.strategies import floats
 
@@ -19,6 +19,7 @@ from hypothesis.strategies import floats
 class TestDrawableDecorator(unittest.TestCase):
     """Tests the Drawable Decorator class
     """
+
     def setUp(self) -> None:
         """Set up function
         """
@@ -148,4 +149,3 @@ class TestDrawableDecorator(unittest.TestCase):
         decorator.original_size = new_size
 
         self.assertEqual(new_size, text.size)
-        

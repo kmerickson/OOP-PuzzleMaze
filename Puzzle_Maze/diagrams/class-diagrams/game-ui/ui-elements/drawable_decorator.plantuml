@@ -1,0 +1,13 @@
+@startuml Drawable Decorator
+title Drawable Decorator 
+class DrawableDecorator {
+    ..Instance Variables..
+    - _drawable: Drawable
+    + drawable: Drawable
+    + original_size: float
+    ..Overridden Methods..
+    + draw(): void
+    + dynamically_draw(): void
+    + _adjust_to_changes(): void
+}
+@enduml

@@ -1,0 +1,19 @@
+@startuml Outline
+title Outline
+
+package "drawable_decorators" {
+    class Outline extends DrawableDecorator{
+    ..Instance Variables..
+    - _outline_color: str
+    - _outline_size: float
+    - _font: pygame.font.Font
+    - _surface: pygame.Surface
+    - _rect: pygame.Rect
+    ..Overridden Methods..
+    + draw(): void
+    + dynamically_draw(): void
+    + _adjust_to_changes(): void
+}
+}
+
+@enduml

@@ -1,0 +1,18 @@
+@startuml Interaction for Text Elements
+
+participant InteractiveText
+participant InteractiveDrawable
+participant InteractiveTextState
+participant IdleText
+participant HoverText
+participant Text
+participant Drawable
+
+InteractiveText -> InteractiveDrawable : inherits
+InteractiveText -> Text : has
+InteractiveText -> InteractiveTextState : has
+InteractiveTextState -> IdleText : can be
+InteractiveTextState -> HoverText : can be
+Text -> Drawable : inherits
+
+@enduml

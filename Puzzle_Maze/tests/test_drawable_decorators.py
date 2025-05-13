@@ -11,12 +11,13 @@ from unittest.mock import patch, MagicMock
 from typing import Any, Dict
 import pygame
 from text import Text
-from text_decorators import Outline, Button
+from drawable_decorators import Outline, Button
 
 
 class TestOutline(unittest.TestCase):
     """Test class for Outline class
     """
+
     def setUp(self) -> None:
         """Set up function
         """
@@ -181,7 +182,7 @@ class TestButton(unittest.TestCase):
         mock_surface = MagicMock(spec=pygame.Surface)
         mock_load.return_value = mock_surface
         button = Button(text, self._image_dir)
-        
+
         with patch.object(button, '_adjust_to_changes') as mock_adjust_changes, \
             patch.object(text, '_adjust_to_changes') as mock_text_adjust_changes, \
                 patch.object(button, 'draw') as mock_draw:

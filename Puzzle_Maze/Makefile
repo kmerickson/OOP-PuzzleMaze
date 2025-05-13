@@ -1,7 +1,4 @@
 PYTHON = python3
-TYPE_CHECK = mypy --strict --allow-untyped-decorators --ignore-missing-imports --explicit-package-bases
-#TYPE_CHECK = mypy --strict --allow-untyped-decorators --ignore-missing-imports .
-STYLE_CHECK = flake8
 DOCS = docs
 
 .PHONY: all
@@ -19,14 +16,23 @@ clean:
 	find . -type d -name ".pytest_cache" -exec rm -rf {} +
 	find . -type d -name "__pycache__" -exec rm -rf {} +
 
-type-check:
-	$(TYPE_CHECK)
+.PHONY: check-types
+check-types:
+	mypy --disallow-untyped-defs --strict .
+	@echo "Used mypy to verify type checking correctness"
 
-style-check:
-	flake8 .
+.PHONY: check-style
+check-style:
+	flake8 . ./tests
+	@echo "Used flake8 for style checking"
 
+.PHONY: fix-style
 fix-style:
-	autopep8 --in-place --recursive --aggressive --aggressive .
+	autopep8 --in-place --recursive --aggressive --aggressive . ./tests
+	@echo "Used autopep8 to fix style mistakes"
+
+.PHONY: aesthetics fix-style check-style check-types
+aesthetics: fix-style check-style check-types
 
 .PHONY: create-docs-folder
 create-docs-folder:
@@ -43,30 +49,3 @@ create-docs: create-docs-folder
 create-cov-report:
 	pytest --verbose --color=yes --cov --cov-report term --cov-report xml:docs/coverage.xml --cov-report=html:docs/htmlcov tests/
 	@echo "Coverage report created in $(DOCS) folder"
-
-.PHONY: uml-diagrams-game
-uml-diagrams-game:
-	plantuml ./uml/game/game.plantuml
-
-.PHONY: uml-diagrams-game-state
-uml-diagrams-game-state:
-	plantuml ./uml/game_states/game_states.plantuml
-
-.PHONY: uml-diagrams-game-objects
-uml-diagrams-game-objects:
-	plantuml ./uml/GameObjects/door_state_design/plantuml ./uml/GameObjects/player_and_enemy.plantuml
-
-.PHONY: uml-diagrams-interactive
-uml-diagrams-interactive:
-	plantuml ./uml/interactve_ui_elements/interactive_ui_elements_contexts.plantuml ./uml/interactive_ui_elements/interactive_ui_elements_states.plantuml
-
-.PHONY: uml-diagrams-screens
-uml-diagrams-screens:
-	plantuml ./uml/screens/info_screen.plantuml ./uml/screens/interation.plantuml ./uml/screens/main_menu.plantuml ./uml/screens/screen.plantuml  ./uml/screens/screens.plantuml
-
-PHONY: uml-diagrams-ui-elements
-uml-diagrams-ui-elements:
-	plantuml ./uml/ui_elements/ui_elements_components ./uml/ui_elements/ui_elements_decorators.plantuml ./uml/ui_elements/ui_elements.plantuml
-
-.PHONY: all-diagrams
-all-diagrams: uml-diagrams-game uml-diagrams-game-state uml-diagrams-game-objects uml-diagrams-interactive uml-diagrams-screens uml-diagrams-ui-elements

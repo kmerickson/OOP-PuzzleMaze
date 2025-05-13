@@ -1,0 +1,29 @@
+@startuml Drawable Decorators
+title Drawable Decorators
+
+class Outline extends DrawableDecorator{
+    ..Instance Variables..
+    - _outline_color: str
+    - _outline_size: float
+    - _font: pygame.font.Font
+    - _surface: pygame.Surface
+    - _rect: pygame.Rect
+    ..Overridden Methods..
+    + draw(): void
+    + dynamically_draw(): void
+    + _adjust_to_changes(): void
+}
+
+class Button extends DrawableDecorator{
+    ..Instance Variables
+    - _button_image_dir: str
+    - _surface: pygame.Surface
+    - _button_width: float
+    - _button_height: float
+    - _rect: pygame.Rect
+    ..Overridden Methods..
+    + draw(): void
+    + dynamically_draw(): void
+    + _adjust_to_changes(): void
+}
+@enduml

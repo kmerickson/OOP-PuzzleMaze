@@ -257,7 +257,7 @@ class TestGame(unittest.TestCase):
         mock_enemy_update = MagicMock()
         mock_player_update = MagicMock()
         mock_draw = MagicMock()
-        
+
         with patch.object(self._game, 'update', mock_game_update), \
                 patch.object(self._game.player, 'update', mock_player_update), \
                 patch.object(self._game.enemies[0], 'update', mock_enemy_update), \

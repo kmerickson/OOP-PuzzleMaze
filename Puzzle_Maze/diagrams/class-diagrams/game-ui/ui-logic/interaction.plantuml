@@ -17,14 +17,8 @@ ScreenState -> MainMenuState : can be
 PlayState -> Game : uses
 InfoState -> InfoScreen : uses
 MainMenuState -> MainMenu : uses
-
-note right of InfoScreen
-  InfoScreen inherits Screen
-end note
-
-note right of MainMenu
-  MainMenu inherits Screen
-end note
+InfoScreen -> Screen : inherits
+MainMenu -> Screen : inherits
 
 @enduml
 

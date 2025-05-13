@@ -9,6 +9,7 @@ __license__ = "MIT"
 from enum import Enum
 import sys
 from typing_extensions import override
+from typing import Any
 import pygame
 from game import Game
 from screen_state import ScreenState
@@ -27,7 +28,7 @@ class InfoState(ScreenState):
     """The concrete state class of info
     """
     @override
-    def display_screen(self, outer_class: "ChipsCoreEscape") -> None:
+    def display_screen(self, outer_class: Any) -> None:
         """Method to display screen in the info state
 
         Args:
@@ -37,7 +38,7 @@ class InfoState(ScreenState):
         outer_class.info.draw_screen()
 
     @override
-    def handle_event(self, outer_class: "ChipsCoreEscape",
+    def handle_event(self, outer_class: Any,
                      event: ChipsCoreEscapeEvents) -> None:
         """Method to that decides which events to deal with it and how
            to deal with them in the info state
@@ -62,7 +63,7 @@ class MainMenuState(ScreenState):
     """The concrete state class of main menu
     """
     @override
-    def display_screen(self, outer_class: "ChipsCoreEscape") -> None:
+    def display_screen(self, outer_class: Any) -> None:
         """Method to display screen in the main menu state
 
         Args:
@@ -71,7 +72,7 @@ class MainMenuState(ScreenState):
         """
         outer_class.menu.draw_screen()
 
-    def handle_event(self, outer_class: "ChipsCoreEscape",
+    def handle_event(self, outer_class: Any,
                      event: ChipsCoreEscapeEvents) -> None:
         """Method to that decides which events to deal with it and how
            to deal with them in the main menu state
@@ -109,7 +110,7 @@ class PlayState(ScreenState):
     """The concrete state class of play
     """
     @override
-    def display_screen(self, outer_class: "ChipsCoreEscape") -> None:
+    def display_screen(self, outer_class: Any) -> None:
         """Method to display screen in the play state
 
         Args:
@@ -119,7 +120,7 @@ class PlayState(ScreenState):
         outer_class.play.single_iteration()
 
     @override
-    def handle_event(self, outer_class: "ChipsCoreEscape",
+    def handle_event(self, outer_class: Any,
                      event: ChipsCoreEscapeEvents) -> None:
         """Method to that decides which events to deal with it and how
            to deal with them in the play state

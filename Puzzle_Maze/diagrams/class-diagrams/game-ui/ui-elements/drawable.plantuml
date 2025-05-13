@@ -1,0 +1,38 @@
+@startuml Drawable
+
+title Drawable
+
+class Drawable <<abstract>>{
+    ..Instance Variables..
+    - _screen: pygame.Surface
+    - _screen_width: float
+    - _screen_height: float
+    - _factor_of_x_pos: float
+    - _factor_of_y_pos: float
+    - _rect: pygame.Rect | None
+    - _surface: pygame.Surface | None
+    - _image_dir: str
+    - _size: float
+    - _data: str
+    + screen: pygame.Surface
+    + screen_width: float
+    + screen_height: float
+    + x_pos: float
+    + factor_of_x_pos: float
+    + factor_of_y_pos: float
+    + y_pos: float
+    + rect: pygame.Rect | None
+    + surface: pygame.Surface | None
+    + image_dir: str
+    + size: float
+    + data: str
+
+    ..Abstract Methods..
+    {abstract}+ draw(): None
+    {abstract}+ dynamically_draw(): None
+    {abstract}+ _adjust_to_changes(): None
+    ..Instance Methods..
+    + resize_screen(): None
+}
+
+@enduml

@@ -16,6 +16,7 @@ from game_screens import MainMenu, InfoScreen
 class TestMainMenu(unittest.TestCase):
     """Tests MainMenu class
     """
+
     def setUp(self) -> None:
         """Set up function
         """
@@ -170,11 +171,12 @@ class TestMainMenu(unittest.TestCase):
 class TestInfoScreen(unittest.TestCase):
     """Tests class for the Info Screen class
     """
+
     def setUp(self) -> None:
         """Set up function
         """
         pygame.init()
-        pygame.font.init() 
+        pygame.font.init()
         self._valid_screen_size: Tuple[int, int] = (800, 600)
         self._mock_screen = MagicMock()
         self._mock_screen.get_size.return_value = self._valid_screen_size
@@ -192,18 +194,18 @@ class TestInfoScreen(unittest.TestCase):
         mock_screen.fill = MagicMock()
         mock_screen.blit = MagicMock()
         mock_screen.get_size.return_value = self._valid_screen_size
-    
+
         info_screen = InfoScreen(mock_screen)
-    
+
         info_screen.main_text.draw = MagicMock()
         info_screen.body_text_line1.draw = MagicMock()
         info_screen.body_text_line_2.draw = MagicMock()
         info_screen.body_text_line_3.draw = MagicMock()
         info_screen.body_text_line_4.draw = MagicMock()
         info_screen.back_button.draw = MagicMock()
-    
+
         info_screen.draw_screen()
-    
+
         mock_screen.fill.assert_called_once_with(info_screen.BACKGROUND_COLOR)
 
         info_screen.main_text.draw.assert_called_once()
@@ -212,7 +214,6 @@ class TestInfoScreen(unittest.TestCase):
         info_screen.body_text_line_3.draw.assert_called_once()
         info_screen.body_text_line_4.draw.assert_called_once()
         info_screen.back_button.draw.assert_called_once()
-
 
     @patch('pygame.image.load')
     @patch.object(InfoScreen, 'resize_screen_variables')
@@ -228,7 +229,7 @@ class TestInfoScreen(unittest.TestCase):
             mocks loading an image
         """
         menu = InfoScreen(self._mock_screen)
-        
+
         self._mock_screen.get_size.return_value = self._valid_screen_size
         menu.adjust_to_screen()
         mock_resize.assert_called_once()
@@ -253,7 +254,7 @@ class TestInfoScreen(unittest.TestCase):
         menu = InfoScreen(self._mock_screen)
         text: str = menu.body_text_line_2.text.data
         self.assertIn(self._body2, text)
-    
+
     def test_body3(self) -> None:
         """Tests line3 getter
         """

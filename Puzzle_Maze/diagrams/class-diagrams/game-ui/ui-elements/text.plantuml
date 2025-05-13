@@ -1,0 +1,15 @@
+@startuml Text
+title Text
+
+class Text implements Drawable{
+    ..Instance Variables..
+    - _color: str
+    - _font: pygame.font.Font
+    + color: str
+    + font: pygame.font.Font
+    ..Overridden Methods..
+    + draw(): void
+    + dynamically_draw(): void
+    + _adjust_to_changes(): void
+}
+@enduml

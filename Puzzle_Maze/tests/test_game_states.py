@@ -14,6 +14,7 @@ from game_states import PlayState, MainMenuState, InfoState, ChipsCoreEscapeEven
 class TestGameStates(unittest.TestCase):
     """Class for testing game states
     """
+
     def tearDown(self) -> None:
         """Tear down method to avoid
             issues with singleton
@@ -108,7 +109,7 @@ class TestGameStates(unittest.TestCase):
         game: ChipsCoreEscape = ChipsCoreEscape()
         game.state = InfoState()
         with patch("pygame.mouse.get_pos",
-                   return_value=(0 , 0)):
+                   return_value=(0, 0)):
             game.state.handle_event(game, ChipsCoreEscapeEvents.USER_CLICK)
             self.assertTrue(isinstance(game.state, InfoState))
 

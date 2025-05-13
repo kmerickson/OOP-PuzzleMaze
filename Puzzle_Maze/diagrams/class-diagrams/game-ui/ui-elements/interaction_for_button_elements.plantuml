@@ -1,0 +1,21 @@
+@startuml Interaction for Button Elements
+title Interaction for Button Elements 
+
+participant InteractiveButton
+participant InteractiveDrawable
+participant Button
+participant DrawableDecorator
+participant Drawable
+participant InteractiveButtonStates
+participant IdleButton
+participant HoverButton
+
+InteractiveButton -> InteractiveDrawable : inherits
+InteractiveButton -> Button : has
+Button -> DrawableDecorator : extends
+DrawableDecorator -> Drawable : implements
+InteractiveButton -> InteractiveButtonStates : has
+InteractiveButtonStates -> IdleButton : can be
+InteractiveButtonStates -> HoverButton : can be
+
+@enduml

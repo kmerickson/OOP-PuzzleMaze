@@ -6,6 +6,7 @@ __date__ = "5/13/25"
 __license__ = "MIT"
 
 from enum import Enum
+from typing import Any
 from interactive_drawable_state import InteractiveDrawableState
 from drawable import Drawable
 
@@ -32,7 +33,7 @@ class IdleText(InteractiveDrawableState):
         """
         super().__init__(drawable)
 
-    def handle_event(self, outer_class: 'InteractiveText', event: TextEvents) -> None:
+    def handle_event(self, outer_class: Any, event: TextEvents) -> None:
         """Switches state depending on given event
 
         Args:
@@ -57,7 +58,7 @@ class HoverText(InteractiveDrawableState):
         """
         super().__init__(drawable)
 
-    def handle_event(self, outer_class: 'InteractiveText', event: TextEvents) -> None:
+    def handle_event(self, outer_class: Any, event: TextEvents) -> None:
         """Switches state depending on given event
 
         Args:

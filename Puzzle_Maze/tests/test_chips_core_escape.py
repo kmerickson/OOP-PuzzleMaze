@@ -16,6 +16,7 @@ from game import Game
 class TestChipsCoreEscape(unittest.TestCase):
     """Tests class for ChipsCoreEscape class
     """
+
     def tearDown(self) -> None:
         """Tear down method to avoid
             issues with singleton
@@ -147,5 +148,3 @@ class TestChipsCoreEscape(unittest.TestCase):
         game: ChipsCoreEscape = ChipsCoreEscape()
         game.state = PlayState()
         self.assertTrue(isinstance, (game.state, PlayState))
-
-        

@@ -1,0 +1,19 @@
+@startuml Button
+title Button
+
+package "drawable_decorators" {
+    class Button extends DrawableDecorator{
+    ..Instance Variables
+    - _button_image_dir: str
+    - _surface: pygame.Surface
+    - _button_width: float
+    - _button_height: float
+    - _rect: pygame.Rect
+    ..Overridden Methods..
+    + draw(): void
+    + dynamically_draw(): void
+    + _adjust_to_changes(): void
+}
+}
+
+@enduml
