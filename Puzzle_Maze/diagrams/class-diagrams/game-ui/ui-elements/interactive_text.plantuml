@@ -1,0 +1,17 @@
+@startuml Interactive Text
+title Interactive Text
+class InteractiveText implements InteractiveDrawable{
+    ..Instance Variables..
+    - _text: Text
+    + _text: Text
+    - _hover_color: str
+    + _hover_color: str
+    - _color: str
+    - _color: str
+    - _state: InteractiveDrawableState
+    + state: InteractiveDrawableState
+    ..Overridden Methods..
+    + draw() : void
+    + handle_mouse_position() : void
+}
+@enduml

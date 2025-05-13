@@ -1,0 +1,12 @@
+@startuml Interactive Button
+title InteractiveButton
+class InteractiveButton implements InteractiveDrawable{
+    ..Instance Variables..
+    - _button : Button
+    + button : Button
+    - _state: InteractiveDrawableState
+    + state: InteractiveDrawableState
+    ..Overridden Methods..
+    + handle_mouse_position() : void
+}
+@enduml

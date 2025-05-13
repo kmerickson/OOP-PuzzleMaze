@@ -2,7 +2,7 @@
 title ChipsCoreEscape
 
 class ChipsCoreEscape {
-    ..Instance Methods..
+    ..Instance Variables..
     - _instance: None | ChipsCoreEscape
     - _state: ScreenState
     + state: ScreenState

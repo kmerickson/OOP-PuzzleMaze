@@ -10,6 +10,7 @@ from typing_extensions import override
 from text_decorators import Button
 from interactive_text import InteractiveText
 from interactive_button_states import ButtonEvents, IdleButton
+from interactive_drawable_state import InteractiveDrawableState
 
 
 class InteractiveButton(InteractiveText):
@@ -40,7 +41,7 @@ class InteractiveButton(InteractiveText):
                          text_to_place, color, hover_color, outline_color,
                          outline_size)
         self._button = Button(self._text, button_image_dir)
-        self.state = IdleButton(self._button)
+        self.state: InteractiveDrawableState = IdleButton(self._button)
 
     @property
     def button(self) -> Button:

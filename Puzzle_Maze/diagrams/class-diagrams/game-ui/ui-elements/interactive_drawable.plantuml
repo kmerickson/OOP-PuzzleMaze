@@ -1,0 +1,15 @@
+@startuml InteractiveDrawable
+title InteractiveDrawable
+class InteractiveDrawable <<abstract>>{
+    ..Instance Variables..
+    - _state: InteractiveDrawableState
+    + state: InteractiveDrawableState
+    ..Instance  Methods..
+    + draw() : void
+    + handle_event(event : Events) : void
+    ..Abstract Methods..
+    + handle_mouse_position() : void
+
+
+}
+@enduml

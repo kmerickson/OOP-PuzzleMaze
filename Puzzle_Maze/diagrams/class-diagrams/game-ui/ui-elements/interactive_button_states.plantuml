@@ -1,0 +1,12 @@
+@startuml Interactive Button States
+title Interactive Button States
+class IdleButton implements InteractiveDrawableState{
+ ..Overridden Methods..
+  + handle_event(outer_class : Any, event : ButtonEvents) : void
+}
+
+class HoverButton implements InteractiveDrawableState{
+  ..Overridden Methods..
+  + handle_event(outer_class : Any, event : ButtonEvents) : void
+}
+@enduml

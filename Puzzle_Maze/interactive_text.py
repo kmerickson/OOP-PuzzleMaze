@@ -11,6 +11,7 @@ from interactive_drawable import InteractiveDrawable
 from interactive_text_states import IdleText, TextEvents
 from text import Text
 from text_decorators import Outline
+from interactive_drawable_state import InteractiveDrawableState
 
 
 class InteractiveText(InteractiveDrawable):
@@ -40,10 +41,10 @@ class InteractiveText(InteractiveDrawable):
         super().__init__()
         self._text = Text(screen, factor_of_x_pos, factor_of_y_pos,
                           image_dir, size, text_to_draw, color)
-        self._hover_color = hover_color
-        self._color = color
+        self._hover_color: str = hover_color
+        self._color: str = color
         self._outline = Outline(self._text, outline_color, outline_size)
-        self.state = IdleText(self._text)
+        self.state: InteractiveDrawableState = IdleText(self._text)
 
     @property
     def text(self) -> Text:

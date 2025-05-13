@@ -1,0 +1,10 @@
+@startuml InteractiveDrawableState
+title InteractiveDrawableState
+class InteractiveDrawableState <<abstract>>{
+  - drawable : Drawable
+  ..Instance Methods..
+   + draw() : void
+  ..Abstract Methods..
+  {abstract} + handle_event(outer_class : Any, event : Events) : None
+}
+@enduml

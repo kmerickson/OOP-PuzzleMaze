@@ -1,0 +1,12 @@
+@startuml Interactive Text States
+title Interactive Text States
+class IdleText implements InteractiveDrawableState{
+ ..Overridden Methods..
+  + handle_event(outer_class : Any, event : TextEvents) : void
+}
+
+class HoverText implements InteractiveDrawableState{
+  ..Overridden Methods..
+  + handle_event(outer_class : Any, event : TextEvents) : void
+}
+@enduml
