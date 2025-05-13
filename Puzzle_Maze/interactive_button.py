@@ -7,10 +7,10 @@ __license__ = "MIT"
 
 import pygame
 from typing_extensions import override
-from text_decorators import Button
+from drawable_decorators import Button
 from interactive_text import InteractiveText
-from interactive_button_states import ButtonEvents, IdleButton
 from interactive_drawable_state import InteractiveDrawableState
+from interactive_button_states import ButtonEvents, IdleButton
 
 
 class InteractiveButton(InteractiveText):

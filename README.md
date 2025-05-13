@@ -12,6 +12,7 @@ Team:
   
   Jessica Story
 
+
 ## Repo set up steps
 ```
 git init
@@ -20,12 +21,20 @@ git fetch
 git checkout -b main origin/main
 ```
 
+## How to Run: 
+  In Puzzle_Maze directory, run command: 
+  `make run`
 
-Make sure the proper repo is set up. To check:
+## How to Test: 
+  In Puzzle_Maze directory, run command: 
+  `make unittest`
 
-`git remote -v`
+## Judge Average Score:
+  Grader 1: 94
+  Grader 2: 83
+  Average: 88.5
 
-Docker is already set up, so in the folder just run:
-
-`sudo bash ./run.docker.sh`
+## Self Grade:
+  Self Grade: 85
+  Justification: Most of the requirements were fulfilled
 

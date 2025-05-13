@@ -5,12 +5,10 @@ DOCS = docs
 all: fix-style style-check type-check unittest clean
 	@echo "all done..."
 
-.PHONY: kattis-test
-kattis-test:
-	@kattis test
-
+.PHONY = unittest
 unittest:
-	$(PYTHON) -m pytest -v
+	python3 -m pytest -v -s
+	@echo "Passed unit testing"
 
 clean:
 	find . -type d -name ".pytest_cache" -exec rm -rf {} +
@@ -23,7 +21,7 @@ check-types:
 
 .PHONY: check-style
 check-style:
-	flake8 . ./tests
+	flake8 .
 	@echo "Used flake8 for style checking"
 
 .PHONY: fix-style
@@ -34,16 +32,25 @@ fix-style:
 .PHONY: aesthetics fix-style check-style check-types
 aesthetics: fix-style check-style check-types
 
-.PHONY: create-docs-folder
-create-docs-folder:
-	mkdir -p $(DOCS)
+.PHONY:
+reports:
+	pytest --verbose --color=yes --cov --cov-report term --cov-report xml:docs/coverage.xml --cov-report=html:docs/htmlcov tests/
+	@echo "Created coverage reports"
+
+.PHONY: documentation
+documentation:
+	mkdir -p ./docs/code-docs
+	pdoc -o ./docs/code-docs ./*.py
+	@echo "Created documentation with pdoc"
+
+.PHONY: doc-folder-content reports documentation
+doc-folder-content: reports documentation
+
+
 .PHONY: run
 run:
 	python3 chips_core_escape.py
 
-.PHONY: create-docs
-create-docs: create-docs-folder
-	pdoc --output-dir $(DOCS) .
 
 .PHONY: create-cov-report
 create-cov-report:

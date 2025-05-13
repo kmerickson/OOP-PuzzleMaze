@@ -10,7 +10,7 @@ from typing_extensions import override
 from interactive_drawable import InteractiveDrawable
 from interactive_text_states import IdleText, TextEvents
 from text import Text
-from text_decorators import Outline
+from drawable_decorators import Outline
 from interactive_drawable_state import InteractiveDrawableState
 
 
