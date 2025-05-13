@@ -30,11 +30,16 @@ git checkout -b main origin/main
   `make unittest`
 
 ## Judge Average Score:
-  Grader 1: 94
-  Grader 2: 83
-  Average: 88.5
+  Grader 1: 94  
+
+  Grader 2: 83  
+
+  Average: 88.5  
+
 
 ## Self Grade:
-  Self Grade: 85
-  Justification: Most of the requirements were fulfilled
+  Self Grade: 85  
+
+  Justification: Most of the requirements were fulfilled  
+  
 

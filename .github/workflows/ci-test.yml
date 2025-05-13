@@ -30,43 +30,21 @@ jobs:
       - name: Lint with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
-          flake8  --max-complexity=10 --max-line-length=100 --count --show-source --statistics demo-assignments/A0/hello
-          flake8  --max-complexity=10 --max-line-length=100 --count --show-source --statistics demo-assignments/A0-OOP/hello
-          flake8  --max-complexity=10 --max-line-length=100 --count --show-source --statistics demo-assignments/A1/cold
-          flake8  --max-complexity=10 --max-line-length=100 --count --show-source --statistics demo-assignments/A1-OOP/cold
-          flake8  --max-complexity=10 --max-line-length=100 --count --show-source --statistics demo-assignments/A2-ABC/egypt
-          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-          # flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+          flake8  --max-complexity=10 --max-line-length=100 --count --show-source --statistics Puzzle_Maze
       - name: Check types with mypy
         run: |
-          mypy --strict --allow-untyped-decorators --ignore-missing-imports demo-assignments/A0/hello 
-          mypy --strict --allow-untyped-decorators --ignore-missing-imports demo-assignments/A0-OOP/hello 
-          mypy --strict --allow-untyped-decorators --ignore-missing-imports demo-assignments/A1/cold
-          mypy --strict --allow-untyped-decorators --ignore-missing-imports demo-assignments/A1-OOP/cold
-          mypy --strict --allow-untyped-decorators --ignore-missing-imports demo-assignments/A2-ABC/egypt
+          mypy --strict --allow-untyped-decorators --ignore-missing-imports Puzzle_Maze
       - name: Test with pytest
         run: |
-          pytest --verbose demo-assignments/A0/hello/tests
-          pytest --verbose demo-assignments/A0-OOP/hello/tests
-          pytest --verbose demo-assignments/A1/cold/tests
-          pytest --verbose demo-assignments/A1-OOP/cold/tests
-          pytest --verbose demo-assignments/A2-ABC/egypt/tests
+          pytest --verbose Puzzle_Maze/tests
       - name: Generate coverage report
         run: |
-          pytest --cov-report=xml:demo-assignments/A0/hello/coverage.xml --cov=demo-assignments/A0/hello demo-assignments/A0/hello/tests
-          pytest --cov-report=xml:demo-assignments/A0-OOP/hello/coverage.xml --cov=demo-assignments/A0-OOP/hello demo-assignments/A0-OOP/hello/tests
-          pytest --cov-report=xml:demo-assignments/A1/cold/coverage.xml --cov=demo-assignments/A1/cold demo-assignments/A1/cold/tests
-          pytest --cov-report=xml:demo-assignments/A1-OOP/cold/coverage.xml --cov=demo-assignments/A1-OOP/cold demo-assignments/A1-OOP/cold/tests
-          pytest --cov-report=xml:demo-assignments/A2-ABC/egypt/coverage.xml --cov=demo-assignments/A2-ABC/egypt demo-assignments/A2-ABC/egypt/tests
-          codecov
+          pytest --cov-report=xml:Puzzle_Maze/coverage.xml --cov=Puzzle_Maze Puzzle_Maze/tests
+
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4.0.1
         with:
           fail_ci_if_error: false # optional (default = false)
-          files: demo-assignments/A0/hello/coverage.xml \
-            demo-assignments/A0-OOP/hello/coverage.xml \
-            demo-assignments/A1/cold/coverage.xml \
-            demo-assignments/A1-OOP/cold/coverage.xml
-            demo-assignments/A2-ABC/egypt/coverage.xml
+          files: Puzzle_Maze/coverage.xml \
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: rambasnet/course-container
