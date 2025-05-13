@@ -10,6 +10,7 @@ import unittest
 import pygame
 from chips_core_escape import ChipsCoreEscape
 from game_states import MainMenuState, PlayState
+from game import Game
 
 
 class TestChipsCoreEscape(unittest.TestCase):
@@ -56,9 +57,13 @@ class TestChipsCoreEscape(unittest.TestCase):
             self.assertTrue(isinstance(game.screen, pygame.Surface))
 
     @patch('pygame.event.get')
-    def test_chips_core_escape1(self, mock_event_queue) -> None:
+    def test_chips_core_escape1(self, mock_event_queue: unittest.mock.MagicMock) -> None:
         """Tests quitting the chips core escape function
             by pressing X on screen
+
+            Args:
+            mock_event_queue  (unittest.mock.MagicMock):
+            mocks pressing x
         """
         game: ChipsCoreEscape = ChipsCoreEscape()
         with patch.object(game.state, 'display_screen', autospec=True) as mock_display_screen:
@@ -72,9 +77,13 @@ class TestChipsCoreEscape(unittest.TestCase):
             mock_display_screen.assert_called()
 
     @patch('pygame.event.get')
-    def test_chips_core_escape2(self, mock_event_queue) -> None:
+    def test_chips_core_escape2(self, mock_event_queue: unittest.mock.MagicMock) -> None:
         """Tests quitting the chips core escape function
             by pressing QUIT button
+
+            Args:
+            mock_event_queue  (unittest.mock.MagicMock):
+            mocks pressing quit button
         """
         game: ChipsCoreEscape = ChipsCoreEscape()
         with patch.object(game.state, 'handle_event', autospec=True) as mock_handle_event:
@@ -88,9 +97,13 @@ class TestChipsCoreEscape(unittest.TestCase):
             mock_handle_event.assert_called()
 
     @patch('pygame.event.get')
-    def test_chips_core_escape3(self, mock_event_queue) -> None:
+    def test_chips_core_escape3(self, mock_event_queue: unittest.mock.MagicMock) -> None:
         """Tests quitting the chips core escape function
             by pressing escape button
+
+            Args:
+            mock_event_queue  (unittest.mock.MagicMock):
+            mocks pressing escape button
         """
         game: ChipsCoreEscape = ChipsCoreEscape()
         with patch.object(game.state, 'handle_event', autospec=True) as mock_handle_event:
@@ -104,13 +117,17 @@ class TestChipsCoreEscape(unittest.TestCase):
             mock_handle_event.assert_called()
 
     @patch.object(ChipsCoreEscape, 'chips_core_escape')
-    def test_main(self, mock_chips_core_escape):
+    def test_main(self, mock_chips_core_escape: unittest.mock.MagicMock) -> None:
         """Tests main function
+
+          Args:
+            mock_chips_core_escape (unittest.mock.MagicMock):
+            mocks function
         """
         ChipsCoreEscape.main()
         mock_chips_core_escape.assert_called_once()
 
-    def test_new_game_instance(self):
+    def test_new_game_instance(self) -> None:
         """Tests whether game can be restarted
         """
         game: ChipsCoreEscape = ChipsCoreEscape()
@@ -118,13 +135,13 @@ class TestChipsCoreEscape(unittest.TestCase):
         game.play = Game()
         self.assertIsNot(first_game_object, game.play)
 
-    def test_state_property(self):
+    def test_state_property(self) -> None:
         """Tests whether game starts out in main menu state
         """
         game: ChipsCoreEscape = ChipsCoreEscape()
         self.assertTrue(isinstance, (game.state, MainMenuState))
 
-    def test_state_setter(self):
+    def test_state_setter(self) -> None:
         """Tests that state can be set
         """
         game: ChipsCoreEscape = ChipsCoreEscape()

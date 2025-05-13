@@ -2,7 +2,7 @@
 """
 
 __author__ = "Jessica Story"
-__date__ = "5/2/25"
+__date__ = "5/13/25"
 __license__ = "MIT"
 
 from unittest.mock import patch, MagicMock
@@ -178,11 +178,13 @@ class TestGame(unittest.TestCase):
         self._game.load_levels()
         self._game.load_level(0)
         self._game.draw()
+
         tile_count: int = sum(len(row) for row in self._game.maze)
         enemy_count: int = len(self._game.enemies)
         door_count: int = len(self._game.doors)
         player_count: int = 1
         total_call_count: int = tile_count + enemy_count + door_count + player_count
+
         self.assertEqual(mock_screen.blit.call_count, total_call_count)
 
     @patch('sys.stdout', new_callable=StringIO)
@@ -239,6 +241,7 @@ class TestGame(unittest.TestCase):
         mock_transform.return_value = mock_surface
         mock_exit = MagicMock()
         sys.exit = mock_exit
+
         self._game = Game()
         test_tile: List[List[int]] = [[5, 5], [5, 5]]
         self._game.maze = test_tile
@@ -254,6 +257,7 @@ class TestGame(unittest.TestCase):
         mock_enemy_update = MagicMock()
         mock_player_update = MagicMock()
         mock_draw = MagicMock()
+        
         with patch.object(self._game, 'update', mock_game_update), \
                 patch.object(self._game.player, 'update', mock_player_update), \
                 patch.object(self._game.enemies[0], 'update', mock_enemy_update), \
