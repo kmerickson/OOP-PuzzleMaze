@@ -21,7 +21,7 @@ class ChipsCoreEscape:
     _instance: Optional['ChipsCoreEscape'] = None
 
     DEFAULT_WIDTH: int = 1280
-    DEFUALT_HEIGHT: int = 720
+    DEFAULT_HEIGHT: int = 720
 
     def __init__(self) -> None:
         """Constructor for the ChipsCoreEscape class
@@ -32,7 +32,6 @@ class ChipsCoreEscape:
                 a singleton class Solution")
         super().__init__()
         ChipsCoreEscape._instance = self
-
         self._screen: pygame.Surface = self._set_screen()
         self._play: Game = Game()
         self._menu: MainMenu = MainMenu(self._screen)
@@ -42,7 +41,7 @@ class ChipsCoreEscape:
     def _set_screen(self) -> pygame.Surface:
         pygame.init()
         return pygame.display.set_mode(
-            (self.DEFAULT_WIDTH, self.DEFUALT_HEIGHT),
+            (self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT),
             pygame.RESIZABLE)
 
     def display_screen(self) -> None:

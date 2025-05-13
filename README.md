@@ -70,3 +70,7 @@ Chip’s Core Escape is an object-oriented Python game that immerses players ins
 | Update repo after showcase              | Jessica        | Completed   |
 | Write test file for game                | Jessica        | Completed   |
 | Write test files for ui                 | Jessica        | In progress |
+
+# Software Management
+Github Issues  
+Discord  
