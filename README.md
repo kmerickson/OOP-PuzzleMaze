@@ -35,6 +35,18 @@ Chip’s Core Escape is an object-oriented Python game that immerses players ins
 
   Justification: Most of the requirements were fulfilled  
 
+## Design Pattern Used:
+
+- **State**: Used in `GameObjects.py`, `interactive_text.py`, `interactive_button.py`, `chips_core_escape.py`
+- **Singleton**: Used in `chips_core_escape.py`
+- **Decorator**: Used in `drawable_decorators.py`
+
+---
+
+- **State Purpose**: Allowed for easy transition between clearly defined states
+- **Singleton Purpose**: Allowed for only one instance of game to be created
+- **Decorator Purpose**: Allowed for flexibility with UI elements
+
 
 # Project Tasks
 
